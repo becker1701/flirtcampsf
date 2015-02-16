@@ -1,0 +1,24 @@
+<h4>Chapter 3</h4>
+<ul>
+	<li>Site Framework</li>
+	<ul>
+		<li>Build app, check in, deploy</li>
+		<li>Create static site pages</li>
+		<li>page title method</li>
+
+		<li></li>
+	</ul>
+	<li>Box 3.3: Guidlines for when to test</li>
+	<ul>
+		<li>When a test is especially short or simple compared to the application code it tests, lean toward writing the test first.</li>
+		<li>When the desired behavior isn’t yet crystal clear, lean toward writing the application code first, then write a test to codify the result.</li>
+		<li>Because security is a top priority, err on the side of writing tests of the security model first.</li>
+		<li>Whenever a bug is found, write a test to reproduce it and protect against regressions, then write the application code to fix it. See <%= link_to "RailsCast episode 187 - Testing Exceptions", "http://railscasts.com/episodes/187-testing-exceptions" %></li>
+		<li>Lean against writing tests for code (such as detailed HTML structure) likely to change in the future.</li>
+		<li>Write tests before refactoring code, focusing on testing error-prone code that’s especially likely to break.</li>
+		<li>Controller and Model tests first, then integration tests to bring everything together.</li>
+	</ul>
+
+	<li>provide(:var_name, "Value") to send dynamic contact to view, then yeild(:var_name)</li>
+	<li>MiniTest uses a special function 'setup' that is run before every test. Use to set instance variables used across tests</li>
+</ul>
