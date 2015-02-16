@@ -1,2 +1,6 @@
-<h1>StaticPages#about</h1>
-<p>Find me in app/views/static_pages/about.html.erb</p>
+<% provide(:title, "About") %>
+
+<h1>About</h1>
+<p>
+  The <em><%= link_to "Ruby on Rails Tutorial", "http://www.railstutorial.org/" %></em> is a <%= link_to "book", "http://www.railstutorial.org/book" %> and <%= link_to "screencast series", "http://screencasts.railstutorial.org/" %> to teach web development with <%= link_to "Ruby on Rails", "http://rubyonrails.org/" %>. This is the sample application for the tutorial.
+</p>
