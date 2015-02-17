@@ -41,11 +41,11 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_select "title", full_title("Terms of Use")
   end
 
-  test "should get notes" do
-    get :notes
-    assert_response :success
-    # assert_select "title", "Notes | #{@base_title}"
-    assert_select "title", full_title("Notes")
-  end
+  # test "should get notes" do
+  #   get :notes
+  #   assert_response :success
+  #   # assert_select "title", "Notes | #{@base_title}"
+  #   assert_select "title", full_title("Notes")
+  # end
 
 end

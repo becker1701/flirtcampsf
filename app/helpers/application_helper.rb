@@ -9,4 +9,10 @@ module ApplicationHelper
 			"#{title} | #{base_title}"
 		end
 	end
+
+	def format_newline(text='')
+		unless text.empty?
+			text.gsub(/\n/, '<br>').html_safe
+		end
+	end
 end

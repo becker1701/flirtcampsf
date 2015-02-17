@@ -2,11 +2,13 @@ Rails.application.routes.draw do
   
   
 
+  resources :notes
+
   get 'about', to: 'static_pages#about'
   get 'help', to: 'static_pages#help'
   get 'contact', to: 'static_pages#contact'
   get 'terms_of_use', to: 'static_pages#terms_of_use'
-  get 'notes', to: 'static_pages#notes'
+  # get 'notes', to: 'static_pages#notes'
   get 'signup', to: 'users#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
