@@ -2,8 +2,14 @@ require 'test_helper'
 
 class NoteTest < ActiveSupport::TestCase
 
-  # test "invalid note" do
-  # 	note = Note.create!(note: "")
-  # 	assert_not_valid note
-  # end
+  def setup 
+  	@note = Note.new(chapter: 1, note: "This ia a note")
+  end
+
+  test "is valid" do
+  	assert @note.valid?
+  end
+
+
+  
 end
