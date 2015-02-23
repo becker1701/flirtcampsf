@@ -8,6 +8,7 @@ class UserSignupTest < ActionDispatch::IntegrationTest
   			post users_path, user: { name: " ", email:"invlid_email", password: "", password_confirmation: "123" }
   		end
   		assert_template 'users/new'
+      assert_not is_logged_in?
   		assert_select "div[id=?]", "error_explanation"
   	end
 
@@ -17,7 +18,8 @@ class UserSignupTest < ActionDispatch::IntegrationTest
   			post_via_redirect users_path, user: { name: "Valid Name", email:"valid_email@example.com", password: "123456", password_confirmation: "123456" }
   		end
   		assert_template 'users/show'
-  		assert_not flash.empty?
+  		assert is_logged_in?
+      assert_not flash.empty?
   	end
   	
 end
