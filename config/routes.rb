@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'signup', to: 'users#new'
 
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

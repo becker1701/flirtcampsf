@@ -5,6 +5,7 @@ class SessionsHelperTest < ActionView::TestCase
 	def setup
 		@user = users(:brian)
 		remember(@user)
+		@other_user = users(:archer)
 	end
 
 
@@ -20,6 +21,14 @@ class SessionsHelperTest < ActionView::TestCase
 	test "current_user returns nil when remember_token is wrong" do
 		@user.update_attribute(:remember_digest, User.digest(User.new_token))
 		assert_nil current_user
+	end
+
+	test "#current_user? returns true when current_user eq @user" do
+		assert current_user?(@user)
+	end
+
+	test "#current_user? returns false then current_user not_eq @user" do
+		assert_not current_user?(@other_user)
 	end
 
 end

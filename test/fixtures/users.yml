@@ -2,3 +2,32 @@ brian:
  name: Brian Example
  email: tester@example.com
  password_digest: <%= User.digest('password') %>
+ admin: true
+
+admin: 
+ name: Admin Example
+ email: admin@example.com
+ password_digest: <%= User.digest('password') %>
+ admin: true
+
+archer:
+ name: Archer Baker
+ email: fbi_guy@example.com
+ password_digest: <%= User.digest('password') %>
+
+kurt:
+ name: Kurt Spirit
+ email: spirit@example.com
+ password_digest: <%= User.digest('password') %>
+
+elisabeth:
+ name: Elisabeth Becker
+ email: elisabeth@example.com
+ password_digest: <%= User.digest('password') %>
+
+<% 30.times do |n| %>
+user_<%= n %>:
+ name: <%= Faker::Name.name %>
+ email: <%= Faker::Internet.safe_email %>
+ password_digest: <%= User.digest('password') %>
+<% end %>

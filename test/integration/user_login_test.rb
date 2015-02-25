@@ -57,6 +57,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
   	log_in_as(@user, remember_me: '0')
   	assert_nil cookies['remember_token'] 
   end
+
+  test "non logged in user is freindly forwarded on login" do
+  	get edit_user_path(@user)
+  	log_in_as @user
+  	assert_redirected_to edit_user_path(@user)
+
+  end
+
 #BUGS=================================
 
 	#flash message on invalid login persistes after a redirect

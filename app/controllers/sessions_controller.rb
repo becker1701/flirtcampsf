@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   		flash[:success] = "Wecome back!"
       params[:remember_me] == '1' ? remember(@user) : forget(@user)
       log_in @user
-  		redirect_to @user
+  		redirect_back_or user_url(@user)
 
   	else
   		flash.now[:danger] = "We could not find a user with that email/password combination."
