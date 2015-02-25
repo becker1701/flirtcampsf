@@ -65,6 +65,18 @@ class UserLoginTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "user is freindly-forwarded after logging in" do
+  	get edit_user_path(@user)
+  	assert_redirected_to login_path
+  	assert_equal session['forwarding_url'], edit_user_url(@user)
+  	log_in_as @user
+  	assert_redirected_to edit_user_path(@user)
+  	assert session['forwarding_url'].nil?
+  	log_out
+  	log_in_as @user
+  	assert_redirected_to @user
+  end
+
 #BUGS=================================
 
 	#flash message on invalid login persistes after a redirect
