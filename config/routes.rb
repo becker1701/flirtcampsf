@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   resources :notes
   resources :users
-
+  resources :account_activations, only: :edit
+  resources :password_resets, only: [:new, :create, :edit, :update]
 # sessions
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
   get 'contact', to: 'static_pages#contact'
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'signup', to: 'users#new'
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -3,31 +3,43 @@ brian:
  email: tester@example.com
  password_digest: <%= User.digest('password') %>
  admin: true
+ activated: true
+ activated_at: <%= Time.zone.now %>
 
 admin: 
  name: Admin Example
  email: admin@example.com
  password_digest: <%= User.digest('password') %>
  admin: true
+ activated: true
+ activated_at: <%= Time.zone.now %>
 
 archer:
  name: Archer Baker
  email: fbi_guy@example.com
  password_digest: <%= User.digest('password') %>
+ activated: true
+ activated_at: <%= Time.zone.now %>
 
 kurt:
  name: Kurt Spirit
  email: spirit@example.com
  password_digest: <%= User.digest('password') %>
+ activated: true
+ activated_at: <%= Time.zone.now %>
 
 elisabeth:
  name: Elisabeth Becker
  email: elisabeth@example.com
  password_digest: <%= User.digest('password') %>
+ activated: true
+ activated_at: <%= Time.zone.now %>
 
 <% 30.times do |n| %>
 user_<%= n %>:
  name: <%= Faker::Name.name %>
  email: <%= Faker::Internet.safe_email %>
  password_digest: <%= User.digest('password') %>
+ activated: true
+ activated_at: <%= Time.zone.now %>
 <% end %>
