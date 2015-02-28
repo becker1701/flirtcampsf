@@ -9,13 +9,19 @@ class PasswordResetsController < ApplicationController
 
   def create
   	
+    # 
   	@user = User.find_by(email: params[:password_reset][:email].downcase) if params[:password_reset][:email]
   	
-  	if @user
-      # debugger
-    	@user.reset_password
+  	if @user && !@user.activated?
+      # @user.send_activation_email
+      flash[:warning] = "Your account is not activated. Check your email for the activation link."
+      redirect_to root_url
+
+    elsif @user && @user.activated?
+    	@user.reset_digest_attributes(:password_reset)
   		flash[:success] = "A password reset email has been sent."
 		  redirect_to login_url
+    
     else
       flash.now[:danger] = "Email address not found."
 		  render :new
@@ -29,7 +35,7 @@ class PasswordResetsController < ApplicationController
 
 
   def update
-    # debugger
+    # 
     if password_blank?
       # flash.now[:danger] = "Password can't be blank."
 

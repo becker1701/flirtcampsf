@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def new
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    # debugger
+    # 
     if @user.update_attributes(user_params)
       flash[:success] = "Your profile has been updated!"
       redirect_to @user
@@ -45,6 +45,11 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:success] = "User deleted."
     redirect_to users_url
+  end
+
+  def thisis
+    msg = "I am not using this method"
+    
   end
 
 private

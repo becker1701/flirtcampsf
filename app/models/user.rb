@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 	validates :password, length: { minimum: 6 }, allow_blank: true
 	
 	before_save :downcase_email
-	before_create :create_activation_digest
+	before_create :generate_activation_digest
 
 
 	#returns the hash digest of the given string
@@ -42,20 +42,19 @@ class User < ActiveRecord::Base
 	end	
 
 	def activate!
-		update_attribute(:activated, true)
-		update_attribute(:activated_at, Time.zone.now)
+		update_columns(activated: true, activated_at: Time.zone.now)
 	end
 
 	def send_activation_email
 		UserMailer.account_activation(self).deliver_now
 	end
 
-	def reset_password
-		self.password_reset_token = User.new_token
-		update_attribute(:reset_digest, User.digest(self.password_reset_token))
-		update_attribute(:reset_sent_at, Time.zone.now)
-		send_password_reset_email
+	def reset_digest_attributes(attribute) #:password_reset or :activation
+		send("reset_#{attribute}")
+		send("send_#{attribute}_email")
 	end
+
+
 
 	def send_password_reset_email
 		UserMailer.password_reset(self).deliver_now
@@ -69,15 +68,38 @@ class User < ActiveRecord::Base
 		errors.add(:password, 'can not be blank')
 	end
 
+	# def reset_activation_digest
+	# 	debugger
+	# 	generate_activation_digest if self.activation_token.nil?
+	# end
+
 private
 	
 	def downcase_email
 		self.email.downcase!
 	end
 
-	def create_activation_digest
+	# def generate_token(attribute)
+	# 	token = send("#{attribute}_token")
+	# 	token = User.new_token
+	# end
+
+	def generate_activation_digest
 		self.activation_token = User.new_token
+		# generate_token(:activation)
 		self.activation_digest = User.digest(self.activation_token)
+	end
+
+	def reset_activation
+		self.activation_token = User.new_token
+		# generate_token(:activation)
+		update_attribute(:activation_digest, User.digest(self.activation_token))
+	end
+
+	def reset_password_reset
+		self.password_reset_token = User.new_token
+		# generate_token(:password_reset)
+		update_columns(reset_digest: User.digest(self.password_reset_token), reset_sent_at: Time.zone.now)
 	end
 
 end

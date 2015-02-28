@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :notes
-  resources :users
-  resources :account_activations, only: :edit
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  # You can have the root of your site routed with "root"
+  root 'static_pages#home'
+
 # sessions
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
@@ -16,13 +15,15 @@ Rails.application.routes.draw do
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'signup', to: 'users#new'
 
-
+  # resources :notes
+  resources :users
+  resources :account_activations, only: [:new, :create, :edit]
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  root 'static_pages#home'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

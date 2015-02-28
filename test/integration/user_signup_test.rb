@@ -29,9 +29,10 @@ class UserSignupTest < ActionDispatch::IntegrationTest
 
       #try to log in before activation
       log_in_as(user, remember_me: '0', password: "123456")
-      assert_redirected_to root_url
+      assert_template 'sessions/new'
       assert_not is_logged_in?
       assert_not flash.empty?
+      assert_select "a[href=?]", new_account_activation_path
 
       #try to activate with incorrect token
       get edit_account_activation_path('incorrect token', email: user.email)

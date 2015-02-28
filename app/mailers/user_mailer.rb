@@ -1,5 +1,6 @@
 class UserMailer < ApplicationMailer
 
+  default from: "noreply@example.com"
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -9,6 +10,7 @@ class UserMailer < ApplicationMailer
 
     @user = user
 
+    
     mail to: @user.email, subject: "Activate your account"
   end
 
@@ -21,6 +23,6 @@ class UserMailer < ApplicationMailer
 
     @user = user
 
-    mail to: @user.email, subject: "Password reset."
+    mail to: @user.email, subject: "Password reset"
   end
 end

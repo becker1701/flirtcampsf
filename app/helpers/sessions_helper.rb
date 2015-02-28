@@ -1,7 +1,7 @@
 module SessionsHelper
 
 	def log_in(user)
-		# debugger
+		# 
 		session[:user_id] = user.id
 	end
 
@@ -10,7 +10,7 @@ module SessionsHelper
 		if (user_id = session[:user_id])
 			@current_user ||= User.find_by(id: user_id) #find_by returns nil if no matching record
 		elsif (user_id = cookies.signed[:user_id])
-			# debugger
+			# 
 			# raise
 			user = User.find_by(id: user_id)
 			if user && user.authenticated?(:remember, cookies[:remember_token])

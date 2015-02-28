@@ -11,7 +11,7 @@ class UserMailerTest < ActionMailer::TestCase
     
     assert_equal "Activate your account", mail.subject
     assert_equal [user.email], mail.to
-    assert_equal ["from@example.com"], mail.from
+    assert_equal ["noreply@example.com"], mail.from
     assert_match user.name,                 mail.body.encoded
     assert_match user.activation_token,     mail.body.encoded
     assert_match CGI::escape(user.email),   mail.body.encoded
@@ -22,9 +22,9 @@ class UserMailerTest < ActionMailer::TestCase
     user.password_reset_token = User.new_token
 
     mail = UserMailer.password_reset(user)
-    assert_equal "Password reset.", mail.subject
+    assert_equal "Password reset", mail.subject
     assert_equal [user.email], mail.to
-    assert_equal ["from@example.com"], mail.from
+    assert_equal ["noreply@example.com"], mail.from
     assert_match user.name,                 mail.body.encoded
     assert_match user.password_reset_token, mail.body.encoded
     assert_match CGI::escape(user.email),   mail.body.encoded

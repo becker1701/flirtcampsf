@@ -26,7 +26,7 @@ gem 'faker', '1.4.2'
   gem "letter_opener", group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Call 'byebug' anywhere in the code to stop execution and get a  console
   gem 'byebug', '3.4.0'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -50,3 +50,4 @@ group :production do
   gem 'puma', '2.11.1'
 end
 
+gem 'simplecov', :require => false, :group => :test

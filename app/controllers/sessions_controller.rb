@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # debugger
+    # 
 
   	@user = User.find_by(email: params[:email].downcase) if params[:email].present?
   	if @user && @user.authenticate(params[:password])
@@ -13,8 +13,9 @@ class SessionsController < ApplicationController
         log_in @user
     		redirect_back_or user_url(@user)
       else
-        flash[:warning] = "Account not activated. Please check your email for the activation link."
-        redirect_to root_url
+        flash.now[:warning] = "Account not activated."
+        params[:reset_account_activation] = true
+        render :new
       end
   	else
       

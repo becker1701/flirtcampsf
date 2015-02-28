@@ -4,8 +4,64 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 
 	def setup
 		@user = users(:brian)
+		
+		
+		@not_activated = users(:not_activated)
+
 		ActionMailer::Base.deliveries.clear
 	end
+
+	test "password reset request for non activaed user" do
+		get new_password_reset_path
+
+		post password_resets_path, password_reset: {email: @not_activated.email}
+
+		assert_not is_logged_in?
+		assert_redirected_to root_url
+		assert_not flash.empty?
+		# user = assigns(:user)
+
+		# assert_not user.activation_token.nil?
+		# assert_redirected_to root_path
+		# assert_not is_logged_in?
+		# assert_equal 1, ActionMailer::Base.deliveries.count
+		# mail = ActionMailer::Base.deliveries.last
+		# assert mail.subject, "Activate your account"
+		# ActionMailer::Base.deliveries.clear
+
+		
+		# log_in_as user
+		# assert_redirected_to root_url
+		# assert_not is_logged_in?
+		# assert_not flash.empty?
+
+		# #visit URL for activating account
+
+		# #try to activate with incorrect token
+		# get edit_account_activation_path('incorrect token', email: user.email)
+		# assert_redirected_to root_url
+		# assert_not is_logged_in?
+		# assert_not flash.empty?
+
+		# #try valid token and wrong email
+		# get edit_account_activation_path(user.activation_token, email: 'wrong')
+		# assert_redirected_to root_url
+		# assert_not is_logged_in?
+		# assert_not flash.empty?
+
+		# #try with correct activation token and email
+  		
+  # 		get edit_account_activation_path(user.activation_token, email: user.email)
+  # 		debugger
+  # 		user.reload
+		# assert user.activated?
+		# follow_redirect!
+		# assert_template 'users/show'
+		# assert_not flash.empty?
+		# assert is_logged_in?
+
+	end
+
 
 	test "password resets with invalid information" do
 		
@@ -21,9 +77,15 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 		assert_not flash.empty?
 		assert_equal 0, ActionMailer::Base.deliveries.count
 
+		
+
+
+
 		#valid email sends email and sets reset attributes
 		post password_resets_path, password_reset: {email: @user.email}
 		assert_equal 1, ActionMailer::Base.deliveries.count
+		mail = ActionMailer::Base.deliveries.last
+		assert mail.subject, "Password reset."
 		assert_not_equal @user.reset_digest, @user.reload.reset_digest
 		assert_not @user.reset_sent_at.nil?
 		assert_redirected_to login_url
