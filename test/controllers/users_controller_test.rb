@@ -22,7 +22,7 @@ class UsersControllerTest < ActionController::TestCase
     log_in_as @user
     get :index
     assert_response :success
-    assert_select "title", full_title("All Users")
+    assert_select "title", full_title("All Camp Members")
   end
 
   test "redirect edit when not logged in" do

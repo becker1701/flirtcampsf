@@ -20,12 +20,12 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_select "title", full_title("About")
   end
 
-  test "should get help" do
-    get :help
-    assert_response :success
-    # assert_select "title", "Help | #{@base_title}"
-    assert_select "title", full_title("Help")
-  end
+  # test "should get help" do
+  #   get :help
+  #   assert_response :success
+  #   # assert_select "title", "Help | #{@base_title}"
+  #   assert_select "title", full_title("Help")
+  # end
 
   test "should get contact" do
     get :contact
@@ -34,12 +34,12 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_select "title", full_title("Contact")
   end
 
-  test "should get terms of use" do
-    get :terms_of_use
-    assert_response :success
-    # assert_select "title", "Terms of Use | #{@base_title}"
-    assert_select "title", full_title("Terms of Use")
-  end
+  # test "should get terms of use" do
+  #   get :terms_of_use
+  #   assert_response :success
+  #   # assert_select "title", "Terms of Use | #{@base_title}"
+  #   assert_select "title", full_title("Terms of Use")
+  # end
 
   # test "should get notes" do
   #   get :notes

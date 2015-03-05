@@ -5,6 +5,7 @@ brian:
  admin: true
  activated: true
  activated_at: <%= Time.zone.now %>
+ playa_name: Flirter
 
 admin: 
  name: Admin Example
@@ -13,13 +14,14 @@ admin:
  admin: true
  activated: true
  activated_at: <%= Time.zone.now %>
-
+ playa_name: Flirter1
 
 not_activated:
  name: Not Activated
  email: n_a@example.com
  password_digest: <%= User.digest('password') %>
  activated: false
+ playa_name: Flirter2
 
 
 archer:
@@ -28,6 +30,7 @@ archer:
  password_digest: <%= User.digest('password') %>
  activated: true
  activated_at: <%= Time.zone.now %>
+ playa_name: Flirter3
 
 kurt:
  name: Kurt Spirit
@@ -35,6 +38,7 @@ kurt:
  password_digest: <%= User.digest('password') %>
  activated: true
  activated_at: <%= Time.zone.now %>
+ playa_name: Flirter4
 
 elisabeth:
  name: Elisabeth Becker
@@ -42,6 +46,7 @@ elisabeth:
  password_digest: <%= User.digest('password') %>
  activated: true
  activated_at: <%= Time.zone.now %>
+ playa_name: Flirter5
 
 <% 30.times do |n| %>
 user_<%= n %>:
@@ -50,4 +55,5 @@ user_<%= n %>:
  password_digest: <%= User.digest('password') %>
  activated: true
  activated_at: <%= Time.zone.now %>
+ playa_name: Flirter<%= 5 + n %>
 <% end %>

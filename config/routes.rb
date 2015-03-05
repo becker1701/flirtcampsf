@@ -10,11 +10,14 @@ Rails.application.routes.draw do
 
 # static pages
   get 'about', to: 'static_pages#about'
-  get 'help', to: 'static_pages#help'
+  # get 'help', to: 'static_pages#help'
   get 'contact', to: 'static_pages#contact'
-  get 'terms_of_use', to: 'static_pages#terms_of_use'
+  # get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'signup', to: 'users#new'
+  get 'new_member_app', to: 'static_pages#new_member_app'
 
+
+  get 'carousel', to: 'static_pages#carousel'
   # resources :notes
   resources :users
   resources :account_activations, only: [:new, :create, :edit]

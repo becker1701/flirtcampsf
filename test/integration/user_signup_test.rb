@@ -9,7 +9,7 @@ class UserSignupTest < ActionDispatch::IntegrationTest
 	test "invalid signup information" do
 		get signup_path
   		assert_no_difference 'User.count' do
-  			post users_path, user: { name: " ", email:"invlid_email", password: "", password_confirmation: "123" }
+  			post users_path, user: { name: " ", email:"invlid_email", password: "", password_confirmation: "123", playa_name: " " }
   		end
   		assert_template 'users/new'
       assert_not is_logged_in?
@@ -19,7 +19,7 @@ class UserSignupTest < ActionDispatch::IntegrationTest
   	test "valid signup information" do
 		  get signup_path
   		assert_difference 'User.count', 1 do
-  			post users_path, user: { name: "Valid Name", email:"valid_email@example.com", password: "123456", password_confirmation: "123456" }
+  			post users_path, user: { name: "Valid Name", email:"valid_email@example.com", password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
   		end
 
       assert_equal 1, ActionMailer::Base.deliveries.size

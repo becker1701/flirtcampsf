@@ -9,16 +9,13 @@ class StaticPagesController < ApplicationController
   def about
   end
 
-  def help
-  end
+  # def help
+  # end
 
   def contact
   end
 
-  def terms_of_use
-  end
-
-  # def notes
+  # def terms_of_use
   # end
 
 private

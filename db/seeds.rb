@@ -9,12 +9,13 @@
 User.create!(	name: "Brian Becker", 
 				email: "becker1701@gmail.com", 
 				password: "123456", 
-				password_confirmation:"123456", 
+				password_confirmation:"123456",
+				playa_name: Faker::Lorem.sentence(1), 
 				admin: true,
 				activated: true,
 				activated_at: Time.zone.now)
 
-99.times do |n|
+40.times do |n|
 	name = Faker::Name.name
 	email = "example-#{n}@example.com"
 	password = "123456"

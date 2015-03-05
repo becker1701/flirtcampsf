@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup 
-  	@user = User.new(name: "Ray Ban", email: "ray@example.com", password: "foobar", password_confirmation: "foobar")
+  	@user = User.new(name: "Ray Ban", email: "ray@example.com", password: "foobar", password_confirmation: "foobar", phone: "123-456-7890", playa_name: "Camp Master")
   end
 
   test "is valid" do
@@ -27,6 +27,26 @@ class UserTest < ActiveSupport::TestCase
   test "is invalid with email > 255 characters" do
   	@user.email = "a" * 256
   	assert_not @user.valid?
+  end
+
+  test "is invalid without playa name" do
+    @user.playa_name = nil
+    assert_not @user.valid?
+  end
+
+  test "is invalid with playa_name > 50 characters" do
+    @user.playa_name = "a" * 51
+    assert_not @user.valid?
+  end
+
+  test "valid if phone = 20 char." do
+    @user.phone = "1" * 20
+    assert @user.valid?
+  end
+
+  test "invlalid if phone number > 20 char." do
+    @user.phone = "1" * 21
+    assert_not @user.valid?
   end
 
   test "email validation passes with valid email addresses" do
