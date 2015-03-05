@@ -47,11 +47,6 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
-  def thisis
-    msg = "I am not using this method"
-    
-  end
-
 private
 
 	def get_user
