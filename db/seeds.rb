@@ -7,10 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create!(	name: "Brian Becker", 
-				email: "becker1701@gmail.com", 
+				email: "campmaster@flirtcampsf.com", 
 				password: "123456", 
 				password_confirmation:"123456",
-				playa_name: Faker::Lorem.sentence(1), 
+				playa_name: "Camp Master", 
 				admin: true,
 				activated: true,
 				activated_at: Time.zone.now)
@@ -22,6 +22,7 @@ User.create!(	name: "Brian Becker",
 	
 	User.create!(	name: name, 
 					email: email, 
+					playa_name: "Camper#{n}", 
 					password: password, 
 					password_confirmation: password, 
 					activated: true,

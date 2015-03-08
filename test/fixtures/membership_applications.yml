@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+first:
+  birth_name: Brian Example
+  playa_name: Camp Master
+  email: campmaster@flirtcampsf.com
+  phone: (707) 123-4567
+  home_town: San Francisco
+  possibility: MyText
+  contribution: MyText
+  passions: MyText
+  years_at_bm: 5
+  approved: false
+
+# two:
+#   birth_name: MyString
+#   playa_name: MyString
+#   email: MyString
+#   phone: MyString
+#   home_town: MyString
+#   possibility: MyText
+#   contribution: MyText
+#   passions: MyText
+#   years_at_bm: 1
+#   approved: false

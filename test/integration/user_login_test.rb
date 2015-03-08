@@ -11,10 +11,11 @@ class UserLoginTest < ActionDispatch::IntegrationTest
 	    get login_path
 	    assert_template 'sessions/new'
 	    post login_path, { email: @user.email, password: 'password' }
-	    assert_redirected_to @user
+	    assert_redirected_to root_url
 	    follow_redirect!
-	    assert_template 'users/show'
+	    assert_template 'static_pages/home'
 	    assert is_logged_in?
+	    assert_select 'h1', text: @user.playa_name
 	    assert_select "a[href=?]", login_path, count: 0
 	    assert_select "a[href=?]", logout_path
 	    assert_select "a[href=?]", user_path(@user)
@@ -40,12 +41,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
 		get login_path
 	    assert_template 'sessions/new'
 	    post login_path, { email: @user.email, password: 'password' }
-	    assert_redirected_to @user
+	    assert_redirected_to root_url
+
 	    follow_redirect!
-	    get root_url
-	    assert_redirected_to @user
-	    follow_redirect!
-	    assert_template 'users/show'
+	    assert_template 'static_pages/home'
+	    # get root_url
+	    # assert_redirected_to @user
+	    # follow_redirect!
+	    # assert_template 'users/show'
   end
 
 
@@ -75,7 +78,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
   	assert session['forwarding_url'].nil?
   	log_out
   	log_in_as @user
-  	assert_redirected_to @user
+  	assert_redirected_to root_url
   end
 
 #BUGS=================================

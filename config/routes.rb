@@ -10,16 +10,21 @@ Rails.application.routes.draw do
 
 # static pages
   get 'about', to: 'static_pages#about'
-  # get 'help', to: 'static_pages#help'
   get 'contact', to: 'static_pages#contact'
-  # get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'signup', to: 'users#new'
   get 'new_member_app', to: 'static_pages#new_member_app'
+  # get ':id/thank_you', to: 'membership_applications#thank_you'
 
-
-  get 'carousel', to: 'static_pages#carousel'
+  # get 'carousel', to: 'static_pages#carousel'
   # resources :notes
   resources :users
+
+  resources :membership_applications, only: [:new, :create] do
+    member do
+      get 'thank_you'
+    end
+  end
+
   resources :account_activations, only: [:new, :create, :edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
 

@@ -24,9 +24,9 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_password_reset_path
 
     log_in_as @user
-    assert_redirected_to @user
+    assert_redirected_to root_url
     follow_redirect!
-    assert_template 'users/show'
+    assert_template 'static_pages/home'
     assert_select "a[href=?]", root_path, count: 2
     assert_select 'a[href=?]', users_path, text: "Members"
     assert_select 'a[href=?]', user_path(@user), text: "Profile"

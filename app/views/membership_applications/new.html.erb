@@ -1,0 +1,49 @@
+<% provide(:title, "Membership Application") %>
+
+<h1>Flirt Camp New Member Application</h1>
+
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+
+		<%= form_for @membership_app do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<%= f.label :birth_name %>
+			<%= f.text_field :birth_name, class: "form-control" %>
+
+			<%= f.label :playa_name %>
+			<%= f.text_field :playa_name, class: "form-control" %>
+
+			<%= f.label :email %>
+			<%= f.text_field :email, class: "form-control" %>
+
+			<%= f.label :phone %>
+			<%= f.text_field :phone, class: "form-control" %>
+
+			<%= f.label :home_town %>
+			<p class="help-block">City, State.</p>
+			<%= f.text_field :home_town, class: "form-control" %>
+
+			<%= f.label :years_at_bm, "How many years have you been to Burning Man?" %>
+			<%= f.number_field :years_at_bm, in: 0..25, step: 1, class: "form-control" %>
+	</div>
+	<div class="col-md-8 col-md-offset-2">
+			<hr>
+
+			<%= f.label :possibility, "What turns you on most about Flirt Camp and the possibility of becoming a Flirt Camper?" %>
+			<%= f.text_area :possibility, row: 10, class: "form-control" %>
+
+			<%= f.label :contribution, "What contributions have you made to Flirt Camp thus far (if applicable)?" %>
+			<p class="help-block">Events and fundraisers attended, or other contribution.</p>
+			<%= f.text_area :contribution, row: 10, class: "form-control" %>
+
+			<%= f.label :passions, "Tell us a little bit about your passions in life and special/sexy abilities or skills that you want to contribute to Flirt Camp." %>
+			<p class="help-block">Perhaps you have a coaching practice, you're great at spanking, you like planning/coordinating, or just plain heavy lifting...  Let us know!  Contributions of all types are welcome and we love opportunities to create new and fun activities!</p>
+			<%= f.text_area :passions, row: 10, class: "form-control" %>
+
+
+
+			<%= f.submit "Submit Flirt Camp Application", class: "btn btn-primary" %>
+		<% end %>		
+	</div>
+</div>

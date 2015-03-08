@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     		flash[:success] = "Wecome back!"
         params[:remember_me] == '1' ? remember(@user) : forget(@user)
         log_in @user
-    		redirect_back_or user_url(@user)
+    		redirect_back_or root_url
       else
         flash.now[:warning] = "Account not activated."
         params[:reset_account_activation] = true

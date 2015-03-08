@@ -167,6 +167,11 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+.help-block {
+	font-size: small;
+	font-style: italic; 
+}
+
 input {
   height: auto !important;
 }

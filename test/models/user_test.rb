@@ -29,9 +29,9 @@ class UserTest < ActiveSupport::TestCase
   	assert_not @user.valid?
   end
 
-  test "is invalid without playa name" do
+  test "is valid without playa name" do
     @user.playa_name = nil
-    assert_not @user.valid?
+    assert @user.valid?
   end
 
   test "is invalid with playa_name > 50 characters" do

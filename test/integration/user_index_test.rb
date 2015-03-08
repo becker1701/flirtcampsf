@@ -17,7 +17,7 @@ class UserIndexTest < ActionDispatch::IntegrationTest
     users = assigns(:users)
   	users.each do |user|
   		# puts "#{user.id}, #{user.activated?}"
-      assert_select 'a[href=?]', user_path(user), text: user.name
+      assert_select 'a[href=?]', user_path(user), text: "#{user.playa_name} (aka #{user.name})"
       assert user.activated?
 
       unless user == @admin
