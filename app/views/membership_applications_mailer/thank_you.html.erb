@@ -1,0 +1,23 @@
+<h3>Howdy <%= display_name(@membership_app) %></h3>
+
+<p>Thank you for your membership application submission to Flirt Camp!</p>
+
+<p>We will get back to you as soon as possible about being a member of Flirt Camp.</p>
+
+<p>Have a sexy, flirty day!<br>
+<em><strong>~Camp Master</strong></em></p>
+
+<%= render partial: 'shared/flirtcamp_properties' %>
+
+<h4>Here are your submitted answers:</h4>
+<ul>
+	<li>Birth Name: <%= @membership_app.birth_name %></li>
+	<li>Playa Name: <%= @membership_app.playa_name %></li>
+	<li>Email: <%= @membership_app.email %></li>
+	<li>Phone: <%= @membership_app.phone %></li>
+	<li>Home Town: <%= @membership_app.home_town %></li>
+	<li>Year at Burning Man: <%= @membership_app.years_at_bm %></li>
+	<li>Why Flirt Camp? <%= @membership_app.possibility %></li>
+	<li>Contribe to Flirt Camp? <%= @membership_app.contribution %></li>
+	<li>Passions: <%= @membership_app.passions %></li>
+</ul>

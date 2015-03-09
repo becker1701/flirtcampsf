@@ -11,9 +11,9 @@ Can't wait to hear from you!
 <br>
 <strong>~Camp Master</strong></p>
 
-<span><a href="http://facebook.com/flirtcampsf", target="_blank">Flirt Camp SF on Facebook...</a></span><br>
-<span><a href="http://meetup.com/flirtcampsf", target="_blank">Flirt Camp SF on Meetup...</a></span><br>
-<span><%= mail_to "flirtcampsf@gmail.com", "Email Flirt Camp SF" %></span>
+<br>
+<%= render 'shared/flirtcamp_properties' %>
+<br>
 
 <hr>
 
@@ -38,19 +38,25 @@ http://www.facebook.com/FlirtCampSF</p>
 <h3>Expectations</h3>
 <p>Camping with Flirt Camp means being grounded and open, and being great with people to allow them to feel open also.  We want to perpetuate that openness and give others the opportunity to reach beyond their comfort zones in relationships and flirting with others. Being good at guiding others to breach that comfort zone is a plus (teasing, feeling where they are at emotionally, etc.)</p>
 
+<br>
 <h4>Promotion:</h4>
 <p>Like Flirt Camp SF on Facebook and become a member on MeetUp.  We encourage you to invite others to join our community online.</p>
 
+<br>
 <h4>1. Camp Dues:</h4>
 <p>Flirt Camp is implementing dues this year to help cover our camp costs.  Dues will be expected to be paid by August 15.  The camp dues are a sliding scale of what you can afford.  $160 is the minimum amount due, but the more you can contribute, the better prepared and more amazing experience we can afford to bring to the Playa.  Any camp funds that are not utilized for Burning Man will be used to create amazing events and parties off the Playa.  Your camp dues cover gourmet Playa dinners every evening during the week (dietary restrictions are taken into account), access to help with logistics coming and going to BM, plus all of the infrastructure that Flirt Camp provides including the shaded and furniture-adorned hookah lounge, a well-stocked bar, kitchen & cooking supplies, and transportation for everything.  If you cannot afford the minimum due, please contact Camp Master at becker1701@gmail.com to work out a payment arrangement.</p>
 
+<br>
 <h4>2. At Burning Man:</h4>
 <p>We will be organizing "Flirt Factions", smaller groups of camp members that will be responsible for various tasks throughout the week.  Tasks include dish washing, ice runs, refuse management, straightening up, among others.  Your group will be called upon each day to handle one task a day.  A schedule will be posted with tasks and days.  Also, when you leave BM, a MOOP sweep around the camp will be asked of you.  If you are staying to the end of the event, your help in packing up the camp is GREATLY appreciated.  It takes a lot of work to setup and maintain a Theme Camp, but with the amazing group of people we have all contributing, not only is it manageable but it is often fun!</p>
 
+<br>
 <h4>3. Flirt Camp Operations (on-Playa):</h4>
 <p>We will have an orientation at camp early in the week with bar rules, games to play, where things are, etc.  If you are arriving later in the week, Camp Master will do a quick run-through with you.</p>
 
+<br>
 <h4>4. Off-Playa Participation:</h4>
 <p>Off the Playa, we have camp potlucks and catch-up sessions throughout the year.  You will be included on all camp emails once you are a member, informing you of these events.  We also have a couple fundraisers that everyone will have the opportunity to contribute to.  We can't have these amazing fundraisers without the help of all of our camp members.  The more we can raise, the better our camp can be, and the more perks we can offer to our camp members!  It's so exciting!</p>
 
-<%= link_to "Contine Membership Applicaiton", new_membership_application_path %>
+<hr>
+<%= link_to "Contine Membership Applicaiton", new_membership_application_path, class: "btn btn-primary" %>

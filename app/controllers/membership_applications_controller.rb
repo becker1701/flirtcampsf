@@ -11,7 +11,11 @@ class MembershipApplicationsController < ApplicationController
 		@membership_app = MembershipApplication.new(membership_app_params)
 		if @membership_app.save
 			flash[:success] = "Thank you for filling out our application!"
+
+			MembershipApplicationsMailer.thank_you(@membership_app).deliver_now
+			MembershipApplicationsMailer.organizer_notification(@membership_app).deliver_now
 			redirect_to thank_you_membership_application_url(@membership_app) 
+		
 		else
 			render :new
 		end

@@ -50,24 +50,46 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 
 		membership_app = assigns(:membership_app)
 
-		assert_equal 1, ActionMailer::Base.deliveries.count
-		mail = ActionMailer::Base.deliveries.last
-		assert_equal mail.to, membership_app.email
-
-		
+		assert_equal 2, ActionMailer::Base.deliveries.count
+		ActionMailer::Base.deliveries.clear
 
 		assert_redirected_to thank_you_membership_application_path(membership_app)
 		follow_redirect!
 		assert_template 'membership_applications/thank_you'
 		membership_app.reload
-		# debugger
+
 		assert_match membership_app.birth_name.to_s, response.body 
 		assert_not membership_app.approved?
 
-
-		ActionMailer::Base.deliveries.clear
-
 		#post app with valid fields with playa name
+		assert_difference 'MembershipApplication.count', 1 do
+			post membership_applications_path, membership_application: { 	birth_name: "Brian Someone", 
+																			playa_name: "Hoochie Mamma", 
+																			email: "brian2@examaple.com", 
+																			phone: "(123) 456-7890", 
+																			home_town: "Some Town, CA", 
+																			possibility: "Some amoutn of text that says this", 
+																			contribution: "Some amoutn of text that says this", 
+																			passions: "Some amoutn of text that says this", 
+																			years_at_bm: "1", 
+																			approved: false }
+		end		
+
+		membership_app = assigns(:membership_app)
+
+		assert_equal 2, ActionMailer::Base.deliveries.count
+		
+		assert_redirected_to thank_you_membership_application_path(membership_app)
+		follow_redirect!
+		assert_template 'membership_applications/thank_you'
+		membership_app.reload
+		assert_match membership_app.playa_name.to_s, response.body 
+		assert_not membership_app.approved?
+
+	end
+
+
+	test "mail delivered after valid submission" do
 		assert_difference 'MembershipApplication.count', 1 do
 			# debugger
 			post membership_applications_path, membership_application: { 	birth_name: "Brian Someone", 
@@ -84,20 +106,13 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 
 		membership_app = assigns(:membership_app)
 
-		assert_equal 1, ActionMailer::Base.deliveries.count
-		mail = ActionMailer::Base.deliveries.last
-		assert_equal mail.to, membership_app.email
-		
-		assert_redirected_to thank_you_membership_application_path(membership_app)
-		follow_redirect!
-		assert_template 'membership_applications/thank_you'
-		membership_app.reload
-		assert_match membership_app.playa_name.to_s, response.body 
-		assert_not membership_app.approved?
+		assert_equal 2, ActionMailer::Base.deliveries.count
 
+		thank_you_mail = ActionMailer::Base.deliveries.first
+		org_notify_mail = ActionMailer::Base.deliveries.last
 
+		assert_equal thank_you_mail.to.pop, membership_app.email
+		assert_equal org_notify_mail.to.pop, "campmaster@flirtcampsf.com"
 	end
-
-
 
 end
