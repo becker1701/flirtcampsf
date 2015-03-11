@@ -45,6 +45,18 @@ class MembershipApplicationsController < ApplicationController
 	def thank_you
 	end
 
+	# def existing_member
+	# 	@member = MembershipApplication.new
+	# end
+
+	# def existing_members_create
+	# 	@member = MembershipApplication.new(membership_app_params)
+	# 	if @member.save
+	# 		redirect_to root_url
+	# 	else
+	# 		render :existing_member
+	# 	end
+	# end
 
 private
 # 

@@ -36,4 +36,17 @@ class UserIndexTest < ActionDispatch::IntegrationTest
     get users_path
     assert_select 'a', text: 'Delete', count: 0
   end
+
+  test "first name alphabetical index" do
+    
+    log_in_as @non_admin
+    get users_path
+    
+    users = assigns(:users)
+    test_users = User.where(activated: true).order(:name).paginate(page: 1)
+
+    assert_equal users.first, test_users.first
+    assert_equal users.last, test_users.last
+
+  end
 end

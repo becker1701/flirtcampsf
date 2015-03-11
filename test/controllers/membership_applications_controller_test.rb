@@ -39,4 +39,5 @@ class MembershipApplicationsControllerTest < ActionController::TestCase
 
 
 
+
 end

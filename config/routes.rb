@@ -13,12 +13,9 @@ Rails.application.routes.draw do
   get 'contact', to: 'static_pages#contact'
   get 'signup', to: 'users#new'
   get 'new_member_app', to: 'static_pages#new_member_app'
-  # get ':id/thank_you', to: 'membership_applications#thank_you'
 
-  # get 'carousel', to: 'static_pages#carousel'
-  # resources :notes
+
   resources :users
-
   resources :membership_applications, only: [:index, :new, :create, :edit] do
     member do
       get 'thank_you'
@@ -26,7 +23,7 @@ Rails.application.routes.draw do
       get 'decline'
     end
   end
-
+  resources :existing_member_requests, only: [:new, :create]
   resources :account_activations, only: [:new, :create, :edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :invitations, only: [:new, :create, :edit, :update, :destroy] do

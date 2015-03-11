@@ -23,7 +23,6 @@ not_activated:
  activated: false
  playa_name: Flirter2
 
-
 archer:
  name: Archer Baker
  email: fbi_guy@example.com
@@ -31,6 +30,22 @@ archer:
  activated: true
  activated_at: <%= Time.zone.now %>
  playa_name: Flirter3
+
+aaa:
+ name: Aaa Aaa
+ email: a_user@example.com
+ password_digest: <%= User.digest('password') %>
+ activated: true
+ activated_at: <%= Time.zone.now %>
+ playa_name: Aaa
+
+zzz:
+ name: Zzz Zzz
+ email: z_user@example.com
+ password_digest: <%= User.digest('password') %>
+ activated: true
+ activated_at: <%= Time.zone.now %>
+ playa_name: Zzz
 
 kurt:
  name: Kurt Spirit
