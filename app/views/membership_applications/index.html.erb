@@ -1,0 +1,23 @@
+<% provide(:title, "Membership Applications") %>
+
+<h1>Membership Applications</h1>
+
+<% if @membership_applications.any? %>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Playa Name</th>
+				<th>Application Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%= render @membership_applications %>
+		</tbody>
+	</table>
+
+	
+<% else %>
+	<h2>There are NO applications!!  :(</h2>
+<% end %>

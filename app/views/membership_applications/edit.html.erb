@@ -1,0 +1,17 @@
+<% provide(:title, "Member Application") %>
+
+<h1>Membership Application</h1>
+<h1><small><%= @membership_app.birth_name %></small></h1>
+<p><strong>Playa Name:</strong> <%= @membership_app.playa_name %></p>
+<p><strong>Email:</strong> <%= @membership_app.email %></p>
+<p><strong>Phone:</strong> <%= @membership_app.phone %></p>
+<p><strong>Hometown:</strong> <%= @membership_app.home_town %></p>
+<p><strong>Years at BM:</strong> <%= @membership_app.years_at_bm %></p>
+
+<p>P<strong>ossibility:</strong> <%= @membership_app.possibility %></p>
+<p><strong>Contribution:</strong> <%= @membership_app.contribution %></p>
+<p><strong>Passions:</strong> <%= @membership_app.passions %></p>
+
+<%= link_to "Approve", approve_membership_application_path(@membership_app), class: "btn btn-primary" %>
+<%= link_to "Decline", decline_membership_application_path(@membership_app), class: "btn btn-danger" %>
+<%= link_to "Back", :back %>

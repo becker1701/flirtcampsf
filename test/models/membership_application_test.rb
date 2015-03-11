@@ -12,7 +12,7 @@ class MembershipApplicationTest < ActiveSupport::TestCase
 													contribution: "Some Contribution", 
 													passions: "Some passion", 
 													years_at_bm: 1, 
-													approved: false)
+													approved: nil)
 	end
 
 	test "is valid" do
@@ -49,13 +49,13 @@ class MembershipApplicationTest < ActiveSupport::TestCase
 	assert_not @membership_app.valid?
 	end
 
-	test "valid if phone = 20 char." do
-	@membership_app.phone = "1" * 20
+	test "valid if phone = 30 char." do
+	@membership_app.phone = "1" * 30
 	assert @membership_app.valid?
 	end
 
-	test "invlalid if phone number > 20 char." do
-	@membership_app.phone = "1" * 21
+	test "invlalid if phone number > 30 char." do
+	@membership_app.phone = "1" * 31
 	assert_not @membership_app.valid?
 	end
 
@@ -103,4 +103,31 @@ class MembershipApplicationTest < ActiveSupport::TestCase
 		assert_equal @membership_app.email, mixed_case_email.downcase
 	end
 
+	test "scope: not_approved" do
+
+		#starting with 21 fixtures
+		#subtract 3 fixtures
+		MembershipApplication.first(3).each do |app|
+			app.toggle!(:approved)
+		end
+		assert_equal 18, MembershipApplication.not_approved.count
+
+	end
+
+	test "#approve sets approved attribute = true" do
+		assert_nil @membership_app.approved
+		assert_difference 'Invitation.count', 1 do
+			@membership_app.approve
+		end
+		assert @membership_app.reload.approved?
+
+	end
+
+	test "#decline sets approved attribute = false" do
+		assert_nil @membership_app.approved
+		assert_no_difference 'Invitation.count' do
+			@membership_app.decline
+		end
+		assert_not @membership_app.reload.approved?
+	end
 end

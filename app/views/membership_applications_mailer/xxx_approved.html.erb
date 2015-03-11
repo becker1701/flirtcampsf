@@ -1,0 +1,10 @@
+<h3>Howdy <%= display_name(@membership_app) %></h3>
+
+<h3>Your Flirt Camp application has been approved!</h3>
+
+<%= link_to "Create your Flirt Camp profile!", edit_invitation_url(@invitation.invite_token, email: @invitation.email) %>
+
+<p>Have a sexy, flirty day!<br>
+<em><strong>~Camp Master</strong></em></p>
+
+<%= render partial: 'shared/flirtcamp_properties' %>

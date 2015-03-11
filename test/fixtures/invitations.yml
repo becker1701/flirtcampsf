@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Some Person
+  email: someemail@example.com
+  invite_digest: <%= Invitation.digest('invite_012345') %>

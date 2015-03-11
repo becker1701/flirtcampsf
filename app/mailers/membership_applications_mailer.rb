@@ -13,4 +13,10 @@ class MembershipApplicationsMailer < ApplicationMailer
     mail to: @membership_app.email, subject: "Thank you for your submission to Flirt Camp!"
   end
 
+
+
+  def declined(membership_app)
+    @membership_app = membership_app
+    mail to: @membership_app.email, subject: "Your Flirt Camp application has been declined."
+  end
 end

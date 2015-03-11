@@ -19,14 +19,17 @@ Rails.application.routes.draw do
   # resources :notes
   resources :users
 
-  resources :membership_applications, only: [:new, :create] do
+  resources :membership_applications, only: [:index, :new, :create, :edit] do
     member do
       get 'thank_you'
+      get 'approve'
+      get 'decline'
     end
   end
 
   resources :account_activations, only: [:new, :create, :edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :invitations, only: [:new, :create, :edit, :update, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,5 +1,7 @@
 <%= render 'shared/error_messages', object: @user %>
 
+<%= hidden_field_tag :invite, @invite.id if @invite %>
+
 <%= f.label :name %>
 <%= f.text_field :name, class: "form-control" %>
 

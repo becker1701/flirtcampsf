@@ -10,7 +10,8 @@ class UsersControllerTest < ActionController::TestCase
 
   test "get new" do
     get :new
-    assert_response :success
+    assert_response :redirect
+    assert_redirected_to root_url
   end
 
   test "redirect index when not logged in" do

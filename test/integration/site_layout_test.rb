@@ -3,7 +3,9 @@ require 'test_helper'
 class SiteLayoutTest < ActionDispatch::IntegrationTest
 
   def setup
-    @user = users(:brian)
+    @user = users(:archer)
+    @admin = users(:brian)
+    @invite = invitations(:one)
   end
 
   test "layout links" do
@@ -15,8 +17,9 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   	assert_select "a[href=?]", contact_path
     assert_select "a[href=?]", new_member_app_path
   	assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", new_invitation_path, count: 0
   	assert_select 'a[href=?]', "http://burningman.org/"
-    get signup_path
+    get signup_path(invite: @invite)
   	assert_select "title", full_title("Sign Up")
 
     get login_path
@@ -27,6 +30,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
     follow_redirect!
     assert_template 'static_pages/home'
+    assert_select "a[href=?]", new_invitation_path, count: 0
     assert_select "a[href=?]", root_path, count: 2
     assert_select 'a[href=?]', users_path, text: "Members"
     assert_select 'a[href=?]', user_path(@user), text: "Profile"
@@ -35,6 +39,15 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", about_path
     assert_select "a[href=?]", contact_path
     assert_select 'a[href=?]', "http://burningman.org/"
+
+    log_out
+
+    log_in_as @admin
+    get root_path
+    assert_select "a[href=?]", new_invitation_path, count: 1
+    assert_select "a[href=?]", membership_applications_path, count: 1
+    assert_select "span.badge"
+
   end
 
 end

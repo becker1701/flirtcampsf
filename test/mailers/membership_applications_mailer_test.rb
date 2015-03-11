@@ -39,4 +39,25 @@ class MembershipApplicationsMailerTest < ActionMailer::TestCase
   
   end
 
+
+  test "approve" do
+    invitation = Invitation.create!(name: @membership_app.birth_name, email: @membership_app.email)
+    assert_not_nil invitation.invite_token
+
+    mail = InvitationMailer.invite(invitation)
+    assert_equal "You have been invited to Flirt Camp!", mail.subject
+    assert_equal [@membership_app.email], mail.to
+    assert_equal ["campmaster@flirtcampsf.com"], mail.from
+    # assert_match display_name(@membership_app), mail.body.encoded
+  end
+
+
+test "decline" do
+    mail = MembershipApplicationsMailer.declined(@membership_app)
+    assert_equal "Your Flirt Camp application has been declined.", mail.subject
+    assert_equal [@membership_app.email], mail.to
+    assert_equal ["no-reply@flirtcampsf.com"], mail.from
+    # assert_match display_name(@membership_app), mail.body.encoded
+  
+  end
 end

@@ -18,6 +18,7 @@ class ActiveSupport::TestCase
 	def is_logged_in?
 		# Returns true if a user is logged in
 		!session[:user_id].nil?
+
 	end
 
   
@@ -38,6 +39,8 @@ class ActiveSupport::TestCase
 
 	def log_out
 		session.delete(:user_id)
+		cookies.delete :user_id 
+		cookies.delete :remember_token 
 	end
 
 private

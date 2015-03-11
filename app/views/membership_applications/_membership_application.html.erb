@@ -1,0 +1,22 @@
+<% if membership_application.approved.nil? %>
+	<tr>
+<% elsif membership_application.approved? %>
+	<tr class="success">
+<% elsif !membership_application.approved? %>
+	<tr class="danger">
+<% end %>
+
+
+
+
+	
+	<td><%= membership_application.birth_name %></td>
+	<td><%= membership_application.playa_name %></td>
+	<td><%= membership_application.created_at %></td>
+	<td><%= link_to "View application", edit_membership_application_path(membership_application), class:"btn btn-default" %></td>
+</tr>
+
+
+
+
+

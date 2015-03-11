@@ -1,0 +1,3 @@
+<%= @invitation.name %>
+<%= @invitation.email %>
+<%= link_to "Create your Flirt Camp profile!", edit_invitation_url(@invitation.invite_token, email: @invitation.email) %>

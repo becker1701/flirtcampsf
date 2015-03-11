@@ -19,8 +19,14 @@
 			This is the home page for Flirt Camp.
 		</h2>
 
-		<%= link_to "New Members", new_member_app_path, class: "btn btn-primary btn-lg" %>
-		<%= link_to "Existing Members", login_path, class: "btn btn-primary btn-lg" %>
+		<hr>
+		<h4>Like to join Flirt Camp?</h4>
+			<p>Flirt Camp is a fun year-round community of folks, mainly from the SF Bay Area, who are committed to having extrodinary relationships and love Burning Man.</p>
+			<%= link_to "Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-lg" %>
+		<hr>
+		<h4>Existing Member?</h4>
+			<p>Need access to the site?  Submit an application with your name, playa name and email, and I will send you a link.</p>
+			<%= link_to "Request Access for existing members.", new_member_app_path, class: "btn btn-primary btn-lg" %>
 
 	</div>
 

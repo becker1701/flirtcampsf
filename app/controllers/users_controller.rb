@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
   before_action :get_user, only: [:show, :edit, :update, :destroy]
+  before_action :get_invite, only: [:new, :create]
+  before_action :invited, only: [:new, :create]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
@@ -10,14 +12,23 @@ class UsersController < ApplicationController
   end
 
   def new
-  	@user = User.new
+    
+    # if @invite
+      @user = User.new(name: @invite.name, email: @invite.email)
+    # else
+    #   @user = User.new
+    # end
   end
 
   def create
+    
+
   	@user = User.new(user_params)
   	if @user.save
-      @user.send_activation_email
-  		flash[:info] = "Please check your email to activate your account."
+      # @user.send_activation_email
+      @user.activate!
+      log_in @user
+  		flash[:info] = "Welcome!"
   		redirect_to root_url
   	else
   		render :new
@@ -54,22 +65,20 @@ private
 	end
 
 	def user_params
-		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone)
+		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :invitation)
 	end
 
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      store_location
-      redirect_to login_url
-    end
-  end
+
 
   def correct_user
     redirect_to root_url unless current_user?(@user)
   end
 
-  def admin_user
-    redirect_to root_url unless current_user.admin?
+  def get_invite
+    @invite = Invitation.find_by(id: params[:invite]) if params[:invite]
+  end
+
+  def invited
+    redirect_to root_url unless @invite
   end
 end

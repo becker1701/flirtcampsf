@@ -39,13 +39,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-  test "valid if phone = 20 char." do
-    @user.phone = "1" * 20
+  test "valid if phone = 30 char." do
+    @user.phone = "1" * 30
     assert @user.valid?
   end
 
-  test "invlalid if phone number > 20 char." do
-    @user.phone = "1" * 21
+  test "invlalid if phone number > 30 char." do
+    @user.phone = "1" * 31
     assert_not @user.valid?
   end
 
@@ -101,5 +101,31 @@ class UserTest < ActiveSupport::TestCase
   test "authenticate? returns false if remember_digest is nil" do
     assert_not @user.authenticated?(:remember, '')
   end
+
+  # test "duplicate email in Invitation table" do
+  #   @invite = invitations(:one)
+  #   @invite.email = "testemail@example.com"
+  #   @new_user = User.new(name: "Ray Ban", email: "testemail@example.com", password: "foobar", password_confirmation: "foobar", phone: "123-456-7890", playa_name: "Camp Master")
+
+  #   @new_user.valid?
+
+  #   debugger
+  #   assert_not @new_user.valid?
+  #   assert_includes @new_user.errors.full_messages, "Email has already been taken."
+
+  # end
+
+  # test "duplicate email in MembershipApplication table" do
+  #   @member_app = membership_applications(:first)
+  #   @member_app.email = "testemail@example.com"
+  #   @new_user = User.new(name: "Ray Ban", email: "testemail@example.com", password: "foobar", password_confirmation: "foobar", phone: "123-456-7890", playa_name: "Camp Master")
+
+  #   @new_user.valid?
+
+  #   assert_not @new_user.valid?
+  #   assert_includes @new_user.errors.full_messages, "Email has already been taken."
+
+  # end
+
 
 end

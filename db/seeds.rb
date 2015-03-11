@@ -28,3 +28,31 @@ User.create!(	name: "Brian Becker",
 					activated: true,
 					activated_at: Time.zone.now)
 end
+
+20.times do |n|
+
+	name = Faker::Name.name
+	email = "example-#{n}@example.com"
+	phone = Faker::PhoneNumber.phone_number
+	city = Faker::Address.city_prefix
+	state = Faker::Address.state_abbr
+	if n % 3 == 0
+		approved = true
+	elsif n % 7 == 0
+		approved = false
+	end 
+
+	MembershipApplication.create!(
+		birth_name: name,
+		playa_name: name,
+		email: email,
+		phone: phone,
+		home_town: "#{city}, #{state}",
+		possibility: "MyText",
+		contribution: "MyText",
+		passions: "MyText",
+		years_at_bm: "#{n}",
+		approved: approved
+  	)
+
+end
