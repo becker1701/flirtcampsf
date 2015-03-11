@@ -201,10 +201,59 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		#create an invitation and send an email
 		# assert_match 
 
-
-
 	end
 
+	test "index displays on new page" do
+		# skip
+		log_in_as @admin
+		assert is_logged_in?
 
+		get new_invitation_path
+		assert_template 'invitations/new'
+
+		invites = assigns(:invitations)
+		assert_equal 11, invites.count
+
+		invites.first(3).each do |invite|
+			User.create!(name: invite.name, email: invite.email, password: "123456", password_confirmation: "123456")
+		end
+		invites.reload
+		get new_invitation_path
+
+		invites.each do |invite|
+
+			if invite.replied?
+				assert_select 'span.label-success', text: "Yes"
+				assert_select 'a[href=?]', resend_invitation_path(invite), count: 0
+			else
+				# debugger
+				assert_select 'span.label-warning', text: "No"
+				assert_select 'a[href=?]', resend_invitation_path(invite), count: 1
+			end
+		end
+	end
+
+	test "resend invitation from index" do
+		
+		invite = invitations(:one)
+
+		log_in_as @admin
+		assert is_logged_in?
+
+		get new_invitation_path
+		assert_template 'invitations/new'
+
+		get resend_invitation_path(invite)
+
+		assert_equal 1, ActionMailer::Base.deliveries.count
+		#mailer already tested
+
+		assert_redirected_to new_invitation_path
+		follow_redirect!
+		assert_template 'invitations/new'
+		assert_not flash.empty?
+		assert_select 'a[href=?]', resend_invitation_path(invite), count: 1
+
+	end
 
 end

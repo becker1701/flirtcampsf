@@ -29,7 +29,11 @@ Rails.application.routes.draw do
 
   resources :account_activations, only: [:new, :create, :edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
-  resources :invitations, only: [:new, :create, :edit, :update, :destroy]
+  resources :invitations, only: [:new, :create, :edit, :update, :destroy] do
+    member do
+      get 'resend'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

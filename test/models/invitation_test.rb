@@ -3,6 +3,7 @@ require 'test_helper'
 class InvitationTest < ActiveSupport::TestCase
   def setup 
   	@invitation = Invitation.new(name: "Test Person", email: "test@example.com")
+    ActionMailer::Base.deliveries.clear
   end
 
   test "is valid" do
@@ -62,4 +63,29 @@ class InvitationTest < ActiveSupport::TestCase
   	@invitation.reload
   	assert_equal @invitation.email, mixed_case_email.downcase
   end
+
+  test "returns false when #replied? with no email match in User table" do
+    assert_not @invitation.replied?
+  end
+
+  test "returns User when #replied? with email in User table" do
+    user = User.create!(name:"blah blah", email: @invitation.email, password: "123456", password_confirmation: "123456")
+    assert @invitation.replied?
+  end
+
+  test "does not resend invitation for replied invite" do
+    user = User.create!(name:"blah blah", email: @invitation.email, password: "123456", password_confirmation: "123456")
+    
+    assert @invitation.replied?
+    assert_not @invitation.resend
+    assert_equal 0, ActionMailer::Base.deliveries.count
+  end
+
+  test "sends email on #resend" do
+    assert_not @invitation.replied?
+    @invitation.resend
+    assert_not @invitation.invite_token.empty?
+    assert_equal 1, ActionMailer::Base.deliveries.count
+  end
+
 end

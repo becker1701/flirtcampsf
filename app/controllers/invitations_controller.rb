@@ -4,6 +4,7 @@ class InvitationsController < ApplicationController
 	before_action :admin_user, except: [:edit]
 
 	def new
+		@invitations = Invitation.all.order(:created_at)
 		@invitation = Invitation.new
 	end
 
@@ -38,6 +39,15 @@ class InvitationsController < ApplicationController
 
 	def destroy
 		redirect_to root_url
+	end
+
+	def resend
+		@invite = Invitation.find_by(id: params[:id])
+		if @invite
+			@invite.resend
+			flash[:success] = "Invitation resent."
+		end
+		redirect_to new_invitation_url
 	end
 
 private

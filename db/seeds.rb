@@ -17,7 +17,7 @@ User.create!(	name: "Brian Becker",
 
 40.times do |n|
 	name = Faker::Name.name
-	email = "example-#{n}@example.com"
+	email = "example-#{n}_user@example.com"
 	password = "123456"
 	
 	User.create!(	name: name, 
@@ -29,10 +29,22 @@ User.create!(	name: "Brian Becker",
 					activated_at: Time.zone.now)
 end
 
-20.times do |n|
+10.times do |n|
+
+	email = "example-#{n}_invitation@example.com"
+	invite_digest = Invitation.digest('invite_012345')
+
+	Invitation.create!(
+		name: Faker::Name.name,
+		email: email,
+		invite_digest: invite_digest
+	)
+end
+
+10.times do |n|
 
 	name = Faker::Name.name
-	email = "example-#{n}@example.com"
+	email = "example-#{n}_member_app@example.com"
 	phone = Faker::PhoneNumber.phone_number
 	city = Faker::Address.city_prefix
 	state = Faker::Address.state_abbr

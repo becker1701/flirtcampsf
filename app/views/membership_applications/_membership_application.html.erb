@@ -1,9 +1,9 @@
 <% if membership_application.approved.nil? %>
-	<tr>
+	<tr id="member_app_<%= membership_application.id %>">
 <% elsif membership_application.approved? %>
-	<tr class="success">
+	<tr class="success" id="member_app_<%= membership_application.id %>">
 <% elsif !membership_application.approved? %>
-	<tr class="danger">
+	<tr class="danger" id="member_app_<%= membership_application.id %>">
 <% end %>
 
 
@@ -13,7 +13,15 @@
 	<td><%= membership_application.birth_name %></td>
 	<td><%= membership_application.playa_name %></td>
 	<td><%= membership_application.created_at %></td>
-	<td><%= link_to "View application", edit_membership_application_path(membership_application), class:"btn btn-default" %></td>
+	<td>
+		<%= link_to "View application", edit_membership_application_path(membership_application), class:"btn btn-default btn-xs" %>	
+
+		<% if membership_application.approved.nil? %>
+			<%= link_to "Approve", approve_membership_application_path(membership_application), class:"btn btn-primary btn-xs" %>
+			<%= link_to "Decline", decline_membership_application_path(membership_application), class:"btn btn-danger btn-xs" %>
+		<% end %>
+	</td>
+	
 </tr>
 
 

@@ -12,6 +12,9 @@
 <p><strong>Contribution:</strong> <%= @membership_app.contribution %></p>
 <p><strong>Passions:</strong> <%= @membership_app.passions %></p>
 
-<%= link_to "Approve", approve_membership_application_path(@membership_app), class: "btn btn-primary" %>
+<%= @membership_app.approved? ? "<h3 class=\"text-success\">Approved</h3>".html_safe : "<h3 class=\"text-danger\">Declined</h3>".html_safe %>
+
+
+<%= link_to "Approve", approve_membership_application_path(@membership_app), class: "btn btn-success" %>
 <%= link_to "Decline", decline_membership_application_path(@membership_app), class: "btn btn-danger" %>
 <%= link_to "Back", :back %>

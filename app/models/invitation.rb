@@ -14,7 +14,18 @@ class Invitation < Application
 		InvitationMailer.invite(self).deliver_now
 	end
 
-	
+	def replied?
+		User.find_by(email: self.email)
+	end
+
+	def resend
+		return false if replied? 
+		self.invite_token = Invitation.new_token
+		self.invite_digest = Invitation.digest(self.invite_token)
+		self.save
+		self.send_invitation_email
+	end
+
 private
 
 

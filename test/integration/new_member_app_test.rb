@@ -115,4 +115,35 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 		assert_equal org_notify_mail.to.pop, "campmaster@flirtcampsf.com"
 	end
 
+
+	test "membership application index" do
+		admin = users(:brian)
+		log_in_as admin
+		get membership_applications_path
+		# follow_redirect!
+		assert_template 'membership_applications/index'
+		assert is_logged_in?
+
+		member_apps = assigns(:membership_applications)
+		assert_equal 21, member_apps.count
+
+		member_apps.first.update_attribute(:approved, nil)
+		member_apps.reload
+		get membership_applications_path
+
+		member_apps.each do |app|
+			assert_select 'a[href=?]', edit_membership_application_path(app)
+
+			if app.approved.nil?
+				# debugger
+				assert_select 'a[href=?]', approve_membership_application_path(app)
+				assert_select 'a[href=?]', decline_membership_application_path(app)	
+			else
+				# debugger
+				assert_select 'a[href=?]', approve_membership_application_path(app), count: 0
+				assert_select 'a[href=?]', decline_membership_application_path(app), count: 0
+			end
+		end
+	end
+
 end
