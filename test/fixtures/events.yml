@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+past:
+  year: 2014
+  start_date: <%= Date.today - 100.days %>
+  end_date:  <%= Date.today - 90.days %>
+  theme: Past Event
+  camp_address: 9:00 & I
+  early_arrival_date: <%= Date.today - 105.days %>
+
+future:
+  year: 2015
+  start_date: <%= Date.today + 100.days %>
+  end_date:  <%= Date.today + 108.days %>
+  theme: Future Event
+  camp_address: 9:00 & F
+  early_arrival_date: <%= Date.today + 95.days %>

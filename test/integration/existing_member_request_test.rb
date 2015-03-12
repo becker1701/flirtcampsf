@@ -5,6 +5,7 @@ class ExistingMemberRequestTest < ActionDispatch::IntegrationTest
 	def setup
 		@admin = users(:brian)
 		@user = users(:archer)
+		ActionMailer::Base.deliveries.clear
 	end
 
 	# new members will visit flirt camp website and click on 'New Member App' button
@@ -12,7 +13,7 @@ class ExistingMemberRequestTest < ActionDispatch::IntegrationTest
 	# they will then fill in their contact info
 	# then they will answer questions about why they want to be in Flirt Camp
 	# Question regarding how many years they have been going to BM, yada, yada
-	test "guests new member app funtionality" do
+	test "existing member request funtionality" do
 		
 		
 

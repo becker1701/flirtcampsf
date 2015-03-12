@@ -47,7 +47,28 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", new_invitation_path, count: 1
     assert_select "a[href=?]", membership_applications_path, count: 1
     assert_select "span.badge"
+    assert_select "a[href=?]", new_event_path, count: 1
 
+  end
+
+  test "edit event link" do
+    #show edit event only if there is an upcoming event listed
+    @future = events(:future)
+
+    assert @future, Event.next_event
+
+    log_in_as @admin
+    get root_url
+
+    assert_select 'a[href=?]', edit_event_path(@future)
+
+    delete logout_path
+
+    log_in_as @user
+    get root_url
+  
+    assert_select 'a[href=?]', edit_event_path(@future), count: 0
+  
   end
 
 end
