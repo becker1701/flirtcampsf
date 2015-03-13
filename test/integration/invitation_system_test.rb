@@ -111,6 +111,32 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_select "input[value=?]", invitation.name.to_s
 		assert_select "input[value=?]", invitation.email.to_s
 		
+		delete logout_path
+		assert_not is_logged_in?
+		log_in_as @admin
+		ActionMailer::Base.deliveries.clear
+
+		#test valid invitation
+		assert_difference 'Invitation.count', 1 do
+			post invitations_path, invitation: { name: "Some Person 123", email: "someperson123@example.com" }
+		end
+
+		#get instance from create
+		new_invite = assigns(:invitation)
+		#make sure the name matches the instance
+		assert_equal "Some Person 123", new_invite.name
+		# make sure the email was sent
+		assert_equal 1, ActionMailer::Base.deliveries.count
+		
+		delete invitation_path(new_invite)
+
+		delete logout_path
+		assert_not is_logged_in?
+
+		get edit_invitation_path(new_invite.invite_token, email: new_invite.email)
+		assert_redirected_to root_url
+		assert_not is_logged_in?
+		assert_not flash.empty?
 
 	end
 
@@ -198,8 +224,9 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		mail = ActionMailer::Base.deliveries.last
 		assert_equal "You have been invited to Flirt Camp!", mail.subject
 
-		#create an invitation and send an email
-		# assert_match 
+		#test when the invitation is deleted, user redirected to root_url
+
+
 
 	end
 
@@ -253,6 +280,43 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_template 'invitations/new'
 		assert_not flash.empty?
 		assert_select 'a[href=?]', resend_invitation_path(invite), count: 1
+
+	end
+
+	test "remove existing invitation" do
+
+		log_in_as @admin
+		get new_invitation_path
+
+		invites = assigns(:invitations)
+
+		first_invite = invitations(:one)
+		# debugger
+
+		invites.each do |invite|
+			
+			assert_select 'a[href=?]', invitation_path(invite), method: :delete
+
+			if invite.replied?
+				assert_select 'span.label-success'
+			else
+				assert_select 'span.label-warning'
+			end
+		end
+
+		#delete button works to remove 
+		assert_difference 'Invitation.count', -1 do
+			delete invitation_path(first_invite)
+		end
+
+		assert_redirected_to new_invitation_path
+		follow_redirect!
+		assert_template 'invitations/new'
+
+		assert_select 'a[href=?]', invitation_path(first_invite), method: :delete, count: 0
+
+		#if invitation sent, make sure the email recipient can not get to the user create page
+
 
 	end
 

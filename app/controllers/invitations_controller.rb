@@ -38,7 +38,10 @@ class InvitationsController < ApplicationController
 	end
 
 	def destroy
-		redirect_to root_url
+		invitation = Invitation.find_by(id: params[:id])
+		invitation.destroy
+		flash[:success] = "Invitation rescended."
+		redirect_to new_invitation_path
 	end
 
 	def resend

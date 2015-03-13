@@ -10,4 +10,7 @@
 		<td><span class="label label-warning">No</span></td>
 		<td><%= link_to "Resend Invite", resend_invitation_path(invitation), class: "btn btn-primary btn-xs" %></td>
 	<% end %>	
+
+	<td><%= link_to "X", invitation_path(invitation), method: :delete, data: { confirm: "Are you sure?" } %></td>
+
 </tr>
