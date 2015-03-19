@@ -102,6 +102,10 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.authenticated?(:remember, '')
   end
 
+
+
+
+
   # test "duplicate email in Invitation table" do
   #   @invite = invitations(:one)
   #   @invite.email = "testemail@example.com"

@@ -15,6 +15,8 @@ class UserLoginTest < ActionDispatch::IntegrationTest
 	    follow_redirect!
 	    assert_template 'static_pages/home'
 	    assert is_logged_in?
+# debugger
+	    assert_not assigns(:intention).nil?
 	    assert_select 'h1', text: @user.playa_name
 	    assert_select "a[href=?]", login_path, count: 0
 	    assert_select "a[href=?]", logout_path
@@ -28,6 +30,8 @@ class UserLoginTest < ActionDispatch::IntegrationTest
 
 	    follow_redirect!
 	    assert_template 'static_pages/home'
+	    
+	    assert assigns(:intention).nil?
 	    assert_select "a[href=?]", new_member_app_path, count: 1
 	    assert_select "a[href=?]", new_existing_member_request_path, count: 1
 	    assert_select "a[href=?]", login_path, count: 1

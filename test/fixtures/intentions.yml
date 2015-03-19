@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: brian
+  event: future
+  status: 1
+  arrival_date: <%= Date.today + 120.days %>
+  departure_date: <%= Date.today + 125.days %>
+  transportation: 1
+  seats_available: 1
+  lodging: 1
+  yurt_owner: true
+  yurt_storage: true
+  yurt_panel_size: 1"
+  yurt_user: Lilly and Michelle
+  opt_in_meals: true
+  food_restrictions: none
+  logistics: I need a few bins transported
+  
+
+# two:
+#   user: 
+#   status: 1

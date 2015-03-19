@@ -73,7 +73,7 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		get root_url
 
 		# debugger
-		assert_select 'h1', text: ")'( #{event.year} Event!!"
+		assert_select 'h1', text: event.year
 
 		assert_select 'a', "I have a ticket and am going!"
 		assert_select 'a', "I want to go, but do not have a ticket :("
@@ -112,6 +112,15 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert_select 'small', text: "Some Future Theme"
 		
+	end
+
+	test "no next event" do
+		Event.delete_all
+		
+		log_in_as @user
+		get root_url
+		assert_match "No event scheduled", response.body
+
 	end
 
 end

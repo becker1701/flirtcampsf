@@ -225,3 +225,25 @@ input {
 	margin: 20px 0;
 	padding: 20px;
 }
+
+ul#camp_info {
+	list-style: none;
+}
+
+div.event_user_header {
+	h1 {
+		text-align: left;
+	}
+	border-bottom: 1px solid $gray-med-light
+}
+
+div.user_intention {
+	ul {
+		list-style: none;
+		li {
+			margin: 10px 0;
+		}
+	}
+
+	margin-top: 10px;
+}

@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+	# include MembershipApplicationsHelper
+
 	def full_title(title='')
 		base_title = "Flirt Camp SF"
 
@@ -15,7 +17,5 @@ module ApplicationHelper
 			text.gsub(/\n/, '<br>').html_safe
 		end
 	end
-
-	
 
 end

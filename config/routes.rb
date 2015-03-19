@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
 
   resources :users
+  resources :intentions, only: [:create, :edit, :update]
+  
   resources :membership_applications, only: [:index, :new, :create, :edit] do
     member do
       get 'thank_you'

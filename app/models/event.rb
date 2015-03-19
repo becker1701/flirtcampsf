@@ -1,5 +1,7 @@
 class Event < ActiveRecord::Base
 
+	has_many :intentions
+
 	validates :year, presence: true
 
 	def self.next_event

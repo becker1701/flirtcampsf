@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311205028) do
+ActiveRecord::Schema.define(version: 20150319000157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,29 @@ ActiveRecord::Schema.define(version: 20150311205028) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
+
+  create_table "intentions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "status"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.date     "arrival_date"
+    t.date     "departure_date"
+    t.integer  "transportation"
+    t.integer  "seats_available"
+    t.integer  "lodging"
+    t.boolean  "yurt_owner",        default: false
+    t.boolean  "yurt_storage",      default: false
+    t.string   "yurt_panel_size"
+    t.string   "yurt_user"
+    t.boolean  "opt_in_meals"
+    t.text     "food_restrictions"
+    t.text     "logistics"
+    t.integer  "event_id"
+  end
+
+  add_index "intentions", ["user_id", "event_id"], name: "index_intentions_on_user_id_and_event_id", using: :btree
+  add_index "intentions", ["user_id"], name: "index_intentions_on_user_id", using: :btree
 
   create_table "invitations", force: :cascade do |t|
     t.string   "name"
@@ -69,4 +92,5 @@ ActiveRecord::Schema.define(version: 20150311205028) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  add_foreign_key "intentions", "users"
 end

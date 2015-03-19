@@ -5,26 +5,51 @@
 			<section class="user_info">
 				<h1>
 					<%= gravatar_for current_user %>	
-					<%= current_user.playa_name %>
+					<%= display_name(current_user) %>
 				</h1>
 			</section>
+			
+			<% if @next_event.present? %>
+				<section>
+					<div id="camp_info">
+					<strong>Camp Info</strong>
+					
+						<span id="camp_address">Address: <%= @next_event.camp_address %></span>
+						<span id="camp_ea_date">Early Arrival Date: <%= @next_event.early_arrival_date %></span>
+					
+					</div>
+				</section>
+			<% end %>
+
 		</aside>
 		<div class="col-md-8">
 
-			<% if @next_event.present? %>
-				<h1>)'( <%= @next_event.year %> Event!!</h1>
-				<h1><small><%= @next_event.start_date %> to <%= @next_event.end_date %></small></h1>
-				<h1><small><%= @next_event.theme %></small></h1>
-				<h3>Camp Info:</h3>
-				<p><%= @next_event.year %> Location: <%= @next_year.blank? ? "None yet." : @next_year.location %></p>
-				<p><%= @next_event.year %> EA Date: <%= @next_year.blank? ? "Not set yet." : @next_year.early_arrival_date %></p>
 
-				<ul>
-					<li><%= link_to "I have a ticket and am going!", '#' %></li>
-					<li><%= link_to "I want to go, but do not have a ticket :(", '#' %></li>
-					<li><%= link_to "I am NOT going, but do have ticket(s) for sale :)", '#' %></li>
-					<li><%= link_to "None of the above, this year..." , '#' %></li>
-				</ul>
+			<% if @next_event.present? %>
+				<div class="event_user_header">
+						<h1 class="text-left"><%= @next_event.year %></h1>
+						<h4><small><%= @next_event.start_date %> to <%= @next_event.end_date %></small></h4>
+						<h4><small><%= @next_event.theme %></small></h4>
+				</div>
+
+				<div class="user_intention">
+					<% if @intention.new_record? %>
+						<ul>
+							<li><%= link_to "I have a ticket and am going!", intentions_path(status: :going_has_ticket, event: @next_event), method: :post %></li>
+							<li><%= link_to "I want to go, but do not have a ticket :(", intentions_path(status: :going_needs_ticket, event: @next_event), method: :post %></li>
+							<li><%= link_to "I am NOT going, but do have ticket(s) for sale :)", intentions_path(status: :not_going_has_ticket, event: @next_event), method: :post %></li>
+							<li><%= link_to "None of the above, this year..." , intentions_path(status: :not_going_no_ticket, event: @next_event), method: :post %></li>
+						</ul>
+					<% else %>
+
+						<%= render "intentions/#{@intention.status}" %>
+
+						
+					<% end %>
+				</div>
+			<% else %>
+
+				<h3>No event scheduled</h3>
 			<% end %>
 		</div>
 	</div>

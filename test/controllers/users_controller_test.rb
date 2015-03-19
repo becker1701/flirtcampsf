@@ -85,4 +85,16 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, id: @user
     end
   end
+
+
+  test "Intention deleted when user is deleted" do
+    log_in_as @admin
+
+    assert_not @user.intentions.empty?
+
+    assert_difference 'Intention.count', -1 do 
+      delete :destroy, id: @user
+    end
+  end
+
 end
