@@ -25,6 +25,8 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 	def setup
 		@admin = users(:brian)
 		@user = users(:archer)
+		@user.intentions.delete_all
+		
 	end
 
 	test "event creation" do
@@ -116,7 +118,9 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 
 	test "no next event" do
 		Event.delete_all
-		
+		# event = events(:future)
+		# event.start_date = Date.today - 120.days
+		# event.end_date = Date.today - 119.days
 		log_in_as @user
 		get root_url
 		assert_match "No event scheduled", response.body

@@ -23,7 +23,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   	assert_select "title", full_title("Sign Up")
 
     get login_path
-    assert_select 'a[href=?]', signup_path
+    assert_select 'a[href=?]', signup_path, count: 0
     assert_select 'a[href=?]', new_password_reset_path
 
     log_in_as @user

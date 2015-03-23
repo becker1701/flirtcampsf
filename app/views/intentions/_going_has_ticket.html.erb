@@ -1,2 +1,36 @@
 <h3>I will be attending <%= @next_event.year %>.<br>
 <small>I have secured tickets.</small></h3>
+
+
+<hr>
+
+<h3>Tickets:</h3>
+<p><strong>Ticket qty for sale?:</strong> <%= user.next_event_intention.tickets_for_sale %></p>
+
+<hr>
+
+<h3>Transportation:</h3>
+<p><strong>Arrival date:</strong> <%= user.next_event_intention.arrival_date %></p>
+<p><strong>Departure date:</strong> <%= user.next_event_intention.departure_date %></p>
+<p><strong>I'm getting there by:</strong> <%= user.next_event_intention.transportation? ? user.next_event_intention.transportation.humanize : "Unknown" %></p>
+<p><strong>Seats available for carpool:</strong> <%= user.next_event_intention.seats_available %></p>
+
+<hr>
+
+<h3>Lodging:</h3>
+<p><strong>I'm sleeping in a:</strong> <%= user.next_event_intention.lodging? ? user.next_event_intention.lodging.humanize : "Unknown" %></p>
+<p><%= user.next_event_intention.yurt_owner? ? "I'm a yurt owner" : "I am NOT a yurt owner" %></p>
+<p><%= user.next_event_intention.yurt_storage? ? "I am requesting yurt storage" : "I do not need yurt storage" %></p>
+<p><strong>Yurt panel size:</strong> <%= user.next_event_intention.yurt_panel_size %></p>
+<p><strong>Yurt occupant:</strong> <%= user.next_event_intention.yurt_user %></p>
+
+<hr>
+
+<h3>Meals:</h3>
+<p><%= user.next_event_intention.opt_in_meals? ? "I would like to partake in camp dinners" : "I do NOT want to partake in camp dinners"  %></p>
+<p><strong>Food restrictions:</strong> <%= user.next_event_intention.food_restrictions %></p>
+
+<hr>
+
+<h3>Logistics:</h3>
+<p><strong>Things to get transported:</strong> <%= user.next_event_intention.logistics %></p>

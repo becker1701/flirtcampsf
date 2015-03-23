@@ -23,7 +23,8 @@ gem 'faker', '1.4.2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-  gem "letter_opener", group: :development
+gem "letter_opener", group: :development
+# gem "minitest-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a  console
@@ -42,7 +43,7 @@ group :test do
 	gem 'minitest-reporters', '1.0.5'
 	gem 'mini_backtrace', '0.1.3'
 	gem 'guard-minitest', '2.3.1'
-  
+  # gem "minitest-rails-capybara"
 end
 
 group :production do

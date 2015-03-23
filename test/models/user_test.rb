@@ -103,6 +103,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
 
+  test "sets intention based on next_event" do
+    event = events(:future)
+    assert_nil @user.next_event_intention
+    @user.email = "someemail@otheremail.com"
+    @user.save!
+    @user.intentions.create!(event: event, status: :going_has_ticket)
+    assert_equal event, @user.next_event_intention.event
+  end
 
 
 

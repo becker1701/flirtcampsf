@@ -9,6 +9,14 @@
 			</h1>
 		</section>
 	</aside>
+	<div class="col-md-8">
+
+		<% if @user.next_event_intention.nil? %>
+			<h3>Not responded yet...</h3>
+		<% else %>
+			<%= render "intentions/#{@user.next_event_intention.status}", user: @user %>
+		<% end %>
+	</div>
 </div>
 
 

@@ -1,2 +1,78 @@
-<h1>Intentions#edit</h1>
-<p>Find me in app/views/intentions/edit.html.erb</p>
+<h1><%= @next_event.year %></h1>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+
+
+		<%= form_for @intention do |f| %>
+			
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<%= f.label :status %>
+			<%= f.select :status, options_for_select(Intention.statuses.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.status), {}, { class: "form-control"} %>
+
+			<br>
+			<h3>Tickets:</h3>
+			<%= f.label :tickets_for_sale, "Ticket qty for sale?" %>
+			<%= f.number_field :tickets_for_sale, max: 10, min: 0, class: "form-control" %>
+
+			<br>
+			<h3>Transportation:</h3>
+			<%= f.label :transportation, "I'm getting there by:" %>
+			<%= f.select :transportation, options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.transportation), {}, { class: "form-control"} %>
+
+			<%= f.label :arrival_date, "Arrival date:" %>
+			<%= f.date_field :arrival_date %>
+			
+			<%= f.label :departure_date, "Departure date:" %>
+			<%= f.date_field :departure_date %>
+			
+			<%= f.label :seats_available, "Seats available for carpool:" %>
+			<%= f.number_field :seats_available, max: 10, min: 0, class: "form-control" %>
+
+			<br>
+			<h3>Lodging:</h3>
+			<%= f.label :lodging, "I'm sleeping in a:" %>
+			<%= f.select :lodging, options_for_select(Intention.lodgings.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.lodging), {}, { class: "form-control"} %>
+
+
+			<%= f.label :yurt_owner, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+				<%= f.check_box :yurt_owner %>
+				<span>Check if you own a yurt</span>
+			<% end %>
+
+			<%= f.label :yurt_storage, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+				<%= f.check_box :yurt_storage %>
+				<span>Check to request yurt storage</span>
+			<% end %>
+
+			<%= f.label :yurt_panel_size, "Yurt panel size" %>
+			<%= f.number_field :yurt_panel_size, max: 3, min: 1, step: 0.5, class: "form-control" %>
+
+			<%= f.label :yurt_user, "Name of yurt occupant this year" %>
+			<%= f.text_field :yurt_user, class: "form-control" %>
+
+			<br>
+			<h3>Meals:</h3>
+
+			<%= f.label :opt_in_meals, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+				<%= f.check_box :opt_in_meals %>
+				<span>Check if you would like to be a part of our daily camp meal</span>
+			<% end %>
+
+			<%= f.label :food_restrictions, "Food restrictions" %>
+			<%= f.text_area :food_restrictions, class: "form-control" %>
+			
+			<br>
+			<h3>Logistics:</h3>
+			<%= f.label :logistics, "Logistics - what do you need transported and approx. size?" %>
+			<%= f.text_area :logistics, class: "form-control" %>
+
+			<%= f.submit "Update", class: "btn btn-primary" %>
+
+
+		<% end %>
+
+		
+	</div>
+</div>

@@ -70,4 +70,22 @@ class IntentionTest < ActiveSupport::TestCase
   		skip
   	end
 
+  	test "invlalid without status" do
+  		@intention.status = nil
+  		assert_not @intention.valid?
+  	end
+
+  test "going/not_going boolean" do
+    # event = events(:future)
+    # debugger
+    @intention.update_attribute(:status, :going_has_ticket)
+    assert @intention.going?
+    @intention.update_attribute(:status, :going_needs_ticket)
+    assert @intention.going?
+    @intention.update_attribute(:status, :not_going_has_ticket)
+    assert_not @intention.going?
+    @intention.update_attribute(:status, :not_going_no_ticket)
+    assert_not @intention.going?
+  end
+
 end

@@ -52,6 +52,12 @@ class User < Application
 		errors.add(:password, 'can not be blank')
 	end
 
+	def next_event_intention
+		self.intentions.find_by(event: Event.next_event) 
+	end
+
+
+
 	# def check_email_existance
 	# 	if Application.email_exists(self.email)
 	# 		errors.add(:email, "has already been taken")

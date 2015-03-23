@@ -1,11 +1,12 @@
 class StaticPagesController < ApplicationController
-  def home
+    
+    before_action :next_event, only: :home
 
-  	@next_event = Event.next_event
+  def home
 
   	if logged_in?
       # debugger
-  		@intention = current_user.intentions.find_by(event: @next_event) || current_user.intentions.build
+  		@intention = current_user.next_event_intention || current_user.intentions.build
   	end
   end
 

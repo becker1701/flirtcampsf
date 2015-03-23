@@ -20,6 +20,13 @@ class UserIndexTest < ActionDispatch::IntegrationTest
       assert_select 'a[href=?]', user_path(user), text: "#{user.playa_name} (aka #{user.name})"
       assert user.activated?
 
+      # debugger
+      if user.next_event_intention
+        assert_select 'div[id=?]', "user_id_#{user.id}", text: user.next_event_intention.status.humanize
+      else
+        assert_select 'div[id=?]', "user_id_#{user.id}", text: "Not responded yet..."
+      end
+
       unless user == @admin
         assert_select 'a[href=?]', user_path(user), text: 'Delete', method: :delete
       end
@@ -47,6 +54,14 @@ class UserIndexTest < ActionDispatch::IntegrationTest
 
     assert_equal users.first, test_users.first
     assert_equal users.last, test_users.last
+
+  end
+
+  test "intention status shows on index page" do
+    log_in_as @user
+    get users_path
+    users = assigns(:users)
+
 
   end
 end

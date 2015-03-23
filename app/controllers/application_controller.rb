@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
 
+	def next_event
+		@next_event = Event.next_event
+	end
+	
 end

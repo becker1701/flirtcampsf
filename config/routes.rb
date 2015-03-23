@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   get 'new_member_app', to: 'static_pages#new_member_app'
 
+  # resources :change_status, only: [:edit, :update]
 
   resources :users
   resources :intentions, only: [:create, :edit, :update]

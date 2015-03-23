@@ -1,0 +1,6 @@
+<ul>
+	<li><%= link_to "I have a ticket and am going!", intentions_path(status: :going_has_ticket, event: @next_event), method: :post %></li>
+	<li><%= link_to "I want to go, but do not have a ticket :(", intentions_path(status: :going_needs_ticket, event: @next_event), method: :post %></li>
+	<li><%= link_to "I am NOT going, but do have ticket(s) for sale :)", intentions_path(status: :not_going_has_ticket, event: @next_event), method: :post %></li>
+	<li><%= link_to "None of the above, this year..." , intentions_path(status: :not_going_no_ticket, event: @next_event), method: :post %></li>
+</ul>
