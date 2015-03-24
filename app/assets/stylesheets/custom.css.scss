@@ -218,6 +218,20 @@ input {
 	}
 }
 
+
+/* Events index */
+
+.events {
+	list-style: none;
+	margin: 0;
+	li {
+		overflow: auto;
+		padding: 10px 0;
+		border-bottom: 1px solid $gray-med-light;
+	}
+}
+
+
 /* account activation */
 
 .reset_account_activation {

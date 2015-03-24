@@ -14,17 +14,20 @@ class UserIndexTest < ActionDispatch::IntegrationTest
   	assert_template 'users/index'
   	assert_select 'div.pagination'
 
+    assert_not assigns(:next_event).nil?
+    next_event = assigns(:next_event)
+
     users = assigns(:users)
+
   	users.each do |user|
   		# puts "#{user.id}, #{user.activated?}"
       assert_select 'a[href=?]', user_path(user), text: "#{user.playa_name} (aka #{user.name})"
       assert user.activated?
 
-      # debugger
       if user.next_event_intention
         assert_select 'div[id=?]', "user_id_#{user.id}", text: user.next_event_intention.status.humanize
       else
-        assert_select 'div[id=?]', "user_id_#{user.id}", text: "Not responded yet..."
+        assert_select 'div[id=?]', "user_id_#{user.id}", text: "Not responded to #{next_event.year}"
       end
 
       unless user == @admin
@@ -35,6 +38,22 @@ class UserIndexTest < ActionDispatch::IntegrationTest
     assert_difference 'User.count', -1 do
       delete user_path(@non_admin)
     end
+
+  end
+
+  test "nil next_event shows only message" do
+      log_in_as @admin    
+      #remove future event to test for index message...
+      Event.next_event.delete
+      assert_nil Event.next_event
+    
+      get users_path
+      users = assigns(:users)
+      assert_nil assigns(:next_event)
+      
+      users.each do |user|
+        assert_select 'div[id=?]', "user_id_#{user.id}", text: "No event scheduled yet..."
+      end
 
   end
 

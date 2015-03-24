@@ -48,5 +48,4 @@ class EventTest < ActiveSupport::TestCase
 		assert_equal @event, Event.next_event
 	end
 
-
 end

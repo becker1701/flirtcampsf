@@ -103,7 +103,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
 
-  test "sets intention based on next_event" do
+  test "sets #next_event_intention equal to next event" do
     event = events(:future)
     assert_nil @user.next_event_intention
     @user.email = "someemail@otheremail.com"
@@ -112,32 +112,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal event, @user.next_event_intention.event
   end
 
+  test "#next_event_intention return nil if next event is nil" do
+    Event.delete_all
+    assert_nil Event.next_event
+    assert_nil @user.next_event_intention
 
-
-  # test "duplicate email in Invitation table" do
-  #   @invite = invitations(:one)
-  #   @invite.email = "testemail@example.com"
-  #   @new_user = User.new(name: "Ray Ban", email: "testemail@example.com", password: "foobar", password_confirmation: "foobar", phone: "123-456-7890", playa_name: "Camp Master")
-
-  #   @new_user.valid?
-
-  #   debugger
-  #   assert_not @new_user.valid?
-  #   assert_includes @new_user.errors.full_messages, "Email has already been taken."
-
-  # end
-
-  # test "duplicate email in MembershipApplication table" do
-  #   @member_app = membership_applications(:first)
-  #   @member_app.email = "testemail@example.com"
-  #   @new_user = User.new(name: "Ray Ban", email: "testemail@example.com", password: "foobar", password_confirmation: "foobar", phone: "123-456-7890", playa_name: "Camp Master")
-
-  #   @new_user.valid?
-
-  #   assert_not @new_user.valid?
-  #   assert_includes @new_user.errors.full_messages, "Email has already been taken."
-
-  # end
-
+  end
 
 end

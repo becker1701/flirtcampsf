@@ -18,6 +18,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", new_member_app_path
   	assert_select "a[href=?]", login_path
     assert_select "a[href=?]", new_invitation_path, count: 0
+    assert_select "a[href=?]", events_path, count: 0
   	assert_select 'a[href=?]', "http://burningman.org/"
     get signup_path(invite: @invite)
   	assert_select "title", full_title("Sign Up")
@@ -39,6 +40,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", about_path
     assert_select "a[href=?]", contact_path
     assert_select 'a[href=?]', "http://burningman.org/"
+    assert_select "a[href=?]", events_path, count: 0
 
     log_out
 
@@ -47,7 +49,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", new_invitation_path, count: 1
     assert_select "a[href=?]", membership_applications_path, count: 1
     assert_select "span.badge"
-    assert_select "a[href=?]", new_event_path, count: 1
+    assert_select "a[href=?]", events_path, count: 1
 
   end
 
@@ -60,7 +62,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     log_in_as @admin
     get root_url
 
-    assert_select 'a[href=?]', edit_event_path(@future)
+    assert_select 'a[href=?]', edit_event_path(@future), count: 0
 
     delete logout_path
 

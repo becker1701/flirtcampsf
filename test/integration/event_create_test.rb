@@ -48,6 +48,22 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 
 		log_in_as @admin
 		assert is_logged_in?
+		get events_path
+		assert_template 'events/index'
+
+		assert_equal Event.all, assigns(:events)
+		events = assigns(:events)
+		assert_equal 2, events.count
+
+		assert_select 'a[href=?]', new_event_path, count: 1
+
+		events.each do |event|
+			assert_select 'a[href=?]', edit_event_path(event)
+			assert_select 'li[id=?]', "event_id_#{event.id}"
+			assert_match event.year, response.body
+			assert_select 'a[href=?]', event_path(event), method: :delete, text: "Remove event"
+		end
+
 		get new_event_path
 		assert_template 'events/new'
 
@@ -65,7 +81,7 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 
 		event = assigns(:event)
 
-		assert_redirected_to root_url
+		assert_redirected_to events_path
 		assert_not flash.empty?
 
 		delete logout_path
@@ -97,21 +113,17 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		assert_template 'events/edit'
 
 		#try to update invalid record - year blank
-		assert_no_difference 'Event.count' do
-			patch event_path(future), event: {year: " ", start_date: nil, end_date: nil, theme: " ", camp_address: " ", early_arrival_date: nil}
-		end
+		patch event_path(future), event: {year: " ", start_date: nil, end_date: nil, theme: " ", camp_address: " ", early_arrival_date: nil}
 		assert_template 'events/edit'
 		assert_select 'div#error_explanation'
 
 		#try to update valid record 
-		assert_no_difference 'Event.count' do
-			patch event_path(future), event: {year: future.year, theme: "Some Future Theme"}
-		end
-
+		patch event_path(future), event: {year: future.year, theme: "Some Future Theme"}
 		assert_equal "Some Future Theme", future.reload.theme
 
-		assert_redirected_to root_path
-		follow_redirect!
+		assert_redirected_to events_path
+		get root_url
+		# follow_redirect!
 		assert_select 'small', text: "Some Future Theme"
 		
 	end
@@ -124,6 +136,28 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get root_url
 		assert_match "No event scheduled", response.body
+
+	end
+
+	test "remove event" do
+		log_in_as @user 
+		assert_no_difference 'Event.count' do
+			delete event_path(events(:future))
+		end
+		assert_not flash.nil?
+		assert_redirected_to root_url
+
+		log_in_as @admin
+
+		assert_difference 'Event.count', -1 do
+			delete event_path(events(:future))
+			assert Intention.where(event: events(:future)).empty?
+		end
+
+		assert_redirected_to events_url
+		follow_redirect!
+		assert_equal 1, assigns(:events).count
+		assert_equal Event.all, assigns(:events)
 
 	end
 

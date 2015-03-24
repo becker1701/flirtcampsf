@@ -4,6 +4,10 @@ class EventsController < ApplicationController
 	before_action :admin_user
 
 
+  def index
+    @events = Event.all
+  end
+
   def new
     @event = Event.new
   end
@@ -12,7 +16,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     if @event.save
       flash[:success] = ")'( Event Added!"
-      redirect_to root_url
+      redirect_to events_url
     else
       render :new
     end
@@ -30,12 +34,18 @@ class EventsController < ApplicationController
     @event = Event.find_by(id: params[:id])
     if @event.update_attributes(event_params)
       flash[:success] = ")'( Event updated."
-      redirect_to root_url
+      redirect_to events_url
     else
       render :edit
     end
   end
 
+  def destroy
+    @event = Event.find_by(id: params[:id])
+    @event.destroy
+    # flash[:success] = "Event removed."
+    redirect_to events_url
+  end
 
 private
 

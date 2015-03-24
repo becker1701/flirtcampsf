@@ -16,7 +16,11 @@
 		</div>
 
 		<div class="col-md-2", id="user_id_<%= user.id %>">
-			<%= user.next_event_intention.nil? ?  "Not responded yet..." : user.next_event_intention.status.humanize %>
+			<% if @next_event.nil? %>
+				No event scheduled yet...
+			<% else %>
+				<%= user.next_event_intention.nil? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %>
+			<% end %>
 		</div>
 
 	
@@ -24,23 +28,27 @@
 			<div class="col-md-4">
 				Tickets for sale: <%= user.next_event_intention.tickets_for_sale.to_i %> <br>
 				<% if user.next_event_intention.going? %>
-					<% unless user.next_event_intention.transportation.nil? %>
-						Tranportation: <%= user.next_event_intention.transportation.humanize %><br>
-					<% end %>
-					<% if user.next_event_intention.driving? %>
-						Carpoool: <%= pluralize(user.next_event_intention.seats_available, "seat") %> available <br>
-					<% end %>
-					<% if user.next_event_intention.yurt_owner %>
-						Yurt occupant: <%= user.next_event_intention.yurt_user %> <br>
-					<% end %>
 
 					<% if user.next_event_intention.arrival_date? %>
 						 Arrive <%= user.next_event_intention.arrival_date.strftime("%b %e") %> <%= "from #{user.hometown}" unless user.hometown.blank? %><br>	
 					<% end %>
-					
+					<% unless user.next_event_intention.transportation.nil? %>
+						Tranportation: <%= user.next_event_intention.transportation.humanize %><br>
+					<% end %>
+
 					<% if user.next_event_intention.departure_date? %>
 						 Depart <%= user.next_event_intention.departure_date.strftime("%b %e") %> <%= "to #{user.hometown}" unless user.hometown.blank? %><br>	
 					<% end %>
+
+					<% if user.next_event_intention.driving? %>
+						Carpoool: <%= pluralize(user.next_event_intention.seats_available, "seat") %> available <br>
+					<% end %>
+					<% if user.next_event_intention.yurt_owner %>
+						<strong>Yurt Owner</strong><br>
+						Yurt occupant: <%= user.next_event_intention.yurt_user %> <br>
+					<% end %>
+
+
 				<% end %>
 
 			</div>

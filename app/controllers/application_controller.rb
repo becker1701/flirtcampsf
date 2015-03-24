@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
 	def next_event
 		@next_event = Event.next_event
+		# debugger
 	end
 	
 end

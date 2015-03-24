@@ -21,7 +21,6 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		
 		assert_not intention.persisted?
 
-		# assert_nil @user.intention
 		assert_template partial: 'intentions/_change_status'
 		assert_select 'a[href=?]', intentions_path(status: :going_has_ticket, event: @event.id)
 
@@ -30,16 +29,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 			post intentions_path, { status: :going_has_ticket, event: @event.id }
 		end
 
-		# assert_redirected_to root_path
-		# follow_redirect!
-		# assert_template 'static_pages/home', partial: 'intentions/going_has_ticket'
-		# assert_match "I will be attending #{@event.year}.", response.body
-		# assert_match "I have secured tickets.", response.body
-
 		assert_redirected_to edit_intention_path(assigns(:intention))
-
-
-		
 	end
 
 
@@ -51,23 +41,13 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert is_logged_in?
 		intention = assigns(:intention)
-
-		# assert_nil @user.intention
 		assert_select 'a[href=?]', intentions_path(status: :going_needs_ticket, event: @event.id)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
 			post intentions_path, { status: :going_needs_ticket, event: @event.id }
 		end
-
-		# assert_redirected_to root_path
-		# follow_redirect!
-		# assert_template 'static_pages/home', partial: 'intentions/going_needs_ticket'
-		# assert_match "I will be attending #{@event.year}.", response.body
-		# assert_match "I have NOT secured tickets.", response.body
-
 		assert_redirected_to edit_intention_path(assigns(:intention))
-
 	end
 
 
@@ -78,23 +58,13 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert is_logged_in?
 		intention = assigns(:intention)
-
-		# assert_nil @user.intention
 		assert_select 'a[href=?]', intentions_path(status: :not_going_has_ticket, event: @event.id)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
 			post intentions_path, { status: :not_going_has_ticket, event: @event.id }
 		end
-
-		# assert_redirected_to root_path
-		# follow_redirect!
-		# assert_template 'static_pages/home', partial: 'intentions/not_going_has_ticket'
-		# assert_match "I will NOT be attending #{@event.year}.", response.body
-		# assert_match "I will be selling my secured tickets.", response.body
-
 		assert_redirected_to edit_intention_path(assigns(:intention))
-
 	end
 
 
@@ -105,23 +75,13 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert is_logged_in?
 		intention = assigns(:intention)
-
-		# assert_nil @user.intention
 		assert_select 'a[href=?]', intentions_path(status: :not_going_no_ticket, event: @event.id)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
 			post intentions_path, { status: :not_going_no_ticket, event: @event.id }
 		end
-
-		# assert_redirected_to root_path
-		# follow_redirect!
-		# assert_template 'static_pages/home', partial: 'intentions/not_going_no_ticket'
-		# assert_match "I will NOT be attending #{@event.year}.", response.body
-		# assert_match "I have NO secured tickets.", response.body
-
 		assert_redirected_to edit_intention_path(assigns(:intention))
-
 	end
 
 
@@ -140,8 +100,6 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 
 		assert_select 'div#camp_info' do
 			assert_select 'strong', "Camp Info"
-			# assert_match @event.camp_address, response.body
-			# assert_match @event.early_arrival_date, response.body
 		end 
 
 		assert_not assigns(:intention).nil?
@@ -178,7 +136,5 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_match "blah", response.body
 
 	end
-
-
 
 end

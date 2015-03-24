@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
 
-	has_many :intentions
+	has_many :intentions, dependent: :destroy
 
 	validates :year, presence: true
 

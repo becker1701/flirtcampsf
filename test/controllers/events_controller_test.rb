@@ -60,12 +60,31 @@ class EventsControllerTest < ActionController::TestCase
   test "save and redirect on valid :update as admin" do
     log_in_as @admin
     patch :update, id: @future.id, event: {year: "2014"}
-    assert_redirected_to root_url
+    assert_redirected_to events_url
   end
 
   test "redirect to root :update as non admin" do
     patch :update, id: @future.id
     assert_redirected_to login_url
+  end
+
+  test "get index only for admin" do
+    get :index
+    assert_redirected_to login_path
+
+    log_in_as @admin
+    get :index
+    assert_response :success
+    assert_template 'events/index'
+  end
+
+  test "delete event only for admin" do
+    delete :destroy, id: @future
+    assert_redirected_to login_path
+
+    log_in_as @admin
+    delete :destroy, id: @future
+    assert_redirected_to events_url
   end
 
 end
