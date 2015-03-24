@@ -5,6 +5,7 @@ class User < Application
 	attr_accessor :remember_token, :activation_token, :password_reset_token
 
 	has_many :intentions, dependent: :destroy
+	# has_many :events
 
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :playa_name, length: { maximum: 50 }

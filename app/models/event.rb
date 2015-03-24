@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
 
 	has_many :intentions, dependent: :destroy
+	# belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
 
 	validates :year, presence: true
 
