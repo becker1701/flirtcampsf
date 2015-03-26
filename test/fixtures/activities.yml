@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event: future
+  user: brian
+  publish: false
+  title: MyString
+  day: 2015-03-23
+  time: 2015-03-23 17:39:39
+  description: MyText
+
+two:
+  event: future
+  user: archer
+  publish: false
+  title: MyString
+  day: 2015-03-23
+  time: 2015-03-23 17:39:39
+  description: MyText
+
+past:
+  event: past
+  user: archer
+  publish: false
+  title: MyString
+  day: 2014-03-23
+  time: 2014-03-23 17:39:39
+  description: MyText
+

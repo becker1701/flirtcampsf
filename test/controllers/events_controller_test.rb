@@ -12,7 +12,7 @@ class EventsControllerTest < ActionController::TestCase
     log_in_as @admin
     get :new
     assert_response :success
-    assert_template 'events/new'
+    assert_template 'events/new'  
   end
 
   test "should get show if admin" do

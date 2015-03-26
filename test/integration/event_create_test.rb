@@ -129,7 +129,7 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 	end
 
 	test "no next event" do
-		Event.delete_all
+		Event.destroy_all
 		# event = events(:future)
 		# event.start_date = Date.today - 120.days
 		# event.end_date = Date.today - 119.days
@@ -161,4 +161,27 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 
 	end
 
+	test "events index" do
+		get events_path
+		assert_redirected_to login_path
+
+		log_in_as @user
+		get events_path
+		assert_redirected_to root_url
+
+		log_in_as @admin
+		get events_path
+		assert_template 'events/index'
+		events = assigns(:events)
+		assert_not_nil events
+
+		events.each do |event|
+			assert_select 'a[href=?]', event_activities_path(event)
+			assert_select 'a[href=?]', '#', text: "EA Team"
+			assert_select 'a[href=?]', '#', text: "Meal Menu"
+			assert_select 'a[href=?]', event_path(event), text: "Remove event"
+
+		end
+		assert_select 'a[href=?]', new_event_path
+	end
 end

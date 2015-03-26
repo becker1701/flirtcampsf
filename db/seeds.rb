@@ -70,6 +70,7 @@ User.all.each do |user|
 # debugger
 	user.intentions.create!(status: status, event: event, arrival_date: Date.today + 120.days, departure_date: Date.today + 130.days, tickets_for_sale: num_ticket) unless status == false
 
+
 # transportation
 # seats_available
 # lodging
@@ -83,6 +84,28 @@ User.all.each do |user|
 # 
 
 end
+
+# debugger
+intentions = event.intentions.where(status: [1,2])
+counter = rand(0..3)
+
+intentions.each do |intention|
+	counter.times do |n|
+		# debugger
+		
+		activity_time = Faker::Time.between(2.days.ago, Time.now)
+		# activity_date = Faker::Date.between(event.start_date, event.end_date)
+
+		event.activities.create!(
+			user: intention.user,
+			publish: n%2 == 0 ? false : true,
+			title: Faker::Lorem.sentence(3).humanize,
+			day: activity_time,
+			time: activity_time,
+			description: Faker::Lorem.paragraph)
+	end
+end
+
 
 10.times do |n|
 

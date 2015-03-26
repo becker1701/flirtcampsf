@@ -113,7 +113,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "#next_event_intention return nil if next event is nil" do
-    Event.delete_all
+    Event.destroy_all
     assert_nil Event.next_event
     assert_nil @user.next_event_intention
 

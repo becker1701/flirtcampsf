@@ -1,0 +1,46 @@
+<h1><small><%= @event.year %></small></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <h3>
+      <%= @activity.title %>
+    </h3>
+    <hr>
+
+    <p>
+      <strong>Day:</strong>
+      <%= @activity.day %>
+    </p>
+
+    <p>
+      <strong>Time:</strong>
+      <%= @activity.time %>
+    </p>
+
+    <p>
+      <strong>Description:</strong>
+      <%= @activity.description %>
+    </p>
+
+    <p>
+      <strong>Hosted by:</strong>
+      <%= display_name(@activity.user) %>
+    </p>
+
+    <p>
+      <strong>This is a:</strong>
+      <%= @activity.publish? ? "Public Event" : "Camp Event" %>
+    </p>
+
+    <% if logged_in? && (current_user?(@activity.user) || admin_user?) %>
+      <%= link_to 'Edit', edit_event_activity_path(@event, @activity) %> |
+    <% end %>
+    
+    <%= link_to 'Back', event_activities_path %>
+ 
+
+  </div>
+</div>
+
+

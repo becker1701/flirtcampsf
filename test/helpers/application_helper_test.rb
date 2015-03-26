@@ -14,5 +14,16 @@ class ApplicationHelperTest < ActionView::TestCase
 		assert_equal format_newline("abc\ndef"), "abc<br>def".html_safe
 	end
 
+	test "strf_day" do
+		#TEST: test for nil date, date format output, other types of input
+		skip
+	end
+
+	test "strf_time" do
+		#TEST: test for nil time, time format output, other types of input
+		skip
+	end
+
+
 end
 

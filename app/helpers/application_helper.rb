@@ -18,6 +18,14 @@ module ApplicationHelper
 		end
 	end
 
+	def strf_day(date)
+		return nil if date.nil?
+		date.strftime("%a, %b %e")
+	end
 
+	def strf_time(time)
+		return nil if time.nil?
+		time.strftime("%I:%M %p")
+	end
 
 end

@@ -36,7 +36,10 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '1.1.3'
   gem 'terminal-notifier'
-  gem 'terminal-notifier-guard', '~> 1.6.1'
+  gem 'terminal-notifier-guard'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
 end
 
 group :test do

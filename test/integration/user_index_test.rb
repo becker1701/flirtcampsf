@@ -44,7 +44,7 @@ class UserIndexTest < ActionDispatch::IntegrationTest
   test "nil next_event shows only message" do
       log_in_as @admin    
       #remove future event to test for index message...
-      Event.next_event.delete
+      Event.next_event.destroy
       assert_nil Event.next_event
     
       get users_path

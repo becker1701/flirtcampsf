@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :intentions, only: [:create, :edit, :update]
+  #TODO: move intentions to nested recourse inside event
   
   resources :membership_applications, only: [:index, :new, :create, :edit] do
     member do
@@ -35,8 +37,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events
-
+  resources :events do 
+    resources :activities
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

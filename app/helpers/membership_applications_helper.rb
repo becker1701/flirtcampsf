@@ -1,13 +1,15 @@
 module MembershipApplicationsHelper
 
-	def display_name(member_app)
+	def display_name(user)
 		# debugger
-		if member_app.playa_name.blank? && member_app.birth_name.blank?
+		return "" if user.nil?
+
+		if user.playa_name.blank? && user.birth_name.blank?
 			""
-		elsif member_app.playa_name.blank? 
-			member_app.birth_name
+		elsif user.playa_name.blank? 
+			user.birth_name
 		else
-			member_app.playa_name
+			user.playa_name
 		end
 	end
 
