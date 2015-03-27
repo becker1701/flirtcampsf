@@ -6,6 +6,8 @@ class User < Application
 
 	has_many :intentions, dependent: :destroy
 	has_many :activities, dependent: :nullify
+
+
 	# has_many :events
 
 	validates :name, presence: true, length: { maximum: 50 }
@@ -55,10 +57,18 @@ class User < Application
 	end
 
 	def next_event_intention
-		self.intentions.find_by(event: Event.next_event) 
+		# self.intentions.find_by(event: Event.next_event) 
+		return nil if Event.next_event.nil?
+		Event.next_event.intentions.find_by(user: self)		
 	end
 
+	# def test_intentions
+	# 	Event.next_event.intentions.pluck(:user.id)
+	# end
 
+	# def self.test
+	# 	self.includes(:intentions).where(intentions: {event: Event.next_event})
+	# end
 
 	# def check_email_existance
 	# 	if Application.email_exists(self.email)

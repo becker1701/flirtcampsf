@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   before_action :next_event, only: [:index, :show]
 
   def index
+    # debugger
     @users = User.where(activated: true).order(:name).paginate(page: params[:page])
   end
 

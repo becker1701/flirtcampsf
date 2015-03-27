@@ -44,8 +44,8 @@
 
 						
 
-						<%= render "intentions/#{@intention.status}", user: current_user %>
-						<%= link_to "Edit", edit_intention_path(@intention), class: "btn btn-primary" %>
+						<%= render "intentions/#{@intention.status}", user: current_user %> <!-- , user: current_user %> -->
+						<%= link_to "Edit", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
 
 						<%= link_to "Activities", event_activities_path(@next_event), class: "btn btn-primary" %>
 						

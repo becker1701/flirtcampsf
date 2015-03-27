@@ -6,6 +6,7 @@ class UserIndexTest < ActionDispatch::IntegrationTest
     @admin = users(:admin)
     @non_admin = users(:archer)
     @not_activated = users(:not_activated)
+    # @event = events(:future)
   end
 
   test "index page paginates" do
@@ -15,17 +16,20 @@ class UserIndexTest < ActionDispatch::IntegrationTest
   	assert_select 'div.pagination'
 
     assert_not assigns(:next_event).nil?
+    # debugger
     next_event = assigns(:next_event)
 
     users = assigns(:users)
 
   	users.each do |user|
   		# puts "#{user.id}, #{user.activated?}"
+      intention = next_event.intentions.find_by(user: user)
       assert_select 'a[href=?]', user_path(user), text: "#{user.playa_name} (aka #{user.name})"
       assert user.activated?
 
-      if user.next_event_intention
-        assert_select 'div[id=?]', "user_id_#{user.id}", text: user.next_event_intention.status.humanize
+      if intention
+        # debugger
+        assert_select 'div[id=?]', "user_id_#{user.id}", text: intention.status.humanize
       else
         assert_select 'div[id=?]', "user_id_#{user.id}", text: "Not responded to #{next_event.year}"
       end

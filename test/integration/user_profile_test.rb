@@ -22,14 +22,14 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_not intention.persisted?
 
 		assert_template partial: 'intentions/_change_status'
-		assert_select 'a[href=?]', intentions_path(status: :going_has_ticket, event: @event.id)
+		assert_select 'a[href=?]', event_intentions_path(@event, status: :going_has_ticket)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
-			post intentions_path, { status: :going_has_ticket, event: @event.id }
+			post event_intentions_path(@event), status: :going_has_ticket
 		end
 
-		assert_redirected_to edit_intention_path(assigns(:intention))
+		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
 	end
 
 
@@ -41,13 +41,13 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert is_logged_in?
 		intention = assigns(:intention)
-		assert_select 'a[href=?]', intentions_path(status: :going_needs_ticket, event: @event.id)
+		assert_select 'a[href=?]', event_intentions_path(@event, status: :going_needs_ticket)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
-			post intentions_path, { status: :going_needs_ticket, event: @event.id }
+			post event_intentions_path(@event), status: :going_needs_ticket
 		end
-		assert_redirected_to edit_intention_path(assigns(:intention))
+		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
 	end
 
 
@@ -58,13 +58,13 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert is_logged_in?
 		intention = assigns(:intention)
-		assert_select 'a[href=?]', intentions_path(status: :not_going_has_ticket, event: @event.id)
+		assert_select 'a[href=?]', event_intentions_path(@event, status: :not_going_has_ticket)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
-			post intentions_path, { status: :not_going_has_ticket, event: @event.id }
+			post event_intentions_path(@event), status: :not_going_has_ticket
 		end
-		assert_redirected_to edit_intention_path(assigns(:intention))
+		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
 	end
 
 
@@ -75,13 +75,13 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		follow_redirect!
 		assert is_logged_in?
 		intention = assigns(:intention)
-		assert_select 'a[href=?]', intentions_path(status: :not_going_no_ticket, event: @event.id)
+		assert_select 'a[href=?]', event_intentions_path(@event, status: :not_going_no_ticket)
 
 		#user clicks status: 1. Create intention and reload page with intention fields
 		assert_difference 'Intention.count', 1 do
-			post intentions_path, { status: :not_going_no_ticket, event: @event.id }
+			post event_intentions_path(@event), status: :not_going_no_ticket
 		end
-		assert_redirected_to edit_intention_path(assigns(:intention))
+		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
 	end
 
 
@@ -116,7 +116,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 
 		#admin intention set in fixtures
 
-		@user.intentions.create!(status: :going_needs_ticket, event: @event, logistics: "blah")
+		@event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
 		get user_path(@admin)
 
 		assert_equal @admin, assigns(:user)

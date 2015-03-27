@@ -21,26 +21,26 @@ class ChangeStatusTest < ActionDispatch::IntegrationTest
   	intention = assigns(:intention)
   	assert_not intention.new_record?
 
-  	assert_select "a[href=?]", edit_intention_path(intention)
+  	assert_select "a[href=?]", edit_event_intention_path(@event, intention)
 
-  	get edit_intention_path(intention)
+  	get edit_event_intention_path(@event, intention)
 
   	assert_select 'form select[name=?]', 'intention[status]'
 
   	#test for invalid intention (no status)
-  	patch intention_path(intention), intention: { status: nil }
+  	patch event_intention_path(@event, intention), intention: { status: nil }
 
   	# follow_redirect!
   	assert_template 'intentions/edit'
   	assert_not flash.empty?
     assert_select 'div.alert-danger'
 
-  	patch intention_path(intention), intention: { status: :not_going_no_ticket, yurt_user: "Some bitch"}
+  	patch event_intention_path(@event, intention), intention: { status: :not_going_no_ticket, yurt_user: "Some bitch"}
   	assert_equal "Some bitch", intention.reload.yurt_user
   	assert_redirected_to root_url
 
-  	get edit_intention_path(intention)
-   	patch intention_path(intention), intention: { status: :going_has_ticket, yurt_user: "Some Otherbitch"}
+  	get edit_event_intention_path(@event, intention)
+   	patch event_intention_path(@event, intention), intention: { status: :going_has_ticket, yurt_user: "Some Otherbitch"}
   	assert_equal "Some Otherbitch", intention.reload.yurt_user
   	follow_redirect! 
   	assert_template 'static_pages/home'

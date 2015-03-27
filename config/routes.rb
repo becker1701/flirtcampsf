@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # resources :change_status, only: [:edit, :update]
 
   resources :users
-  resources :intentions, only: [:create, :edit, :update]
+  
   #TODO: move intentions to nested recourse inside event
   
   resources :membership_applications, only: [:index, :new, :create, :edit] do
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   resources :events do 
     resources :activities
+    resources :intentions, only: [:create, :edit, :update]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

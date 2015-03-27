@@ -1,10 +1,10 @@
-<h1><%= @next_event.year %></h1>
+<h1><%= @event.year %></h1>
 
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 
 
-		<%= form_for @intention do |f| %>
+		<%= form_for([@event, @intention]) do |f| %>
 			
 			<%= render 'shared/error_messages', object: f.object %>
 
