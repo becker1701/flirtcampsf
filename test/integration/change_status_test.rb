@@ -44,7 +44,6 @@ class ChangeStatusTest < ActionDispatch::IntegrationTest
   	assert_equal "Some Otherbitch", intention.reload.yurt_user
   	follow_redirect! 
   	assert_template 'static_pages/home'
-  	assert_match "Some Otherbitch", response.body
   	
 
   end

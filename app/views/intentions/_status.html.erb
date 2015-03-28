@@ -1,0 +1,17 @@
+<% if user.next_event_intention.going_has_ticket? %>
+	<h3>I will be attending <%= @next_event.year %>.<br>
+	<small>I have secured tickets.</small></h3>
+
+<% elsif user.next_event_intention.going_needs_ticket? %>
+	<h3>I will be attending <%= @next_event.year %>.<br>
+	<small>I have NOT secured tickets.</small></h3>
+
+<% elsif user.next_event_intention.not_going_has_ticket? %>
+	<h3>I will NOT be attending <%= @next_event.year %>.<br>
+	<small>I will be selling my secured tickets.</small></h3>
+
+<% elsif user.next_event_intention.not_going_no_ticket? %>
+	<h3>I will NOT be attending <%= @next_event.year %>.<br>
+	<small>I have NO secured tickets.</small></h3>
+
+<% end %>

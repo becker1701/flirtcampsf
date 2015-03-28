@@ -137,6 +137,11 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		get root_url
 		assert_match "No event scheduled", response.body
 
+		#check the profiles of other members
+		get user_path @admin
+		assert_template 'users/show'
+		
+
 	end
 
 	test "remove event" do

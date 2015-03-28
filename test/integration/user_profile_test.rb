@@ -11,77 +11,31 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		@user.intentions.delete_all
 	end
 
-	test "redirect to root with Going With Ticket message" do
-		get root_url
-		log_in_as @user
-		assert_redirected_to root_url
-		follow_redirect!
-		assert is_logged_in?
-		intention = assigns(:intention)
-		
-		assert_not intention.persisted?
+	test "redirect new intention to root with status message" do
+		Intention.statuses.map do |message, id|
+			
+			@user.intentions.destroy_all
+			@user.reload
 
-		assert_template partial: 'intentions/_change_status'
-		assert_select 'a[href=?]', event_intentions_path(@event, status: :going_has_ticket)
+			log_in_as @user
+			get root_url
 
-		#user clicks status: 1. Create intention and reload page with intention fields
-		assert_difference 'Intention.count', 1 do
-			post event_intentions_path(@event), status: :going_has_ticket
+			intention = assigns(:intention)
+			assert_not intention.nil?
+			assert intention.new_record?
+			
+			assert_template partial: 'intentions/_change_status'
+
+			assert_select 'a[href=?]', event_intentions_path(@event, status: message)
+			assert_difference 'Intention.count', 1 do
+				post event_intentions_path(@event), status: message
+			end
+			if message == "not_going_no_ticket"
+				assert_redirected_to root_url
+			else
+				assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
+			end
 		end
-
-		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
-	end
-
-
-
-	test "redirect to root with Going Needs Ticket message" do
-		get root_url
-		log_in_as @user
-		assert_redirected_to root_url
-		follow_redirect!
-		assert is_logged_in?
-		intention = assigns(:intention)
-		assert_select 'a[href=?]', event_intentions_path(@event, status: :going_needs_ticket)
-
-		#user clicks status: 1. Create intention and reload page with intention fields
-		assert_difference 'Intention.count', 1 do
-			post event_intentions_path(@event), status: :going_needs_ticket
-		end
-		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
-	end
-
-
-	test "redirect to root with Not Going Has Ticket message" do
-		get root_url
-		log_in_as @user
-		assert_redirected_to root_url
-		follow_redirect!
-		assert is_logged_in?
-		intention = assigns(:intention)
-		assert_select 'a[href=?]', event_intentions_path(@event, status: :not_going_has_ticket)
-
-		#user clicks status: 1. Create intention and reload page with intention fields
-		assert_difference 'Intention.count', 1 do
-			post event_intentions_path(@event), status: :not_going_has_ticket
-		end
-		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
-	end
-
-
-	test "redirect to root with Not Going No Ticket message" do
-		get root_url
-		log_in_as @user
-		assert_redirected_to root_url
-		follow_redirect!
-		assert is_logged_in?
-		intention = assigns(:intention)
-		assert_select 'a[href=?]', event_intentions_path(@event, status: :not_going_no_ticket)
-
-		#user clicks status: 1. Create intention and reload page with intention fields
-		assert_difference 'Intention.count', 1 do
-			post event_intentions_path(@event), status: :not_going_no_ticket
-		end
-		assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
 	end
 
 
@@ -133,7 +87,19 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_no_match @admin.name, response.body
 		assert_no_match "Lilly and Michelle", response.body
 
-		assert_match "blah", response.body
+		assert_no_match "blah", response.body
+
+	end
+
+	test "visit page of member who does not have next event intention" do
+		Event.destroy_all
+		@admin.intentions.destroy_all
+		assert_empty @admin.intentions
+
+		log_in_as @user
+		get user_path(@admin)
+		
+		assert_response :success
 
 	end
 

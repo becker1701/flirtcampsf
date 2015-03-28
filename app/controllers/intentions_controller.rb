@@ -14,7 +14,11 @@ class IntentionsController < ApplicationController
 
 		@intention = @event.intentions.build(status: intention_status, user: current_user)
 		if @intention.save
-			redirect_to edit_event_intention_url(@event, @intention)
+			if intention_status == "not_going_no_ticket"
+				redirect_to root_url	
+			else
+				redirect_to edit_event_intention_url(@event, @intention)
+			end
 		else
 			redirect_to root_url
 		end

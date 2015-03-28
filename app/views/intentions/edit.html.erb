@@ -19,7 +19,7 @@
 			<br>
 			<h3>Transportation:</h3>
 			<%= f.label :transportation, "I'm getting there by:" %>
-			<%= f.select :transportation, options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.transportation), {}, { class: "form-control"} %>
+			<%= f.select :transportation, options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.transportation), {include_blank: "Please select your transportation..."}, { class: "form-control"} %>
 
 			<%= f.label :arrival_date, "Arrival date:" %>
 			<%= f.date_field :arrival_date %>
@@ -33,7 +33,7 @@
 			<br>
 			<h3>Lodging:</h3>
 			<%= f.label :lodging, "I'm sleeping in a:" %>
-			<%= f.select :lodging, options_for_select(Intention.lodgings.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.lodging), {}, { class: "form-control"} %>
+			<%= f.select :lodging, options_for_select(Intention.lodgings.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.lodging), {include_blank: "Please select your lodging..."}, { class: "form-control"} %>
 
 
 			<%= f.label :yurt_owner, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
@@ -46,8 +46,8 @@
 				<span>Check to request yurt storage</span>
 			<% end %>
 
-			<%= f.label :yurt_panel_size, "Yurt panel size" %>
-			<%= f.number_field :yurt_panel_size, max: 3, min: 1, step: 0.5, class: "form-control" %>
+			<%= f.label :yurt_panel_size, "Yurt panel size (in inches)" %>
+			<%= f.select :yurt_panel_size, options_for_select(%w[1 1.5 2 2.5 3]), {include_blank: true}, class: "form-control" %>
 
 			<%= f.label :yurt_user, "Name of yurt occupant this year" %>
 			<%= f.text_field :yurt_user, class: "form-control" %>

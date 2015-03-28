@@ -1,6 +1,25 @@
 <ul>
-	<li><%= link_to "I have a ticket and am going!", event_intentions_path(@next_event, status: :going_has_ticket), method: :post %></li>
-	<li><%= link_to "I want to go, but do not have a ticket :(", event_intentions_path(@next_event, status: :going_needs_ticket), method: :post %></li>
-	<li><%= link_to "I am NOT going, but do have ticket(s) for sale :)", event_intentions_path(@next_event, status: :not_going_has_ticket), method: :post %></li>
-	<li><%= link_to "None of the above, this year..." , event_intentions_path(@next_event, status: :not_going_no_ticket), method: :post %></li>
+	<li>
+		<%= link_to "I have a ticket and am going!", 
+					event_intentions_path(@next_event, status: :going_has_ticket), 
+					method: :post, class: "btn btn-primary" %>
+	</li>
+	
+	<li>
+		<%= link_to "I want to go, but do not have a ticket :(", 
+					event_intentions_path(@next_event, status: :going_needs_ticket), 
+					method: :post, class: "btn btn-primary" %>
+	</li>
+	
+	<li>
+		<%= link_to "I am NOT going, but do have ticket(s) for sale :)", 
+					event_intentions_path(@next_event, status: :not_going_has_ticket), 
+					method: :post, class: "btn btn-primary" %>
+	</li>
+	
+	<li>
+		<%= link_to "None of the above, this year..." , 
+					event_intentions_path(@next_event, status: :not_going_no_ticket), 
+					method: :post, class: "btn btn-primary" %>
+	</li>
 </ul>

@@ -103,20 +103,20 @@ class UserTest < ActiveSupport::TestCase
   end
 
 
-  # test "sets #next_event_intention equal to next event" do
-  #   event = events(:future)
-  #   assert_nil @user.next_event_intention
-  #   @user.email = "someemail@otheremail.com"
-  #   @user.save!
-  #   @user.intentions.create!(event: event, status: :going_has_ticket)
-  #   assert_equal event, @user.next_event_intention.event
-  # end
+  test "sets #next_event_intention equal to next event" do
+    event = events(:future)
+    assert @user.next_event_intention.new_record?
+    @user.email = "someemail@otheremail.com"
+    @user.save!
+    @user.intentions.create!(event: event, status: :going_has_ticket)
+    assert_equal event, @user.next_event_intention.event
+  end
 
-  # test "#next_event_intention return nil if next event is nil" do
-  #   Event.destroy_all
-  #   assert_nil Event.next_event
-  #   assert_nil @user.next_event_intention
+  test "#next_event_intention return nil if next event is nil" do
+    Event.destroy_all
+    assert_nil Event.next_event
+    assert_nil @user.next_event_intention
 
-  # end
+  end
 
 end

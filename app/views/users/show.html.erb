@@ -11,10 +11,12 @@
 	</aside>
 	<div class="col-md-8">
 
-		<% if @user.next_event_intention.nil? %>
-			<h3>Not responded yet...</h3>
-		<% else %>
-			<%= render "intentions/#{@user.next_event_intention.status}", user: @user %>
+		<% if @next_event.present? %>
+			<% if @user.next_event_intention.new_record? %>
+				<h3>Not responded yet...</h3>
+			<% else %>
+				<%= render "intentions/#{@user.next_event_intention.status}", user: @user %>
+			<% end %>
 		<% end %>
 	</div>
 </div>

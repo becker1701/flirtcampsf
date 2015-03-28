@@ -44,10 +44,17 @@
 
 						
 
-						<%= render "intentions/#{@intention.status}", user: current_user %> <!-- , user: current_user %> -->
-						<%= link_to "Edit", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
+						<%= render "intentions/status", user: current_user %> <!-- , user: current_user %> -->
+						<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
+						<hr>
 
+						<h3>Activites</h3>
 						<%= link_to "Activities", event_activities_path(@next_event), class: "btn btn-primary" %>
+
+						<hr>
+						<h3>Camp Roster</h3>
+						<p>List of camper going</p>
+
 						
 					<% end %>
 				</div>
@@ -57,7 +64,6 @@
 			<% end %>
 		</div>
 	</div>
-
 
 <% else %>
 	<div class="center jumbotron">
