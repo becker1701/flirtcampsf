@@ -32,7 +32,7 @@ User.create!(	name: "Brian Becker",
 end
 
 #create upcoming event
-Event.create!(
+future_event = Event.create!(
 	year: "Burning Man 2015",
 	start_date: Date.today + 120.days,
 	end_date: Date.today + 130.days,
@@ -41,8 +41,16 @@ Event.create!(
 	early_arrival_date: Date.today + 115.days
 	)
 
-	
-event = Event.last
+past_event = Event.create!(
+	year: "Burning Man 2014",
+	start_date: Date.today - 130.days,
+	end_date: Date.today - 120.days,
+	theme: "Old",
+	camp_address: "9:00 & Flirt",
+	early_arrival_date: Date.today - 135.days
+	)
+
+# event = Event.last
 
 User.all.each do |user|
 
@@ -65,28 +73,12 @@ User.all.each do |user|
 		status = false
 	end
 
-
-
-# debugger
-	user.intentions.create!(status: status, event: event, arrival_date: Date.today + 120.days, departure_date: Date.today + 130.days, tickets_for_sale: num_ticket) unless status == false
-
-
-# transportation
-# seats_available
-# lodging
-# yurt_owner
-# yurt_storage
-# yurt_panel_size
-# yurt_user
-# opt_in_meals
-# food_restrictions
-# logistics
-# 
-
+	future_event.intentions.create!(status: status, user: user, arrival_date: Date.today + 120.days, departure_date: Date.today + 130.days, tickets_for_sale: num_ticket) unless status == false
+	past_event.intentions.create!(status: status, user: user, arrival_date: Date.today - 130.days, departure_date: Date.today - 120.days, tickets_for_sale: 0) unless status == false
 end
 
 # debugger
-intentions = event.intentions.where(status: [1,2])
+intentions = future_event.intentions.where(status: [1,2])
 counter = rand(0..3)
 
 intentions.each do |intention|
@@ -96,7 +88,7 @@ intentions.each do |intention|
 		activity_time = Faker::Time.between(2.days.ago, Time.now)
 		# activity_date = Faker::Date.between(event.start_date, event.end_date)
 
-		event.activities.create!(
+		future_event.activities.create!(
 			user: intention.user,
 			publish: n%2 == 0 ? false : true,
 			title: Faker::Lorem.sentence(3).humanize,

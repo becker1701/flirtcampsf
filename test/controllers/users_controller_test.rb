@@ -91,10 +91,28 @@ class UsersControllerTest < ActionController::TestCase
     log_in_as @admin
 
     assert_not @user.intentions.empty?
+    count = @user.intentions.count
 
-    assert_difference 'Intention.count', -1 do 
+    assert_difference 'Intention.count', -count do 
       delete :destroy, id: @user
     end
+  end
+
+  test "nullify activity user_id when user is deleted" do
+    log_in_as @admin
+
+    activity_1 = activities(:one)
+    activity_2 = activities(:past_two)
+
+    assert_not @user.activities.empty?
+    activities = @user.activities
+    assert_no_difference 'Activity.count' do 
+      delete :destroy, id: @user
+    end
+
+    assert_nil activity_1.reload.user_id
+    assert_nil activity_2.reload.user_id
+
   end
 
 end

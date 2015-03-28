@@ -7,7 +7,6 @@ class User < Application
 	has_many :intentions, dependent: :destroy
 	has_many :activities, dependent: :nullify
 
-
 	# has_many :events
 
 	validates :name, presence: true, length: { maximum: 50 }
@@ -21,6 +20,10 @@ class User < Application
 	
 	before_save :downcase_email
 	before_create :generate_activation_digest
+
+	def User.activated
+		where(activated: true).order(:name)
+	end
 
 	def remember
 		self.remember_token = User.new_token
@@ -58,17 +61,23 @@ class User < Application
 
 	def next_event_intention
 		# self.intentions.find_by(event: Event.next_event) 
-		return nil if Event.next_event.nil?
-		Event.next_event.intentions.find_by(user: self)		
+		event = Event.next_event
+		return nil if event.nil?
+		self.intentions.find_by(event: event) || event.intentions.build(user: self)
+
+		# self.intentions.for_next_event	
 	end
 
 	# def test_intentions
 	# 	Event.next_event.intentions.pluck(:user.id)
 	# end
 
-	# def self.test
-	# 	self.includes(:intentions).where(intentions: {event: Event.next_event})
-	# end
+
+
+	def User.next_event_intentions
+
+		# self.where(activated: true).includes(:intentions).where('intentions.event_id = ?', Event.next_event.id.to_s).references(:intentions)
+	end
 
 	# def check_email_existance
 	# 	if Application.email_exists(self.email)

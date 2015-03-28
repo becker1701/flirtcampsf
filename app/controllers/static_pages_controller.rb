@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
   def home
 
   	if logged_in? && @next_event
-  		@intention = current_user.next_event_intention || @next_event.intentions.build(user: current_user)
+  		@intention = current_user.next_event_intention# || @next_event.intentions.build(user: current_user)
       # debugger
   	end
   end

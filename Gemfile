@@ -25,6 +25,7 @@ gem 'faker', '1.4.2'
 # gem 'capistrano-rails', group: :development
 gem "letter_opener", group: :development
 # gem "minitest-rails"
+gem 'rack-mini-profiler'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a  console
@@ -34,18 +35,19 @@ group :development, :test do
   gem 'web-console', '2.0.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '1.1.3'
-  gem 'terminal-notifier'
-  gem 'terminal-notifier-guard'
+  gem 'spring', '~> 1.3.3'
+  gem 'terminal-notifier', '~> 1.6.2'
+  gem 'terminal-notifier-guard', '~> 1.6.4'
   gem 'better_errors'
   gem 'binding_of_caller'
 
 end
 
 group :test do
-	gem 'minitest-reporters', '1.0.5'
-	gem 'mini_backtrace', '0.1.3'
-	gem 'guard-minitest', '2.3.1'
+	gem 'minitest-reporters', '~> 1.0.11'
+	gem 'mini_backtrace'
+  gem 'guard', '~>2.12.5'
+	gem 'guard-minitest', '~>2.4.4'
   # gem "minitest-rails-capybara"
 end
 

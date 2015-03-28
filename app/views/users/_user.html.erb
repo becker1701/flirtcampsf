@@ -19,12 +19,12 @@
 			<% if @next_event.nil? %>
 				No event scheduled yet...
 			<% else %>
-				<%= user.next_event_intention.nil? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %>
+				<%= user.next_event_intention.new_record? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %>
 			<% end %>
 		</div>
 
-	
-		<% unless user.next_event_intention.nil?  %>
+		<% if @next_event.present? %>
+		<% unless user.next_event_intention.new_record?  %>
 			<div class="col-md-4">
 				Tickets for sale: <%= user.next_event_intention.tickets_for_sale.to_i %> <br>
 				<% if user.next_event_intention.going? %>
@@ -53,6 +53,8 @@
 
 			</div>
 		<% end %>
+		<% end %>
+
 	</div>
 
 <% end %>

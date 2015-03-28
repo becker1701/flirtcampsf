@@ -19,8 +19,6 @@ Rails.application.routes.draw do
 
   resources :users
   
-  #TODO: move intentions to nested recourse inside event
-  
   resources :membership_applications, only: [:index, :new, :create, :edit] do
     member do
       get 'thank_you'

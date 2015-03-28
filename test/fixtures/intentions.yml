@@ -35,3 +35,39 @@ for_archer:
   food_restrictions: none
   logistics: I need a few bins transported
   tickets_for_sale: 1
+
+past_1:
+  user: brian
+  event: past
+  status: 1
+  arrival_date: <%= Date.today - 120.days %>
+  departure_date: <%= Date.today - 115.days %>
+  transportation: 1
+  seats_available: 1
+  lodging: 1
+  yurt_owner: true
+  yurt_storage: true
+  yurt_panel_size: 1
+  yurt_user: Lilly and Michelle
+  opt_in_meals: true
+  food_restrictions: none
+  logistics: I need a few bins transported
+  tickets_for_sale: 0
+
+past_2:
+  user: archer
+  event: past
+  status: 1
+  arrival_date: <%= Date.today - 120.days %>
+  departure_date: <%= Date.today - 115.days %>
+  transportation: 1
+  seats_available: 1
+  lodging: 1
+  yurt_owner: true
+  yurt_storage: true
+  yurt_panel_size: 1"
+  yurt_user: Lilly and Michelle
+  opt_in_meals: true
+  food_restrictions: none
+  logistics: I need a few bins transported
+  tickets_for_sale: 1

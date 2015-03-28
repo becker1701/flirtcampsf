@@ -27,3 +27,11 @@ past:
   time: 2014-03-23 17:39:39
   description: MyText
 
+past_two:
+  event: past
+  user: brian
+  publish: false
+  title: MyString
+  day: 2014-03-23
+  time: 2014-03-23 17:39:39
+  description: MyText

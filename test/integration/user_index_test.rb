@@ -48,9 +48,8 @@ class UserIndexTest < ActionDispatch::IntegrationTest
   test "nil next_event shows only message" do
       log_in_as @admin    
       #remove future event to test for index message...
-      Event.next_event.destroy
-      assert_nil Event.next_event
-    
+      Event.destroy_all
+
       get users_path
       users = assigns(:users)
       assert_nil assigns(:next_event)

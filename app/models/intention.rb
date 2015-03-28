@@ -9,6 +9,10 @@ class Intention < ActiveRecord::Base
   enum lodging: { tent: 1, yurt: 2, car: 3, other_lodging: 4 }
   enum transportation: { driving: 1, carpool: 2, bus: 3, walk: 4, other_transportation: 5 }
 
+  def Intention.for_next_event
+  	where(event: Event.next_event)
+  end
+
 	def going?
 		# debugger
 		if self.going_has_ticket? || self.going_needs_ticket?
