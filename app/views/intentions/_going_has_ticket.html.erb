@@ -15,8 +15,12 @@
 
 <h3>Lodging:</h3>
 <p><strong>I'm sleeping in a:</strong> <%= user.next_event_intention.lodging? ? user.next_event_intention.lodging.humanize : "Unknown" %></p>
+<p><strong># occupants in quarters:</strong> <%= user.next_event_intention.lodging_num_occupants %></p>
+
+<h3>Yurt Owner:</h3>
 <p><%= user.next_event_intention.yurt_owner? ? "I'm a yurt owner" : "I am NOT a yurt owner" %></p>
 <p><%= user.next_event_intention.yurt_storage? ? "I am requesting yurt storage" : "I do not need yurt storage" %></p>
+<p><%= user.next_event_intention.shipping_yurt? ? "I am requesting yurt shipping" : "I do not need yurt shipping" %></p>
 <p><strong>Yurt panel size:</strong> <%= user.next_event_intention.yurt_panel_size %></p>
 <p><strong>Yurt occupant:</strong> <%= user.next_event_intention.yurt_user %></p>
 
@@ -29,4 +33,8 @@
 <hr>
 
 <h3>Logistics:</h3>
+<p><strong># Bikes to ship:</strong> <%= user.next_event_intention.logistics_bike %></p>
+<p><strong># Bins to ship:</strong> <%= user.next_event_intention.logistics_bins %></p>
 <p><strong>Things to get transported:</strong> <%= user.next_event_intention.logistics %></p>
+
+

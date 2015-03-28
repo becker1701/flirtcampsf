@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325231837) do
+ActiveRecord::Schema.define(version: 20150328022356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,15 +46,15 @@ ActiveRecord::Schema.define(version: 20150325231837) do
   create_table "intentions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "status"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.date     "arrival_date"
     t.date     "departure_date"
     t.integer  "transportation"
     t.integer  "seats_available"
     t.integer  "lodging"
-    t.boolean  "yurt_owner",        default: false
-    t.boolean  "yurt_storage",      default: false
+    t.boolean  "yurt_owner",            default: false
+    t.boolean  "yurt_storage",          default: false
     t.string   "yurt_panel_size"
     t.string   "yurt_user"
     t.boolean  "opt_in_meals"
@@ -62,6 +62,11 @@ ActiveRecord::Schema.define(version: 20150325231837) do
     t.text     "logistics"
     t.integer  "event_id"
     t.integer  "tickets_for_sale"
+    t.integer  "storage_bikes"
+    t.integer  "logistics_bike"
+    t.integer  "logistics_bins"
+    t.integer  "lodging_num_occupants"
+    t.boolean  "shipping_yurt"
   end
 
   add_index "intentions", ["user_id", "event_id"], name: "index_intentions_on_user_id_and_event_id", using: :btree

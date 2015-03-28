@@ -44,7 +44,7 @@ class IntentionsController < ApplicationController
 private
 
 	def intention_params
-		params.require(:intention).permit(:status, :arrival_date, :departure_date, :transportation, :seats_available, :lodging, :yurt_owner, :yurt_storage, :yurt_panel_size, :yurt_user, :opt_in_meals, :food_restrictions, :logistics, :user_id, :event_id, :tickets_for_sale)
+		params.require(:intention).permit(:status, :arrival_date, :departure_date, :transportation, :seats_available, :lodging, :yurt_owner, :yurt_storage, :yurt_panel_size, :yurt_user, :opt_in_meals, :food_restrictions, :logistics, :user_id, :event_id, :tickets_for_sale, :storage_bikes, :logistics_bike, :logistics_bins, :lodging_num_occupants, :shipping_yurt)
 	end
 
 	def get_intention
