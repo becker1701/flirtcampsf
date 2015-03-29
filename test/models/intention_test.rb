@@ -4,7 +4,29 @@ class IntentionTest < ActiveSupport::TestCase
 
 	def setup
 		@user = users(:brian)
-		@intention = intentions(:one)
+		@intention = Intention.new(
+			  user: users(:brian),
+			  event: events(:future),
+			  status: 1,
+			  arrival_date: Date.today + 120.days,
+			  departure_date: Date.today + 125.days,
+			  transportation: 1,
+			  seats_available: 1,
+			  lodging: 1,
+			  yurt_owner: true,
+			  yurt_storage: true,
+			  yurt_panel_size: 1,
+			  yurt_user: "Lilly and Michelle",
+			  opt_in_meals: true,
+			  food_restrictions: "none",
+			  logistics: "I need a few bins transported",
+			  tickets_for_sale: 1,
+			  storage_bikes: 1,
+			  logistics_bike: 2,
+			  logistics_bins: 2,
+			  lodging_num_occupants: 2,
+			  shipping_yurt: false
+			  )
 	end
 
 	test "user has intention" do
@@ -66,10 +88,6 @@ class IntentionTest < ActiveSupport::TestCase
   	end
 
 
-  	test "invalid if departure date is before arrival date" do
-  		skip
-  	end
-
   	test "invlalid without status" do
   		@intention.status = nil
   		assert_not @intention.valid?
@@ -87,5 +105,11 @@ class IntentionTest < ActiveSupport::TestCase
     @intention.update_attribute(:status, :not_going_no_ticket)
     assert_not @intention.going?
   end
+
+	test "invalid if arrival_date after departure_date" do
+		@intention.arrival_date = @intention.departure_date + 1.day
+		assert_not @intention.valid?
+		assert_includes @intention.errors.full_messages, "Arrival date must be before departure date"
+	end
 
 end

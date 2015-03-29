@@ -16,12 +16,29 @@ class ApplicationHelperTest < ActionView::TestCase
 
 	test "strf_day" do
 		#TEST: test for nil date, date format output, other types of input
-		skip
+		date = nil
+		assert_nil strf_day(date)
+
+		date = "not a date"
+		assert_nil strf_day(date)
+
+
+		date = Date.new(2015, 05, 26)
+		assert_equal "Tue, May 26", strf_day(date)
+
 	end
 
 	test "strf_time" do
 		#TEST: test for nil time, time format output, other types of input
-		skip
+		time = nil
+		assert_nil strf_time(time)
+
+		time = "not a time"
+		assert_nil strf_time(time)
+
+
+		time = Time.new(2015, 05, 26, 12, 0, 0)
+		assert_equal "12:00 PM", strf_time(time)
 	end
 
 

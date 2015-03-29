@@ -16,7 +16,7 @@
 
   <tbody>
     <% @activities.each do |activity| %>
-      <tr>
+      <tr id="activity_id_<%= activity.id %>">
         <td><h4><%= link_to activity.title, [@event, activity] %></h4></td>
         <td><%= strf_day(activity.day) %></td>
         <td><%= strf_time(activity.time) %></td>

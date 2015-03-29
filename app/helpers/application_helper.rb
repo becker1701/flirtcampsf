@@ -19,12 +19,14 @@ module ApplicationHelper
 	end
 
 	def strf_day(date)
-		return nil if date.nil?
+		return nil if date.nil? || 
+						(date.class != Date && date.class != Time && date.class != DateTime)
+
 		date.strftime("%a, %b %e")
 	end
 
 	def strf_time(time)
-		return nil if time.nil?
+		return nil if time.nil? || (time.class != Date && time.class != Time && time.class != DateTime)
 		time.strftime("%I:%M %p")
 	end
 

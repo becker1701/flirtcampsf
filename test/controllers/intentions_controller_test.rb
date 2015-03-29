@@ -32,8 +32,12 @@ class IntentionsControllerTest < ActionController::TestCase
 		assert_redirected_to edit_event_intention_path(@event, intention)
 	end
 
-	test "update intention" do
-		skip
+	test "correct user on update" do
+		log_in_as @user
+		existing_status = @intention.status
+		patch :update, event_id: @event.id, id: @intention, intention: { status: :not_going_no_ticket}
+		assert_not_equal existing_status, @intention.reload.status
+		assert_redirected_to root_path
 	end
 	
 	test "redirect incorrect user on edit" do

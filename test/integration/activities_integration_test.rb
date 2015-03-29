@@ -1,6 +1,8 @@
 require 'test_helper'
 
-class ActivitiesCreateTest < ActionDispatch::IntegrationTest
+class ActivitiesIntegrationTest < ActionDispatch::IntegrationTest
+
+	include MembershipApplicationsHelper
 
 	def setup
 		@user = users(:archer)
@@ -126,11 +128,32 @@ class ActivitiesCreateTest < ActionDispatch::IntegrationTest
 
 		activities.each do |activity|
 			# debugger
-			assert_match activity.user.playa_name, response.body
+			
+			assert_select 'tr[id=?]', "activity_id_#{activity.id}" do 
+				assert_select 'a[href=?]', event_activity_path(@event, activity)
+				assert_match activity.user.playa_name, response.body
+				assert_select 'td', text: strf_day(activity.day)
+				assert_select 'td', text: strf_time(activity.time)
+			end
 			# assert_select 'a[href=?]', edit_event_activity_path(@event, activity)
 		end
 
 		assert_select 'a[href=?]', new_event_activity_path(@event)
 	end
+
+
+	test "activities show page" do
+		log_in_as @user
+		activity = @event.activities.first
+
+		get event_activity_path(@event, activity)
+
+		assert_select 'h3', text: activity.title
+		assert_select 'span[id=?]', "activity_time", text: strf_time(activity.time)
+		assert_select 'span[id=?]', "activity_day", text: strf_day(activity.day)
+		assert_match display_name(activity.user), response.body
+
+	end
+
 
 end

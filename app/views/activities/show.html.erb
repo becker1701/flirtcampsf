@@ -10,12 +10,12 @@
 
     <p>
       <strong>Day:</strong>
-      <%= @activity.day %>
+      <span id="activity_day"><%= strf_day(@activity.day) %></span>
     </p>
 
     <p>
       <strong>Time:</strong>
-      <%= @activity.time %>
+      <span id="activity_time"><%= strf_time(@activity.time) %></span>
     </p>
 
     <p>

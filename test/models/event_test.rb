@@ -17,8 +17,19 @@ class EventTest < ActiveSupport::TestCase
 	end
 
 	test "invalid if end_date before start_date" do
-		skip
+		@event.start_date = @event.end_date + 1.day
+		assert_not @event.valid?
+		assert_includes @event.errors.full_messages, "Start date must be before event end date"
 	end
+
+
+	test "invalid if early_arrival_date after start_date" do
+		@event.early_arrival_date = @event.start_date + 1.day
+		assert_not @event.valid?
+		assert_includes @event.errors.full_messages, "Early arrival date must be before event start date"
+	end
+
+
 
 	test "return event if not passed end date" do
 		@event.save
@@ -41,11 +52,26 @@ class EventTest < ActiveSupport::TestCase
 
 
 	test "return current event if end date has passed" do
+
 		@event.start_date = Date.today - 4.days
+		@event.early_arrival_date = @event.start_date - 1.day
 		@event.end_date = Date.today + 7.days
 		@event.save
-
 		assert_equal @event, Event.next_event
+	end
+
+	test "event date list" do
+		start_day = @event.start_date
+		end_day = @event.end_date
+
+		date_range = (start_day..end_day).to_a
+		num_days = date_range.size
+		event_days = @event.days
+		assert_equal num_days, event_days.count
+
+		date_range.each do |date|
+			assert_includes event_days, date.strftime("%a, %b %-e")
+		end
 	end
 
 end

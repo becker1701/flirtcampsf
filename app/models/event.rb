@@ -6,9 +6,29 @@ class Event < ActiveRecord::Base
 	#TODO: belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
 
 	validates :year, presence: true
+	validate :start_date_before_end_date
+	validate :early_arrival_date_before_start_date
 
 	def self.next_event
 		self.where( "end_date > ?", Date.today ).first
+	end
+
+	def days
+		(self.start_date..self.end_date).to_a.map! { |day| day.strftime("%a, %b %-e") }
+	end
+
+private
+
+	def start_date_before_end_date
+		if self.end_date && self.start_date > self.end_date
+			errors.add(:start_date, "must be before event end date")
+		end
+	end
+
+	def early_arrival_date_before_start_date
+		if self.start_date && self.early_arrival_date > self.start_date
+			errors.add(:early_arrival_date, "must be before event start date")
+		end
 	end
 
 end
