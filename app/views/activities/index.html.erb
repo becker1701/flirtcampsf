@@ -6,7 +6,6 @@
     <tr>
       
       <th>Title</th>
-      <th>Day</th>
       <th>Time</th>
       <th>Creator</th>
       <th>Publish</th>
@@ -14,24 +13,35 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @activities.each do |activity| %>
-      <tr id="activity_id_<%= activity.id %>">
-        <td><h4><%= link_to activity.title, [@event, activity] %></h4></td>
-        <td><%= strf_day(activity.day) %></td>
-        <td><%= strf_time(activity.time) %></td>
-        <td><%= display_name(activity.user) %></td>
-        <td><%= activity.publish? ? "Yes" : "No" %></td>
+    <tbody>
 
-        
-        <% if logged_in? && ( current_user?(activity.user) || admin_user? ) %>
-          <td><%= link_to 'Edit', edit_event_activity_path(@event, activity) %></td>
-          <td><%= link_to 'Remove', [@event, activity], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% @event.date_range.each do |date| %>
+            <div id="event_date_<%= date %>">
+                <tr><td colspan="6"><h4><%= strf_day(date) %></h4></td></tr>
+
+                <% @activities.each do |activity| %>
+                    <% if activity.day == date %>
+                        <tr id="activity_id_<%= activity.id %>">
+                        <td><strong><%= link_to activity.title, [@event, activity] %></strong></td>
+                        <!-- <td><%#= strf_day(activity.day) %></td> -->
+                        <td><%= strf_time(activity.time) %></td>
+                        <td><%= display_name(activity.user) %></td>
+                        <td><%= activity.publish? ? "Yes" : "No" %></td>
+
+
+                        <% if logged_in? && ( current_user?(activity.user) || admin_user? ) %>
+                        <td><%= link_to 'Edit', edit_event_activity_path(@event, activity) %></td>
+                        <td><%= link_to 'Remove', [@event, activity], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                        <% end %>
+
+                        </tr>
+                    <% end %>
+                <% end %>
+
+            </div>
         <% end %>
-        
-      </tr>
-    <% end %>
-  </tbody>
+
+    </tbody>
 </table>
 
 <br>

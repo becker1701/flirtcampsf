@@ -143,7 +143,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get root_path
 		# debugger
-		assert_select 'span[id=?]', "activity-count", text: "(2)"
+		assert_select 'span[id=?]', "activity-count", text: "(12)"
 	end
 
 	test "attending members link is on page" do

@@ -45,6 +45,8 @@ class ActivitiesControllerTest < ActionController::TestCase
     get :index, event_id: @activity.event_id
     assert_response :success
     assert_not_nil assigns(:activities)
+    assert_equal @event.activities.order(:day, :time), assigns(:activities)
+    assert_not_equal @event.activities, assigns(:activities)
   end
 
   test "redirect guest on new activity" do

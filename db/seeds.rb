@@ -85,7 +85,7 @@ intentions.each do |intention|
 	counter.times do |n|
 		# debugger
 		
-		activity_time = Faker::Time.between(2.days.ago, Time.now)
+		activity_time = Faker::Time.between(future_event.start_date, future_event.end_date)
 		# activity_date = Faker::Date.between(event.start_date, event.end_date)
 
 		future_event.activities.create!(

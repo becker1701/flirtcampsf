@@ -17,6 +17,10 @@ class Event < ActiveRecord::Base
 		(self.start_date..self.end_date).to_a.map! { |day| day.strftime("%a, %b %-e") }
 	end
 
+	def date_range
+		(self.start_date..self.end_date).to_a
+	end
+
 private
 
 	def start_date_before_end_date

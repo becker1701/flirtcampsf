@@ -1,22 +1,37 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  
   event: future
   user: brian
   publish: false
   title: MyString
-  day: 2015-03-23
-  time: 2015-03-23 17:39:39
+  <% date = Faker::Time.between(Date.today + 101.days, Date.today + 107.days) %>
+  day: <%= date %>
+  time: <%= date %>
   description: MyText
 
 two:
+  <% date = Faker::Time.between(Date.today + 101.days, Date.today + 107.days) %>
   event: future
   user: archer
   publish: false
   title: MyString
-  day: 2015-03-23
-  time: 2015-03-23 17:39:39
+  day: <%= date %>
+  time: <%= date %>
   description: MyText
+
+<% 10.times do |n| %>
+activity_<%= n %>:
+  <% date = Faker::Time.between(Date.today + 101.days, Date.today + 107.days) %>
+  event: future
+  user: kurt
+  publish: false
+  title: MyString
+  day: <%= date %>
+  time: <%= date %>
+  description: MyText
+<% end %>
 
 past:
   event: past

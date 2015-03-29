@@ -1,5 +1,7 @@
 <% if logged_in? %>
 
+
+
 	<div class="row">
 		<aside class="col-md-4">
 			<section class="user_info">
@@ -59,7 +61,8 @@
 						<small>Who is going to <%= @next_event.year %></small></h3>
 						<% if User.attending_next_event.any? %>
 							<% User.attending_next_event.each do |user| %>
-								<%= link_to(gravatar_for(user, size: 50), user_path(user), style: "margin-bottom: 10px;") %>
+								<%= link_to(gravatar_for(user, size: 50), user_path(user), 
+								data: { toggle: "tooltip", placement: "left", title: display_name(user) }) %>
 							<% end %>
 						<% else %>
 							<p>No one has responded yet.</p>

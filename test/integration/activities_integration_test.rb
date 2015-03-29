@@ -117,25 +117,33 @@ class ActivitiesIntegrationTest < ActionDispatch::IntegrationTest
 
 	test "activities index" do
 		#describe the activities index page
-		assert_equal 2, @event.activities.count
+		assert_equal 12, @event.activities.count
 
 		log_in_as @user
 
 		get event_activities_path(@event)
 		activities = assigns(:activities)
+		assert_equal 12, activities.count
+
 
 		assert_not_nil activities
 
-		activities.each do |activity|
-			# debugger
-			
-			assert_select 'tr[id=?]', "activity_id_#{activity.id}" do 
-				assert_select 'a[href=?]', event_activity_path(@event, activity)
-				assert_match activity.user.playa_name, response.body
-				assert_select 'td', text: strf_day(activity.day)
-				assert_select 'td', text: strf_time(activity.time)
+		@event.date_range.each do |date|
+			assert_select 'div[id=?]', "event_date_#{date}" do
+
+				activities.each do |activity|
+					if activity.day == date	
+						assert_select 'tr[id=?]', "activity_id_#{activity.id}" do 
+							assert_select 'a[href=?]', event_activity_path(@event, activity)
+							assert_match activity.user.playa_name, response.body
+							assert_select 'td', text: strf_day(activity.day), count: 0
+							assert_select 'td', text: strf_time(activity.time)
+						end
+					else
+						assert_select 'tr[id=?]', "activity_id_#{activity.id}", count: 0 
+					end
+				end
 			end
-			# assert_select 'a[href=?]', edit_event_activity_path(@event, activity)
 		end
 
 		assert_select 'a[href=?]', new_event_activity_path(@event)

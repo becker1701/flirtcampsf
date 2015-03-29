@@ -8,7 +8,15 @@ class ActivitiesController < ApplicationController
 
   # GET /activities
   def index
-    @activities = @event.activities.all
+    @activities = @event.activities.order(:day, :time)
+
+
+
+    # @event.days.each do |day|
+    #   instance_variable_set("@#{day.tableize}", @event.activities.by_day(day))
+    # end
+
+
   end
 
   # GET /activities/1

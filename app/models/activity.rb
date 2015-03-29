@@ -6,4 +6,8 @@ class Activity < ActiveRecord::Base
 
   validates :event_id, :day, :time, :title, presence: true
 
+  def Activity.by_day(date)
+  	where(day: date)
+  end
+
 end
