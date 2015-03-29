@@ -21,6 +21,10 @@ class User < Application
 	before_save :downcase_email
 	before_create :generate_activation_digest
 
+	def User.attending_next_event
+		joins(:intentions).merge(Intention.for_next_event)
+	end
+
 	def User.activated
 		where(activated: true).order(:name)
 	end

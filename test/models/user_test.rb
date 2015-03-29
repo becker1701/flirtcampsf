@@ -119,4 +119,13 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test "attending_next_event" do
+    #return all users whose intention status are attenting the next_event
+    event = events(:future)
+    intentions_user_id = event.intentions.where(status: [1,2]).pluck(:user_id).to_a
+    users = User.where(id: intentions_user_id).order(:id)
+    assert_equal users.to_a, User.attending_next_event.order(:id).to_a
+
+  end
+
 end

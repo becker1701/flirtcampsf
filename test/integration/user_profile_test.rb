@@ -35,6 +35,41 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 			else
 				assert_redirected_to edit_event_intention_path(@event, assigns(:intention))
 			end
+
+			get user_path @user
+			assert_template partial: 'intentions/_intention'
+			assert_template partial: 'intentions/_status'
+			if message == "going_has_ticket"
+
+				assert_select 'h3', text: "Tickets:", count: 1
+				assert_select 'h3', text: "Transportation:", count: 1
+				assert_select 'h3', text: "Lodging:", count: 1
+				assert_select 'h3', text: "Yurt Owner:", count: 1
+				assert_select 'h3', text: "Meals:", count: 1
+				assert_select 'h3', text: "Logistics:", count: 1
+			elsif message == "going_needs_ticket"
+				assert_select 'h3', text: "Tickets:", count: 1
+				assert_select 'h3', text: "Transportation:", count: 1
+				assert_select 'h3', text: "Lodging:", count: 1
+				assert_select 'h3', text: "Yurt Owner:", count: 1
+				assert_select 'h3', text: "Meals:", count: 1
+				assert_select 'h3', text: "Logistics:", count: 1
+			elsif message == "not_going_has_ticket"
+				# debugger
+				assert_select 'h3', text: "Tickets:", count: 1
+				assert_select 'h3', text: "Transportation:", count: 0
+				assert_select 'h3', text: "Lodging:", count: 0
+				assert_select 'h3', text: "Yurt Owner:", count: 1
+				assert_select 'h3', text: "Meals:", count: 0
+				assert_select 'h3', text: "Logistics:", count: 0
+			elsif message == "not_going_no_ticket"
+				assert_select 'h3', text: "Tickets:", count: 0
+				assert_select 'h3', text: "Transportation:", count: 0
+				assert_select 'h3', text: "Lodging:", count: 0
+				assert_select 'h3', text: "Yurt Owner:", count: 1
+				assert_select 'h3', text: "Meals:", count: 0
+				assert_select 'h3', text: "Logistics:", count: 0
+			end
 		end
 	end
 
@@ -84,7 +119,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		get root_url
 
 		assert_template 'static_pages/home'
-		assert_no_match @admin.name, response.body
+		# assert_no_match @admin.name, response.body
 		assert_no_match "Lilly and Michelle", response.body
 
 		assert_no_match "blah", response.body
@@ -101,6 +136,28 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		
 		assert_response :success
 
+	end
+
+	test "activites count exists" do
+		@event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
+		log_in_as @user
+		get root_path
+		# debugger
+		assert_select 'span[id=?]', "activity-count", text: "(2)"
+	end
+
+	test "attending members link is on page" do
+		@event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
+		@event.intentions.create!(status: :going_has_ticket, user: @admin, logistics: "who")
+		
+		log_in_as @user
+		get root_url
+		
+		# assert_equal 2, User.attending_next_event.count
+		
+		User.attending_next_event.each do |user|
+			assert_select 'a[href=?]', user_path(user)
+		end
 	end
 
 end

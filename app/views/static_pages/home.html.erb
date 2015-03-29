@@ -48,12 +48,22 @@
 						<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
 						<hr>
 
-						<h3>Activites</h3>
-						<%= link_to "Activities", event_activities_path(@next_event), class: "btn btn-primary" %>
+						<h3>Activites <span id="activity-count">(<%= @next_event.activities.size %>)</span><br>
+						<small>Flirt Camp on-playa activities.</small></h3>
+						<p class="help-block">Do you want to host an on-playa camp activity or a What-When-Where activity to get puclished in the book?</p>
+
+						<%= link_to "View Activities", event_activities_path(@next_event), class: "btn btn-primary" %>
 
 						<hr>
-						<h3>Camp Roster</h3>
-						<p>List of camper going</p>
+						<h3>Camp Roster<br>
+						<small>Who is going to <%= @next_event.year %></small></h3>
+						<% if User.attending_next_event.any? %>
+							<% User.attending_next_event.each do |user| %>
+								<%= link_to(gravatar_for(user, size: 50), user_path(user), style: "margin-bottom: 10px;") %>
+							<% end %>
+						<% else %>
+							<p>No one has responded yet.</p>
+						<% end %>
 
 						
 					<% end %>

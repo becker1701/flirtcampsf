@@ -15,7 +15,8 @@
 			<% if @user.next_event_intention.new_record? %>
 				<h3>Not responded yet...</h3>
 			<% else %>
-				<%= render "intentions/#{@user.next_event_intention.status}", user: @user %>
+				<%= render "intentions/status", user: @user %>
+				<%= render "intentions/intention", user: @user %>
 			<% end %>
 		<% end %>
 	</div>
