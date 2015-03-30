@@ -9,18 +9,22 @@ class EarlyArrivalsController < ApplicationController
 		@early_arrivals = @event.early_arrivals.includes(:user)
 	end
 	
-	def new
-
-	end
+	# def new
+	# 	# @ea = @event.early_arrivals.build
+	# 	@intentions = Intention.going_to_next_event
+	# end
 
 	def create
-		debugger
+		# debugger
 		@ea = @event.early_arrivals.build(ea_params)
 		if @ea.save
 			flash[:success] = "Early Arrival member added"
-			redirect_to event_early_arrivals_url(@event)
+			respond_to do |format|
+				format.html {redirect_to event_early_arrivals_url(@event)}
+				format.js {}
+			end
 		else
-			render :new
+			redirect_to event_early_arrivals_url(@event)
 		end
 	end
 
@@ -40,6 +44,6 @@ private
 	end
 
 	def get_event
-		@event = Event.find_by(id: params[:event_id])
+		@event = @next_event || Event.find_by(id: params[:event_id])
 	end
 end

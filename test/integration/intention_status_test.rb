@@ -4,7 +4,7 @@ class IntentionStatusTest < ActionDispatch::IntegrationTest
   
   def setup
   	@user = users(:brian)
-  	@intention = intentions(:one)
+  	@intention = intentions(:for_brian)
   	@event = events(:future)
   end
 

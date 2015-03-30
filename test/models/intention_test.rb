@@ -112,4 +112,29 @@ class IntentionTest < ActiveSupport::TestCase
 		assert_includes @intention.errors.full_messages, "Arrival date must be before departure date"
 	end
 
+	test "users returned for next event" do 
+		#users that have intentions created for next event
+		intentions_for_next_event = Intention.for_next_event
+		assert_equal 3, intentions_for_next_event.count
+		assert_includes intentions_for_next_event, intentions(:for_brian)
+		assert_includes intentions_for_next_event, intentions(:for_archer)
+		assert_includes intentions_for_next_event, intentions(:for_kurt)
+
+	end 
+
+	test "users returned for going to next event" do 
+		#users that have intentions created for next event
+		other_user = users(:kurt)
+		other_user_intention = intentions(:for_kurt)
+		other_user_intention.status = 3
+		other_user_intention.save!
+		#should be 2 
+		intentions_for_going_to_next_event = Intention.going_to_next_event
+		assert_equal 2, intentions_for_going_to_next_event.count
+		assert_includes intentions_for_going_to_next_event, intentions(:for_brian)
+		assert_includes intentions_for_going_to_next_event, intentions(:for_archer)
+		refute_includes intentions_for_going_to_next_event, other_user_intention
+
+	end 
+
 end

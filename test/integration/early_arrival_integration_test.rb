@@ -51,8 +51,8 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
 
   test "assign early arrival member" do
   	log_in_as @admin
-  	get new_event_early_arrival_path(@event)
-  	assert_template 'early_arrivals/new'
+  	
+
 
   	#get list of users NOT already in the EA list
 

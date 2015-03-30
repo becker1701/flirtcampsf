@@ -14,6 +14,11 @@ class Intention < ActiveRecord::Base
   	where(event: Event.next_event)
   end
 
+  def Intention.going_to_next_event
+    #TODO: test Intention.going
+    for_next_event.where(status: [1,2])
+  end 
+
 	def going?
 		# debugger
 		if self.going_has_ticket? || self.going_needs_ticket?
