@@ -3,7 +3,7 @@ require 'test_helper'
 class EventTest < ActiveSupport::TestCase
 
 	def setup
-		Event.destroy_all
+		# Event.destroy_all
 		@event = Event.new(year: "2015", start_date: Date.today + 150.days, end_date: Date.today + 157.days, theme: "Some Theme", camp_address: "9:00 & F", early_arrival_date: Date.today + 145.days)
 	end
 
@@ -32,6 +32,7 @@ class EventTest < ActiveSupport::TestCase
 
 
 	test "return event if not passed end date" do
+		Event.destroy_all
 		@event.save
 		event_past = @event.dup
 
@@ -42,7 +43,7 @@ class EventTest < ActiveSupport::TestCase
 	end
 
 	test "return no event if end date has passed" do
-		# Event.delete_all
+		Event.destroy_all
 		@event.start_date = Date.today - 100.days
 		@event.end_date = @event.start_date + 7.days
 		@event.save
@@ -52,7 +53,7 @@ class EventTest < ActiveSupport::TestCase
 
 
 	test "return current event if end date has passed" do
-
+		Event.destroy_all
 		@event.start_date = Date.today - 4.days
 		@event.early_arrival_date = @event.start_date - 1.day
 		@event.end_date = Date.today + 7.days
@@ -73,5 +74,12 @@ class EventTest < ActiveSupport::TestCase
 			assert_includes event_days, date.strftime("%a, %b %-e")
 		end
 	end
+
+	test "early arrival association exists" do
+		# @event.save
+		assert @event.early_arrivals.empty?
+	end
+
+
 
 end

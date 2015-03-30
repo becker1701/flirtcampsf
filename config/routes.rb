@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
@@ -38,6 +37,7 @@ Rails.application.routes.draw do
   resources :events do 
     resources :activities
     resources :intentions, only: [:create, :edit, :update]
+    resources :early_arrivals
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

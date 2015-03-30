@@ -182,7 +182,7 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 
 		events.each do |event|
 			assert_select 'a[href=?]', event_activities_path(event)
-			assert_select 'a[href=?]', '#', text: "EA Team"
+			assert_select 'a[href=?]', event_early_arrivals_path(event), text: "EA Team"
 			assert_select 'a[href=?]', '#', text: "Meal Menu"
 			assert_select 'a[href=?]', event_path(event), text: "Remove event"
 

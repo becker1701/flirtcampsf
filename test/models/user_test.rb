@@ -128,4 +128,8 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test "early arrival association exists" do
+    assert_empty @user.early_arrivals
+  end
+
 end
