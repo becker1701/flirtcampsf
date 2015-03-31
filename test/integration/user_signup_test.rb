@@ -24,21 +24,39 @@ class UserSignupTest < ActionDispatch::IntegrationTest
       get signup_path(invite: @invite)
       assert_template 'users/new'
 
-      #POST without invite hidden field redirectes to rot_url
+      #POST valid fields without invite attribute redirectes to root_url
       assert_no_difference 'User.count' do
-        post users_path, user: { name: " ", email:"invlid_email", password: "", password_confirmation: "123", playa_name: " " }
+        post users_path, user: { name: @invite.name, email: @invite.email, password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
       end
       assert_redirected_to root_url
       assert_not is_logged_in?
 
       # invalid user information WITH invite attribute should render :new
   		assert_no_difference 'User.count' do
-  			post users_path, invite: @invite.id, user: { name: " ", email:"invlid_email", password: "", password_confirmation: "123", playa_name: " " }
+  			post users_path, invite: @invite.id, user: { name: @invite.name, email: @invite.email, password: "", password_confirmation: "123", playa_name: " " }
         # debugger
   		end
   		assert_template 'users/new'
       assert_not is_logged_in?
   		assert_select "div[id=?]", "error_explanation"
+      assert_not assigns(:invite).nil?
+      assert_select 'p.form-static-control', text: @invite.email
+      assert_select 'input[type=?]', 'hidden', value: @invite.email
+      assert_select 'input[id=?]', "user_name", value: @invite.name
+
+      #POST with missing email attribute 
+      assert_no_difference 'User.count' do
+        post users_path, invite: @invite.id, user: { name: @invite.name, password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
+        # debugger
+      end
+      assert_template 'users/new'
+      assert_not is_logged_in?
+      assert_select "div[id=?]", "error_explanation"
+      
+      assert_not assigns(:invite).nil?
+      assert_select 'p.form-static-control', text: @invite.email
+      assert_select 'input[type=?]', 'hidden', value: @invite.email
+      assert_select 'input[id=?]', "user_name", value: @invite.name
   
   	end
 
@@ -46,8 +64,13 @@ class UserSignupTest < ActionDispatch::IntegrationTest
 		  
       get signup_path(invite: @invite)
 
+      assert_not assigns(:invite).nil?
+      assert_select 'p.form-static-control', text: @invite.email
+      assert_select 'input[type=?]', 'hidden', value: @invite.email
+      assert_select 'input[id=?]', "user_name", value: @invite.name
+
   		assert_difference 'User.count', 1 do
-  			post users_path, invite: @invite.id, user: { name: "Valid Name", email:"valid_email@example.com", password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
+  			post users_path, invite: @invite.id, user: { name: @invite.name, email: @invite.email, password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
   		end
 
       #do NOT send a aactivation email. Activation happens automatically
@@ -94,4 +117,8 @@ class UserSignupTest < ActionDispatch::IntegrationTest
 
   	end
   	
+    test "signup from invitaiton" do
+
+    end
+
 end

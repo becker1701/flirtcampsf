@@ -28,7 +28,7 @@ class InvitationsController < ApplicationController
 			flash[:success] = "Create your Flirt Camp Profile!"
 			redirect_to signup_url(invite: @invitation.id)
 		else
-			flash[:danger] = "Ah, darn it.  The token used for your email address does not match."
+			flash[:danger] = "Ah, darn it.  Something went wrong."
 			redirect_to root_url
 		end
 	end

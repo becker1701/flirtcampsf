@@ -109,7 +109,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		
 		assert_select "input[value=?]", invitation.id.to_s
 		assert_select "input[value=?]", invitation.name.to_s
-		assert_select "input[value=?]", invitation.email.to_s
+		assert_select "p.form-static-control", invitation.email.to_s
 		
 		delete logout_path
 		assert_not is_logged_in?

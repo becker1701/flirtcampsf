@@ -12,7 +12,12 @@
 <%= f.text_field :hometown, class: "form-control" %>
 
 <%= f.label :email %>
-<%= f.text_field :email, class: "form-control" %>
+<% if @invite.present? %>
+	<p class="form-static-control"><%= @invite.email %></p>
+	<%= f.hidden_field :email, value: @invite.email %>
+<% else %>
+	<%= f.text_field :email, class: "form-control" %>
+<% end %>
 
 <%= f.label :phone %>
 <%= f.phone_field :phone, class: "form-control" %>

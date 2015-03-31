@@ -51,13 +51,16 @@ class IntentionTest < ActiveSupport::TestCase
 		@intention.transportation = :driving
 		assert @intention.valid?
 
-		@intention.transportation = :carpool
+		@intention.transportation = :riding_with_someone
 		assert @intention.valid?
 
 		@intention.transportation = :bus
 		assert @intention.valid?
 
 		@intention.transportation = :walk
+		assert @intention.valid?
+
+		@intention.transportation = :flying_in
 		assert @intention.valid?
 
 		@intention.transportation = :other_transportation

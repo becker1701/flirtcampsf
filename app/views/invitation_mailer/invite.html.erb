@@ -1,3 +1,21 @@
-<%= @invitation.name %>
-<%= @invitation.email %>
-<%= link_to "Create your Flirt Camp profile!", edit_invitation_url(@invitation.invite_token, email: @invitation.email) %>
+<p>Dear <%= @invitation.name %>,</p>
+
+<p>You have been invited to create a profile at Flirt Camp Online!</p>
+
+<p>Each year, folks camping with Flirt Camp at Burning Man will be required to fill out the questionaire so we can plan our week accordingly.  The website will also allow you to see:
+<ul>
+	<li>Who has seats available for carpooling</li>
+	<li>When folks are arriving and departing</li>
+	<li>Who owns yurts, and who is willing to rent them out next year</li>
+	<li>Our flirty, fun camp activites!</li>
+	<li>Create a camp activity</li>
+	<li>Where our camp is this year</li>
+</ul>
+</p>
+
+<p>Eventually, this will be a place where we can all share our experiences at Burning Man, invite others to participate, and keep our Flirt Camp community communicating year-round!</p>
+
+<p><%= link_to "Create your Flirt Camp profile and lets get out to the Playa!!", edit_invitation_url(@invitation.invite_token, email: @invitation.email) %></p>
+
+<p>Sincerely,</p>
+<p>~Camp Master</p>

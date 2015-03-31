@@ -26,8 +26,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    
-
+    # debugger
   	@user = User.new(user_params)
   	if @user.save
       # @user.send_activation_email
@@ -71,7 +70,7 @@ private
 	end
 
 	def user_params
-		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :invitation)
+		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :invitation, :hometown)
 	end
 
 
