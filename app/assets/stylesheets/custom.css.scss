@@ -199,13 +199,12 @@ input {
 }
 
 .checkbox {
-	margin-top: 10px;
-	margin-bottom: 20px;
-	/*margin-left: 19px;*/
-	span {
+	/*margin: 10px 20px;*/
+	padding: 5px 20px;
+/*	span {
 		margin-left: 20px;
 		font-weight: normal;
-	}
+	}*/
 }
 
 #remember_me {

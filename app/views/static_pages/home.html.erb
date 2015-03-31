@@ -73,7 +73,6 @@
 
 			<% if @next_event.present? %>
 				<div class="event_user_header">
-					<p><em>Next event...</em></p>	
 					<h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
 					<h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
 					<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
