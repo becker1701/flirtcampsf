@@ -3,20 +3,21 @@
 <h1>Early Arrivals</h1>
 <h1><small><%= @event.year %></small></h1>
 	
+<div class="row">
 
 	<% if @early_arrivals.any? %>
 		
 		<% @early_arrivals.each do |ea| %>
-		<div class="row" id="ea_id_<%= ea.id %>">
-			<div class="col-md-2">
-				<%= gravatar_for ea.user %>
-			</div>
+			<div class="row" id="ea_id_<%= ea.id %>">
+				<div class="col-md-2">
+					<%= gravatar_for ea.user %>
+				</div>
 
-			<div class="col-md-10">
-				<%= link_to display_name(ea.user), user_path(ea.user) %> | 
-			
-				<%= link_to "Remove from EA List", event_early_arrival_path(@event, ea), method: :delete, data: { confirm: "Are you sure?"} %>
-			</div>
+				<div class="col-md-10">
+					<%= link_to display_name(ea.user), user_path(ea.user) %> | 
+				
+					<%= link_to "Remove from EA List", event_early_arrival_path(@event, ea), method: :delete, data: { confirm: "Are you sure?"} %>
+				</div>
 			</div>
 		<% end %>
 		
@@ -25,5 +26,4 @@
 			<p>No Early Arrival Members assigned.</p>
 		</div>
 	<% end %>
-
-	<%= link_to "Assign Early Arrival", new_event_early_arrival_path(@event), class: "btn btn-primary" %>
+</div>

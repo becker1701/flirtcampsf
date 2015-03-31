@@ -29,9 +29,13 @@ class UserIndexTest < ActionDispatch::IntegrationTest
 
       if intention
         # debugger
-        assert_select 'div[id=?]', "user_id_#{user.id}", text: intention.status.humanize
+        assert_select 'span[id=?]', "intention_status_#{user.id}", text: intention.status.humanize
       else
         assert_select 'div[id=?]', "user_id_#{user.id}", text: "Not responded to #{next_event.year}"
+      end
+
+      if user.ea_exists?(next_event)
+        assert_select 'span[id=?]', "ea_status_#{user.id}", text: "Early Arrival Team"
       end
 
       unless user == @admin

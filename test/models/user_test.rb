@@ -132,4 +132,37 @@ class UserTest < ActiveSupport::TestCase
     assert_empty @user.early_arrivals
   end
 
+  test "assign_ea adds and unassign_ea deletes and ea_exists? return TF for early_arrival record for user" do
+
+    assert @user.valid?
+    @user.save!
+    event = events(:future)
+
+    assert_empty @user.early_arrivals
+
+    assert_not @user.ea_exists?(event)
+
+    assert_difference 'EarlyArrival.count', 1 do
+      @user.assign_ea(event)
+    end
+
+    ea = EarlyArrival.last
+    
+    assert @user.ea_exists?(event)
+
+    assert_not_empty @user.early_arrivals
+    assert_equal ea, @user.early_arrivals.find_by(event: event)
+    assert_equal 1, @user.early_arrivals.count
+
+    assert_difference 'EarlyArrival.count', -1 do
+      @user.unassign_ea(event)
+      # debugger
+    end
+
+    assert_not @user.ea_exists?(event)
+    assert_empty @user.reload.early_arrivals
+
+  end
+
+
 end

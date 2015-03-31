@@ -149,6 +149,12 @@ aside {
 	}
 }
 
+.camp_info_side {
+	list-style-type: none; 
+	margin-left: 5px; 
+	padding: 2px;
+}
+
 .gravatar {
 	float: left;
 	margin-right: 10px;
@@ -193,7 +199,7 @@ input {
 }
 
 .checkbox {
-	margin-top: -10px;
+	margin-top: 10px;
 	margin-bottom: 20px;
 	/*margin-left: 19px;*/
 	span {
@@ -261,4 +267,17 @@ div.user_intention {
 	}
 
 	margin-top: 10px;
+}
+
+#home-next-event {
+	text-align: center;
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	margin: 20px 0;
+	padding: 20px;
+
+	#home_activites_list {
+		border-bottom: 1px solid $gray-med-light;
+		border-width: 90%;
+	}
 }

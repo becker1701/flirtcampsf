@@ -11,7 +11,7 @@
   <div class="field">
     <%= f.label :day %><br>
     <%#= f.date_field :day, class: "form-control" %>
-    <%= f.select :day, options_for_select(Event.next_event.date_range.map { |date| [strf_day(date), date]}, selected: @activity.day), {insert_blank: "Select day"}, class: "form-control" %>
+    <%= f.select :day, options_for_select(Event.next_event.date_range.map { |date| event_extended_date_select_formatter(@event, date) }, selected: @activity.day), {include_blank: "Select day"}, class: "form-control" %>
   </div>
   <div class="field">
     <%= f.label :time %><br>

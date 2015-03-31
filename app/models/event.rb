@@ -22,6 +22,14 @@ class Event < ActiveRecord::Base
 		(self.start_date..self.end_date).to_a
 	end
 
+	def extended_date_range
+		((self.early_arrival_date - 2.days)..(self.end_date + 2.days)).to_a
+	end
+
+	def early_arrival_list
+		self.early_arrivals.includes(:user)
+	end
+
 private
 
 	def start_date_before_end_date

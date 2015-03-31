@@ -80,6 +80,13 @@ class EventTest < ActiveSupport::TestCase
 		assert @event.early_arrivals.empty?
 	end
 
-
+	test "#extended_date_range" do
+		edr = @event.extended_date_range
+		assert_includes edr, @event.early_arrival_date - 2.days
+		assert_includes edr, @event.start_date
+		assert_includes edr, @event.end_date
+		assert_includes edr, @event.end_date + 2.days
+		assert_operator 18, :>=, edr.size
+	end
 
 end

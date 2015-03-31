@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :events do 
     resources :activities
     resources :intentions, only: [:create, :edit, :update]
-    resources :early_arrivals
+    resources :early_arrivals, only: [:index, :create, :destroy]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

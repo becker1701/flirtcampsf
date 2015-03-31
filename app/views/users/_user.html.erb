@@ -19,7 +19,8 @@
 			<% if @next_event.nil? %>
 				No event scheduled yet...
 			<% else %>
-				<%= user.next_event_intention.new_record? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %>
+				<span id="intention_status_<%= user.id %>"><%= user.next_event_intention.new_record? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %></span><br>
+				<span id="ea_status_<%= user.id %>"><%= user.ea_exists?(@next_event) ? "Early Arrival Team" : "" %></span>
 			<% end %>
 		</div>
 

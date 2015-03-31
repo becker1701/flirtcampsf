@@ -46,13 +46,40 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
   		end
   	end
 
-  	assert_select 'a[href=?]', new_event_early_arrival_path
   end
 
   test "assign early arrival member" do
-  	log_in_as @admin
-  	
+  		
+  	@user.early_arrivals.destroy_all
+  	@user.reload
 
+  	log_in_as @admin
+  	get user_path(@user)
+
+
+  	assert_select 'form[action=?]', event_early_arrivals_path(@event)
+  	assert_select 'input[type=?]', 'submit', value: "Assign to Early Arrival"
+
+  	assert_difference 'EarlyArrival.count', 1 do
+  		# @user.assign_ea(@event)
+  		post event_early_arrivals_path(@event), early_arrival: { user_id: @user.id }
+  	end
+
+  	ea = assigns(:ea)
+
+  	assert_redirected_to user_path(@user)
+  	follow_redirect!
+
+  	
+  	assert_select 'form[action=?]', event_early_arrival_path(@event, ea)
+  	assert_select 'input[type=?]', 'submit', value: "Unassign from Early Arrival"
+  	
+# debugger
+  	assert_difference 'EarlyArrival.count', -1 do
+  		delete event_early_arrival_path(@event, ea)
+  		
+  	end
+  	assert_redirected_to user_path(@user)
 
   	#get list of users NOT already in the EA list
 

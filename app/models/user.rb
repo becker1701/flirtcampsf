@@ -72,6 +72,19 @@ class User < Application
 		# self.intentions.for_next_event	
 	end
 
+	def assign_ea(event)
+		self.early_arrivals.create!(event: event)
+	end
+
+	def unassign_ea(event)
+		# debugger
+		self.early_arrivals.find_by(event: event).destroy
+	end
+
+	def ea_exists?(event)
+		self.early_arrivals.find_by(event: event)
+	end
+
 	# def test_intentions
 	# 	Event.next_event.intentions.pluck(:user.id)
 	# end

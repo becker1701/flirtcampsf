@@ -14,18 +14,34 @@
 			<br>
 			<h3>Tickets:</h3>
 			<%= f.label :tickets_for_sale, "Ticket qty for sale?" %>
-			<%= f.select :tickets_for_sale, options_for_select(%w[0 1 2 3 4], selected: @intention.tickets_for_sale), {}, class: "form-control" %>
+			<%= f.select :tickets_for_sale, 
+				options_for_select(%w[0 1 2 3 4], 
+					selected: @intention.tickets_for_sale), 
+				{}, 
+				class: "form-control" %>
 
 			<br>
 			<h3>Transportation:</h3>
 			<%= f.label :transportation, "I'm getting there by:" %>
-			<%= f.select :transportation, options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.transportation), {include_blank: "Please select your transportation..."}, { class: "form-control"} %>
+			<%= f.select :transportation, 
+				options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]}, 
+					selected: @intention.transportation), 
+				{include_blank: "Please select your transportation..."}, 
+				class: "form-control" %>
 
 			<%= f.label :arrival_date, "Arrival date:" %>
-			<%= f.date_field :arrival_date %>
+    		<%= f.select :arrival_date, 
+    			options_for_select(Event.next_event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) }, 
+    				selected: @intention.arrival_date),
+    			{include_blank: "Select arrival day"}, 
+    			class: "form-control" %>
 			
 			<%= f.label :departure_date, "Departure date:" %>
-			<%= f.date_field :departure_date %>
+    		<%= f.select :departure_date, 
+    			options_for_select(Event.next_event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) }, 
+    				selected: @intention.departure_date), 
+    			{include_blank: "Select departure day"}, 
+    			class: "form-control" %>
 			
 			<%= f.label :seats_available, "Seats available for carpool:" %>
 			<%= f.select :seats_available, options_for_select(%w[0 1 2 3 4 5 6 7 8 9 10], selected: @intention.seats_available), {}, class: "form-control" %>
@@ -41,7 +57,7 @@
 			
 			<br>
 			<h3>Yurt Owners:</h3>
-			<%= f.label :yurt_owner, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+			<%= f.label :yurt_owner, class: "checkbox" do %>
 				<%= f.check_box :yurt_owner %>
 				<span>Check if you own a yurt</span>
 			<% end %>
@@ -53,12 +69,12 @@
 			<span class="help-block">These folks will be responsible for storage fees for the year.</span>
 			<%= f.text_field :yurt_user, class: "form-control" %>
 			
-			<%= f.label :shipping_yurt, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+			<%= f.label :shipping_yurt, class: "checkbox" do %>
 				<%= f.check_box :shipping_yurt %>
 				<span>Check if you need to ship a yurt to the Playa</span>
 			<% end %>
 
-			<%= f.label :yurt_storage, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+			<%= f.label :yurt_storage, class: "checkbox" do %>
 				<%= f.check_box :yurt_storage %>
 				<span>Check to request yurt storage</span>
 			<% end %>
@@ -67,7 +83,7 @@
 			<br>
 			<h3>Meals:</h3>
 
-			<%= f.label :opt_in_meals, class: "checkbox", style: "margin-left: 18px; margin-top: 10px;" do %>
+			<%= f.label :opt_in_meals, class: "checkbox" do %>
 				<%= f.check_box :opt_in_meals %>
 				<span>Check if you would like to be a part of our daily camp meal</span>
 			<% end %>

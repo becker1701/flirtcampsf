@@ -47,7 +47,7 @@ class EarlyArrivalsControllerTest < ActionController::TestCase
 		assert_difference 'EarlyArrival.count', -1 do
 			delete :destroy, event_id: @event.id, id: @ea
 		end
-		assert_redirected_to event_early_arrivals_path(@event)
+		assert_redirected_to @ea.user
 	end
 
 	# test "success on new when admin" do
@@ -72,7 +72,10 @@ class EarlyArrivalsControllerTest < ActionController::TestCase
 		assert_difference 'EarlyArrival.count', 1 do
 			post :create, event_id: @event.id, early_arrival: { user_id: @user.id }
 		end
-		assert_redirected_to event_early_arrivals_path(@event)
+		assert_equal @user, assigns(:user), "User assigned not equal"
+		assert_equal @event, assigns(:event), "Event assigned not equal"
+		assert_redirected_to user_path(assigns(:user))
+		# assert_not flash.empty?
 
 	end 
 

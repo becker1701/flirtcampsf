@@ -13,19 +13,59 @@
 			
 			<% if @next_event.present? %>
 				<section>
+
 					<div id="camp_info">
-					<strong>Camp Info</strong>
+				
+						<p><strong>Camp Info</strong></p>
 					
-						<span id="camp_address">Address: <%= @next_event.camp_address %></span>
-						<span id="camp_ea_date">EA Date: <%= @next_event.early_arrival_date.strftime("%B %e") %></span>
+						<ul class="camp_info_side">
+							<li>Address: <%= @next_event.camp_address %></li>
+						</ul>
+						
+					</div>
+
+					<div id="camp_organizer">
+						<p><strong>Camp Organizer:</strong></p>
+						
+						<ul class="camp_info_side">
+							<li>Camp Master</li>
+							<li><%= mail_to "campmaster@flirtcampsf.com" %></li>
+						</ul>
+					</div>
+					
+
+					<div id="ea_team">
+						
+						<p><strong>EA Team:</strong></p>
+						
+						<ul class="camp_info_side">
+							<li>
+								<span id="camp_ea_date">EA Date: <%= @next_event.early_arrival_date.strftime("%B %e") %></span>
+							</li>	
+						
+							<% if @next_event.early_arrival_list.any? %>
+							
+								<% @next_event.early_arrival_list .each do |ea| %>
+									<%= content_tag(:li, display_name(ea.user)) %>
+								<% end %>
+							</ul>
+						<% else %>
+							None
+						<% end %>
 					
 					</div>
 				</section>
 			<% end %>
+			
+			<div id="prev_years">
 
-			<p>Camp Organizer:</p>
-			<p>EA Team:</p>
-			<p>Previous Years:</p>
+				<p><strong>Previous Years:</strong></p>
+				
+				<ul style="list-style-type: none; margin-left: 5px; padding: 2px;">
+					<li>Coming Soon...</li>
+				</ul>
+			</div>
+				
 
 		</aside>
 		<div class="col-md-8">
@@ -33,9 +73,10 @@
 
 			<% if @next_event.present? %>
 				<div class="event_user_header">
-						<h1 class="text-left"><%= @next_event.year %></h1>
-						<h1><small><%= @next_event.theme %></small></h1>
-						<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
+					<p><em>Next event...</em></p>	
+					<h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
+					<h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
+					<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
 						
 				</div>
 
@@ -94,6 +135,27 @@
 			<%= link_to "I am an existing member", new_existing_member_request_path, class: "btn btn-primary btn-lg" %>
 
 	</div>
+
+	<div id="home-next-event">
+		<% if @next_event.present? %>
+			<h1>
+				<%= @next_event.year %>
+			<br>	
+			<small>Flirt Camp Address: <%= @next_event.camp_address %></small></h1>
+			<% if @next_event.activities.any? %>
+				<h3>Flirt Camp Activities:</h3>
+				<div>
+					<% @next_event.activities.order(:day,:time).each do |activity| %>
+						<div class="row" id="home_activites_list">
+							<%= content_tag(:div, "#{strf_day(activity.day)} @ #{strf_time(activity.time)}", class: "text-left col-md-3 col-md-offset-2") %>
+							<%= content_tag(:div, "#{activity.title} with #{display_name(activity.user)}", class: "text-left col-md-5") %>
+						</div>
+					<% end %>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+
 
 <% end %>
 

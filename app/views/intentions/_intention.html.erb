@@ -1,70 +1,131 @@
-<% if user.next_event_intention.going_has_ticket? || 
-	  user.next_event_intention.going_needs_ticket? ||
-	  user.next_event_intention.not_going_has_ticket? %>
-<hr>
+<table class="table table-hover">
+	<tbody>
+		<% if user.next_event_intention.going_has_ticket? || 
+			  user.next_event_intention.going_needs_ticket? ||
+			  user.next_event_intention.not_going_has_ticket? %>
 
-<h3>Tickets:</h3>
-<p><strong>Ticket qty for sale?:</strong> <%= user.next_event_intention.tickets_for_sale %></p>
+			<tr>
+				<td colspan="2"><h3>Tickets:</h3></td>
+			</tr>
+			<tr>
+				<td><strong>Ticket qty for sale?:</strong></td>
+				<td><%= user.next_event_intention.tickets_for_sale %></td>
+			</tr>
 
-<% end %>
+		<% end %>
 
+		<% if user.next_event_intention.going_has_ticket? || 
+			  user.next_event_intention.going_needs_ticket? %>
 
-<% if user.next_event_intention.going_has_ticket? || 
-	  user.next_event_intention.going_needs_ticket? %>
-
-<hr>
-
-<h3>Transportation:</h3>
-<p><strong>Arrival date:</strong> <%= user.next_event_intention.arrival_date %></p>
-<p><strong>Departure date:</strong> <%= user.next_event_intention.departure_date %></p>
-<p><strong>I'm getting there by:</strong> <%= user.next_event_intention.transportation? ? user.next_event_intention.transportation.humanize : "Unknown" %></p>
-<p><strong>Seats available for carpool:</strong> <%= user.next_event_intention.seats_available %></p>
-
-<% end %>
-
-
-<% if user.next_event_intention.going_has_ticket? || 
-	  user.next_event_intention.going_needs_ticket? %>
-<hr>
-
-<h3>Lodging:</h3>
-<p><strong>I'm sleeping in a:</strong> <%= user.next_event_intention.lodging? ? user.next_event_intention.lodging.humanize : "Unknown" %></p>
-<p><strong># occupants in quarters:</strong> <%= user.next_event_intention.lodging_num_occupants %></p>
-
-<% end %>
-
-<% if user.next_event_intention.going_has_ticket? || 
-	  user.next_event_intention.going_needs_ticket? || 
-	  user.next_event_intention.not_going_has_ticket? || 
-	  user.next_event_intention.not_going_no_ticket? %>
-<hr>
-<h3>Yurt Owner:</h3>
-<p><%= user.next_event_intention.yurt_owner? ? "I'm a yurt owner" : "I am NOT a yurt owner" %></p>
-<p><%= user.next_event_intention.yurt_storage? ? "I am requesting yurt storage" : "I do not need yurt storage" %></p>
-<p><%= user.next_event_intention.shipping_yurt? ? "I am requesting yurt shipping" : "I do not need yurt shipping" %></p>
-<p><strong>Yurt panel size:</strong> <%= user.next_event_intention.yurt_panel_size %></p>
-<p><strong>Yurt occupant:</strong> <%= user.next_event_intention.yurt_user %></p>
-
-<% end %>
-
-<% if user.next_event_intention.going_has_ticket? || 
-	  user.next_event_intention.going_needs_ticket? %>
-<hr>
-
-<h3>Meals:</h3>
-<p><%= user.next_event_intention.opt_in_meals? ? "I would like to partake in camp dinners" : "I do NOT want to partake in camp dinners"  %></p>
-<p><strong>Food restrictions:</strong> <%= user.next_event_intention.food_restrictions %></p>
-
-<% end %>
+			<tr>
+				<td colspan="2"><h3>Transportation:</h3></td>
+			</tr>
+			<tr>
+				<td><strong>Arrival date:</strong></td>
+				<td><%= strf_day(user.next_event_intention.arrival_date) %></td>
+			</tr>
+			<tr>
+				<td><strong>Departure date:</strong></td>
+				<td><%= strf_day(user.next_event_intention.departure_date) %></td>
+			</tr>
+			<tr>
+				<td><strong>I'm getting there by:</strong></td>
+				<td><%= user.next_event_intention.transportation? ? user.next_event_intention.transportation.humanize : "Unknown" %></td>
+			</tr>
+			<tr>
+				<td><strong>Seats available for carpool:</strong></td>
+				<td><%= user.next_event_intention.seats_available %></td>
+			</tr>
+		
+		<% end %>
 
 
-<% if user.next_event_intention.going_has_ticket? || 
-	  user.next_event_intention.going_needs_ticket? %>
-<hr>
+		<% if user.next_event_intention.going_has_ticket? || 
+			  user.next_event_intention.going_needs_ticket? %>
+			<tr>
+				<td colspan="2"><h3>Lodging:</h3></td>
+			</tr>
+			<tr>
+				<td><strong>I'm sleeping in a:</strong></td>
+				<td><%= user.next_event_intention.lodging? ? user.next_event_intention.lodging.humanize : "Unknown" %></td>
+			</tr>
+			<tr>
+				<td><strong># occupants in quarters:</strong></td>
+				<td><%= user.next_event_intention.lodging_num_occupants %></td>
+			</tr>
 
-<h3>Logistics:</h3>
-<p><strong># Bikes to ship:</strong> <%= user.next_event_intention.logistics_bike %></p>
-<p><strong># Bins to ship:</strong> <%= user.next_event_intention.logistics_bins %></p>
-<p><strong>Things to get transported:</strong> <%= user.next_event_intention.logistics %></p>
+		<% end %>
 
-<% end %>
+		<% if user.next_event_intention.going_has_ticket? || 
+			  user.next_event_intention.going_needs_ticket? || 
+			  user.next_event_intention.not_going_has_ticket? || 
+			  user.next_event_intention.not_going_no_ticket? %>
+			
+			<tr>
+				<td colspan="2"><h3>Yurt Owner:</h3></td>
+			</tr>
+			<tr>
+				<td><strong>Yurt owner?</strong></td>
+				<td><%= user.next_event_intention.yurt_owner? ? "Yes" : "No" %></td>
+			</tr>
+			<tr>
+				<td><strong>Yurt storage requested?</strong></td>
+				<td><%= user.next_event_intention.yurt_storage? ? "Yes" : "No" %></td>
+			</tr>
+		
+			<tr>
+				<td><strong>Yurt shipping requested?</strong></td>
+				<td><%= user.next_event_intention.shipping_yurt? ? "Yes" : "No" %></td>
+			</tr>
+			<tr>
+				<td><strong>Yurt panel size:</strong></td>
+				<td><%= user.next_event_intention.yurt_panel_size %></td>
+			</tr>
+			<tr>
+				<td><strong>Yurt occupant:</strong></td>
+				<td><%= user.next_event_intention.yurt_user %></td>
+			</tr>
+
+		<% end %>
+
+
+		<% if user.next_event_intention.going_has_ticket? || 
+			  user.next_event_intention.going_needs_ticket? %>
+			<tr>
+				<td colspan="2"><h3>Meals:</h3></td> 	
+			</tr>
+			<tr>
+				<td><strong>Joining us for dinner?</strong></td>
+				<td><%= user.next_event_intention.opt_in_meals? ? "Wouldn't miss it!" : "No, not this year"  %></td>
+			</tr>
+			<tr>
+				<td><strong>Food restrictions:</strong></td>
+				<td><%= user.next_event_intention.food_restrictions %></td>
+			</tr>
+
+		<% end %>
+
+
+		<% if user.next_event_intention.going_has_ticket? || 
+			  user.next_event_intention.going_needs_ticket? %>
+
+			<tr>
+				<td colspan="2"><h3>Logistics:</h3></td>
+			</tr>
+			<tr>
+				<td><strong># Bikes to ship:</strong></td>
+				<td><%= user.next_event_intention.logistics_bike %></td>
+			</tr>
+			<tr>
+				<td><strong># Bins to ship:</strong></td>
+				<td><%= user.next_event_intention.logistics_bins %></td>
+			</tr>
+
+			<tr>
+				<td><strong>Things to get transported:</strong></td>
+				<td><%= user.next_event_intention.logistics %></td>
+			</tr>
+
+		<% end %>
+	</tbody>
+</table>

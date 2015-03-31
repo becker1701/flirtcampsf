@@ -30,4 +30,16 @@ module ApplicationHelper
 		time.strftime("%I:%M %p")
 	end
 
+	def event_extended_date_select_formatter(event, date)
+		if date == event.start_date
+			["#{strf_day(date)} - Event Starts", date]
+		elsif date == event.end_date
+			["#{strf_day(date)} - Event Ends", date]
+		elsif date == event.early_arrival_date
+			["#{strf_day(date)} - Early Arrival Starts", date]
+		else
+			[strf_day(date), date] 
+		end
+	end
+	
 end
