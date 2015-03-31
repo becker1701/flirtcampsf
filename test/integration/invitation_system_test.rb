@@ -186,7 +186,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		# assert_redirected_to edit_membership_application_path(@membership_app)
 		# follow_redirect!
 		assert_template "membership_applications/edit"
-		assert_match @membership_app.birth_name, response.body
+		assert_match @membership_app.name, response.body
 		assert_match @membership_app.playa_name, response.body
 		assert_match @membership_app.email, response.body
 		assert_select "a", "Approve"

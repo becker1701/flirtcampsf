@@ -61,7 +61,7 @@ class MembershipApplicationsController < ApplicationController
 private
 # 
 	def membership_app_params
-		params.require(:membership_application).permit( :birth_name, :playa_name, :email, :phone, :home_town, :possibility, :contribution, :passions, :years_at_bm, :approved)
+		params.require(:membership_application).permit(:name, :playa_name, :email, :phone, :home_town, :possibility, :contribution, :passions, :years_at_bm, :approved)
 	end
 
 	def get_membership_app

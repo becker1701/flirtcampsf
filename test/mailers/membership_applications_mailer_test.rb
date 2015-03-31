@@ -15,7 +15,7 @@ class MembershipApplicationsMailerTest < ActionMailer::TestCase
     assert_equal ["campmaster@flirtcampsf.com"], mail.to
     assert_equal ["no-reply@flirtcampsf.com"], mail.from
 
-    assert_match @membership_app.birth_name, mail.body.encoded
+    assert_match @membership_app.name, mail.body.encoded
     assert_match @membership_app.email, mail.body.encoded
 
   end
@@ -27,7 +27,7 @@ class MembershipApplicationsMailerTest < ActionMailer::TestCase
     assert_equal [@membership_app.email], mail.to
     assert_equal ["no-reply@flirtcampsf.com"], mail.from
     
-    assert_match @membership_app.birth_name, mail.body.encoded
+    assert_match @membership_app.name, mail.body.encoded
     assert_match @membership_app.playa_name, mail.body.encoded
     assert_match @membership_app.email, mail.body.encoded
     assert_match @membership_app.phone, mail.body.encoded
@@ -41,7 +41,7 @@ class MembershipApplicationsMailerTest < ActionMailer::TestCase
 
 
   test "approve" do
-    invitation = Invitation.create!(name: @membership_app.birth_name, email: @membership_app.email)
+    invitation = Invitation.create!(name: @membership_app.name, email: @membership_app.email)
     assert_not_nil invitation.invite_token
 
     mail = InvitationMailer.invite(invitation)

@@ -8,8 +8,8 @@
 		<%= form_for @existing_member_request, url: existing_member_requests_path do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 
-			<%= f.label :birth_name %>
-			<%= f.text_field :birth_name, class: "form-control" %>
+			<%= f.label :name %>
+			<%= f.text_field :name, class: "form-control" %>
 
 			<%= f.label :playa_name %>
 			<%= f.text_field :playa_name, class: "form-control" %>

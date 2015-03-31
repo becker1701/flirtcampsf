@@ -13,14 +13,14 @@ class MembershipApplicationsControllerTest < ActionController::TestCase
 
 	test "POST invalid info" do
 		assert_no_difference 'MembershipApplication.count' do 
-			post :create, membership_application: { birth_name: " "}
+			post :create, membership_application: { name: " "}
 		end
 		assert_template 'membership_applications/new'
 	end
 
 	test "POST valid info" do
 		assert_difference 'MembershipApplication.count', 1 do
-			post :create, membership_application: { birth_name: "Brian Someone", playa_name: "Hoochie Mamma", email: "brian1@examaple.com", 
+			post :create, membership_application: { name: "Brian Someone", playa_name: "Hoochie Mamma", email: "brian1@examaple.com", 
 																			phone: "(123) 456-7890", home_town: "Some Town, CA", 
 																			possibility: "Some amoutn of text that says this", 
 																			contribution: "Some amoutn of text that says this", 
@@ -29,7 +29,7 @@ class MembershipApplicationsControllerTest < ActionController::TestCase
 		end
 
 		member_app = assigns(:membership_app)
-		assert_equal "Brian Someone", member_app.birth_name
+		assert_equal "Brian Someone", member_app.name
 		assert_response :redirect
 		assert_redirected_to thank_you_membership_application_path(member_app)
 

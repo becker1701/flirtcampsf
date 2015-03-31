@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 first:
-  birth_name: Brian Example
+  name: Brian Example
   playa_name: Camp Master
   email: campmaster123@example.com
   phone: (707) 123-4567
@@ -13,7 +13,7 @@ first:
   approved: false
 
 # two:
-#   birth_name: MyString
+#   name: MyString
 #   playa_name: MyString
 #   email: MyString
 #   phone: MyString
@@ -27,7 +27,7 @@ first:
 <% 20.times do |n| %>
 
 member_app_<%= n %>:
-  birth_name: MyString_<%= n %>
+  name: MyString_<%= n %>
   playa_name: MyString_<%= n %>
   email: MyString_<%= n %>_member_apps@example.com
   phone: MyString

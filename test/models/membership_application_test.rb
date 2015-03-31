@@ -3,7 +3,7 @@ require 'test_helper'
 class MembershipApplicationTest < ActiveSupport::TestCase
 
 	def setup
-		@membership_app = MembershipApplication.new(birth_name: "MyString", 
+		@membership_app = MembershipApplication.new(name: "MyString", 
 													playa_name: "MyString", 
 													email: "email@example.com", 
 													phone: "(123) 456-7890", 
@@ -19,8 +19,8 @@ class MembershipApplicationTest < ActiveSupport::TestCase
 		assert @membership_app.valid?
 	end
 
-	test "invlid without birth_name" do
-		@membership_app.birth_name = " "
+	test "invlid without name" do
+		@membership_app.name = " "
 		assert_not @membership_app.valid?
 	end
 
@@ -30,7 +30,7 @@ class MembershipApplicationTest < ActiveSupport::TestCase
 	end
 
 	test "is invalid with name > 50 characters" do
-		@membership_app.birth_name = "a" * 51
+		@membership_app.name = "a" * 51
 		assert_not @membership_app.valid?
 	end
 

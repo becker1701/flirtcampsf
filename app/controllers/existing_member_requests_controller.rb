@@ -18,7 +18,7 @@ class ExistingMemberRequestsController < ApplicationController
 private
 
 	def existing_member_request_params
-		params.require(:membership_application).permit(:birth_name, :playa_name, :email)
+		params.require(:membership_application).permit(:name, :playa_name, :email)
 	end
 
 end

@@ -26,7 +26,7 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 
 		#post app with invalid fields
 		assert_no_difference 'MembershipApplication.count' do
-			post membership_applications_path, membership_application: { birth_name: " ", playa_name: "test", email: " ", 
+			post membership_applications_path, membership_application: { name: " ", playa_name: "test", email: " ", 
 																			phone: " ", home_town: " ", possibility: " ", 
 																			contribution: " ", passions: " ", years_at_bm: " ", 
 																			approved: false }
@@ -40,7 +40,7 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 
 		#post app with valid fields without playa name
 		assert_difference 'MembershipApplication.count', 1 do
-			post membership_applications_path, membership_application: { birth_name: "Brian Someone", playa_name: " ", email: "brian3@examaple.com", 
+			post membership_applications_path, membership_application: { name: "Brian Someone", playa_name: " ", email: "brian3@examaple.com", 
 																			phone: "(123) 456-7890", home_town: "Some Town, CA", 
 																			possibility: "Some amoutn of text that says this", 
 																			contribution: "Some amoutn of text that says this", 
@@ -58,12 +58,12 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 		assert_template 'membership_applications/thank_you'
 		membership_app.reload
 
-		assert_match membership_app.birth_name.to_s, response.body 
+		assert_match membership_app.name.to_s, response.body 
 		assert_not membership_app.approved?
 
 		#post app with valid fields with playa name
 		assert_difference 'MembershipApplication.count', 1 do
-			post membership_applications_path, membership_application: { 	birth_name: "Brian Someone", 
+			post membership_applications_path, membership_application: { 	name: "Brian Someone", 
 																			playa_name: "Hoochie Mamma", 
 																			email: "brian2@examaple.com", 
 																			phone: "(123) 456-7890", 
@@ -92,7 +92,7 @@ class NewMemberAppTest < ActionDispatch::IntegrationTest
 	test "mail delivered after valid submission" do
 		assert_difference 'MembershipApplication.count', 1 do
 			# debugger
-			post membership_applications_path, membership_application: { 	birth_name: "Brian Someone", 
+			post membership_applications_path, membership_application: { 	name: "Brian Someone", 
 																			playa_name: "Hoochie Mamma", 
 																			email: "brian2@examaple.com", 
 																			phone: "(123) 456-7890", 

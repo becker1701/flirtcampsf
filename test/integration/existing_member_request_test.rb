@@ -27,7 +27,7 @@ class ExistingMemberRequestTest < ActionDispatch::IntegrationTest
 		#post app with invalid fields
 		assert_no_difference 'MembershipApplication.count' do
 			# debugger
-			post existing_member_requests_path, membership_application: { birth_name: " ", playa_name: "test", email: " " }
+			post existing_member_requests_path, membership_application: { name: " ", playa_name: "test", email: " " }
 		end
 
 		assert_template 'existing_member_requests/new'
@@ -38,7 +38,7 @@ class ExistingMemberRequestTest < ActionDispatch::IntegrationTest
 
 		#post app with valid fields without playa name
 		assert_difference 'MembershipApplication.count', 1 do
-			post existing_member_requests_path, membership_application: { birth_name: "Brian Someone", playa_name: " ", email: "brian3@examaple.com" }
+			post existing_member_requests_path, membership_application: { name: "Brian Someone", playa_name: " ", email: "brian3@examaple.com" }
 		end		
 
 		member = assigns(:existing_member_request)
@@ -51,12 +51,12 @@ class ExistingMemberRequestTest < ActionDispatch::IntegrationTest
 		assert_template 'static_pages/home'
 		# membership_ap.reload
 
-		# assert_match membership_app.birth_name.to_s, response.body 
+		# assert_match membership_app.name.to_s, response.body 
 		assert_not member.approved?
 
 		#post app with valid fields with playa name
 		assert_difference 'MembershipApplication.count', 1 do
-			post existing_member_requests_path, membership_application: { 	birth_name: "Brian Someone", 
+			post existing_member_requests_path, membership_application: { 	name: "Brian Someone", 
 																			playa_name: "Hoochie Mamma", 
 																			email: "brian2@examaple.com" }
 		end		

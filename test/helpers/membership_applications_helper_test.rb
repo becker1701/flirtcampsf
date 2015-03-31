@@ -6,7 +6,7 @@ class MembershipApplicationsHelperTest < ActionView::TestCase
 		@member_app = membership_applications(:first)
 	end
 
-	test "returns birth_name when playa_name is empty" do
+	test "returns name when playa_name is empty" do
 		@member_app.playa_name = " "
 		assert_equal display_name(@member_app), "Brian Example"
 	end
@@ -18,7 +18,7 @@ class MembershipApplicationsHelperTest < ActionView::TestCase
 
 	test "return empty string if both missing" do
 		@member_app.playa_name = " "
-		@member_app.birth_name = " "
+		@member_app.name = " "
 		assert_equal display_name(@member_app), ""
 	end
 

@@ -125,7 +125,7 @@ end
 	end 
 
 	MembershipApplication.create!(
-		birth_name: name,
+		name: name,
 		playa_name: name,
 		email: email,
 		phone: phone,

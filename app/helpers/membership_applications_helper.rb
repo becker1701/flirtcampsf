@@ -4,10 +4,10 @@ module MembershipApplicationsHelper
 		# debugger
 		return "" if user.nil?
 
-		if user.playa_name.blank? && user.birth_name.blank?
+		if user.playa_name.blank? && user.name.blank?
 			""
 		elsif user.playa_name.blank? 
-			user.birth_name
+			user.name
 		else
 			user.playa_name
 		end
