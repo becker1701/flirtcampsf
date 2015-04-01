@@ -1,0 +1,14 @@
+<tr id="ticket_id_<%= ticket.id %>">
+	<%= content_tag(:td, ticket.name) %>
+	<%= content_tag(:td, mail_to(ticket.email)) %>
+	<%= content_tag(:td, ticket.admission_qty) %>
+	<%= content_tag(:td, ticket.parking_qty) %>
+	<%= content_tag(:td, ticket.confirmation_number) %>
+	<%= content_tag(:td, ticket.status.humanize) %>
+
+	<% if ticket.for_sale? %>
+		<%= content_tag(:td, link_to("Sold?", edit_event_ticket_path(@event, ticket, status: :sold), class: "btn btn-danger btn-xs btn-block")) %>
+	<% else %>
+		<td></td>
+	<% end %>
+</tr>

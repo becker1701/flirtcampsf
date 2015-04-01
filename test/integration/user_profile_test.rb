@@ -41,14 +41,14 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 			assert_template partial: 'intentions/_status'
 			if message == "going_has_ticket"
 
-				assert_select 'h3', text: "Tickets:", count: 1
+				assert_select 'h3', text: "Tickets:", count: 0
 				assert_select 'h3', text: "Transportation:", count: 1
 				assert_select 'h3', text: "Lodging:", count: 1
 				assert_select 'h3', text: "Yurt Owner:", count: 1
 				assert_select 'h3', text: "Meals:", count: 1
 				assert_select 'h3', text: "Logistics:", count: 1
 			elsif message == "going_needs_ticket"
-				assert_select 'h3', text: "Tickets:", count: 1
+				assert_select 'h3', text: "Tickets:", count: 0
 				assert_select 'h3', text: "Transportation:", count: 1
 				assert_select 'h3', text: "Lodging:", count: 1
 				assert_select 'h3', text: "Yurt Owner:", count: 1
@@ -56,7 +56,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 				assert_select 'h3', text: "Logistics:", count: 1
 			elsif message == "not_going_has_ticket"
 				# debugger
-				assert_select 'h3', text: "Tickets:", count: 1
+				assert_select 'h3', text: "Tickets:", count: 0
 				assert_select 'h3', text: "Transportation:", count: 0
 				assert_select 'h3', text: "Lodging:", count: 0
 				assert_select 'h3', text: "Yurt Owner:", count: 1
@@ -84,6 +84,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_match display_name(@user), response.body
 
 		assert_not assigns(:next_event).nil?
+		assert_select 'a[href=?]', event_tickets_path(@event)
 
 		assert_template 'static_pages/home', partial: 'intentions/change_status'
 

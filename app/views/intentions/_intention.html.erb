@@ -1,6 +1,6 @@
 <table class="table table-hover">
 	<tbody>
-		<% if user.next_event_intention.going_has_ticket? || 
+<!-- 		<%# if user.next_event_intention.going_has_ticket? || 
 			  user.next_event_intention.going_needs_ticket? ||
 			  user.next_event_intention.not_going_has_ticket? %>
 
@@ -9,10 +9,10 @@
 			</tr>
 			<tr>
 				<td><strong>Ticket qty for sale?:</strong></td>
-				<td><%= user.next_event_intention.tickets_for_sale %></td>
+				<td><%#= user.next_event_intention.tickets_for_sale %></td>
 			</tr>
 
-		<% end %>
+		<%# end %> -->
 
 		<% if user.next_event_intention.going_has_ticket? || 
 			  user.next_event_intention.going_needs_ticket? %>

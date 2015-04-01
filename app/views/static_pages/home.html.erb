@@ -73,10 +73,19 @@
 
 			<% if @next_event.present? %>
 				<div class="event_user_header">
-					<h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
-					<h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
-					<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
-						
+					<div class="row">
+						<div class="col-md-9">
+							
+							<h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
+							<h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
+							<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
+						</div>
+						<div class="col-md-3">
+							<%= link_to "Sell/Buy Tickets", event_tickets_path(@next_event), class: "btn btn-danger btn-block", style: "margin-top: 20px;" %>
+						</div>
+					</div>
+
+					
 				</div>
 
 				<div class="user_intention">
@@ -88,6 +97,7 @@
 
 						<%= render "intentions/status", user: current_user %> <!-- , user: current_user %> -->
 						<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
+						
 						<hr>
 
 						<h3>Activites <span id="activity-count">(<%= @next_event.activities.size %>)</span><br>
@@ -108,7 +118,7 @@
 							<p>No one has responded yet.</p>
 						<% end %>
 
-						
+
 					<% end %>
 				</div>
 			<% else %>
@@ -157,7 +167,7 @@
 
 
 		<div class="col-md-4">
-			<%= link_to "Sell Your Ticket", '#', class: "btn btn-primary btn-block" %>
+			<%= link_to "Sell Your Ticket", new_event_ticket_path(@next_event), class: "btn btn-primary btn-block" if @next_event %>
 		</div>
 	</div>
 

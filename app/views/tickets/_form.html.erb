@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		
+		<%= form_for [@event, @ticket] do |f| %>
+
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<div class="form-group">
+				<%= f.label :name %>
+				<%= f.text_field :name, class: "form-control", value: @user.name if @user %>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :email %>
+				<%= f.email_field :email, class: "form-control", value: @user.email if @user %>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :admission_qty, "Number of Admission Tickets" %>
+				<%= f.select :admission_qty, options_for_select(0..4, selected: @ticket.admission_qty), {}, class: "form-control" %>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :parking_qty, "Number of Parking Passes" %>
+				<%= f.select :parking_qty, options_for_select(0..4, selected: @ticket.parking_qty), {}, class: "form-control" %>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :confirmation_number %>
+				<%= f.text_field :confirmation_number, class: "form-control" %>
+			</div>
+
+			<%= f.submit "Sell your tickets!", class: "btn btn-primary" %>
+
+		<% end %>
+
+	</div>
+</div>

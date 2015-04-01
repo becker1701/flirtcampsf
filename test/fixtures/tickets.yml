@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Some Person
+  email: someperson@example.com
+  admission_qty: 1
+  parking_qty: 1
+  confirmation_number: 123ABC
+  event_id: future
+  status: 1
+
+two:
+  name: Another Person
+  email: another@example.com
+  admission_qty: 2
+  parking_qty: 1
+  confirmation_number: 234BCD
+  event_id: future
+  status: 1

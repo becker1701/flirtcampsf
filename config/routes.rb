@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :activities
     resources :intentions, only: [:create, :edit, :update]
     resources :early_arrivals, only: [:index, :create, :destroy]
+    resources :tickets, only: [:new, :create, :show, :index, :edit]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -12,15 +12,15 @@
 			<%= f.select :status, options_for_select(Intention.statuses.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.status), {}, { class: "form-control"} %>
 
 			<br>
-			<h3>Tickets:</h3>
-			<%= f.label :tickets_for_sale, "Ticket qty for sale?" %>
-			<%= f.select :tickets_for_sale, 
+<!-- 			<h3>Tickets:</h3>
+			<%#= f.label :tickets_for_sale, "Ticket qty for sale?" %>
+			<%#= f.select :tickets_for_sale, 
 				options_for_select(%w[0 1 2 3 4], 
 					selected: @intention.tickets_for_sale), 
 				{}, 
 				class: "form-control" %>
 
-			<br>
+			<br> -->
 			<h3>Transportation:</h3>
 			<%= f.label :transportation, "I'm getting there by:" %>
 			<%= f.select :transportation, 

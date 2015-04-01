@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
 	has_many :intentions, dependent: :destroy
 	has_many :activities, dependent: :destroy
 	has_many :early_arrivals, dependent: :destroy
+	has_many :tickets, dependent: :nullify
 
 	#TODO: belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
 

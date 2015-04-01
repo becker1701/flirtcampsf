@@ -27,18 +27,18 @@
 		<% if @next_event.present? %>
 		<% unless user.next_event_intention.new_record?  %>
 			<div class="col-md-4">
-				Tickets for sale: <%= user.next_event_intention.tickets_for_sale.to_i %> <br>
+				<!-- Tickets for sale: <%#= user.next_event_intention.tickets_for_sale.to_i %> <br> -->
 				<% if user.next_event_intention.going? %>
 
 					<% if user.next_event_intention.arrival_date? %>
 						 Arrive <%= user.next_event_intention.arrival_date.strftime("%b %e") %> <%= "from #{user.hometown}" unless user.hometown.blank? %><br>	
 					<% end %>
-					<% unless user.next_event_intention.transportation.nil? %>
-						Tranportation: <%= user.next_event_intention.transportation.humanize %><br>
-					<% end %>
-
 					<% if user.next_event_intention.departure_date? %>
 						 Depart <%= user.next_event_intention.departure_date.strftime("%b %e") %> <%= "to #{user.hometown}" unless user.hometown.blank? %><br>	
+					<% end %>
+
+					<% unless user.next_event_intention.transportation.nil? %>
+						Tranportation: <%= user.next_event_intention.transportation.humanize %><br>
 					<% end %>
 
 					<% if user.next_event_intention.driving? %>

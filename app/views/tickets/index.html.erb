@@ -1,0 +1,25 @@
+<% provide(:title, "Tickets for Sale") %>
+
+<h1>Tickets for Sale</h1>
+<h1><small><%= @event.year %></small></h1>
+
+<% if @tickets.any? %>
+	<table class="table">
+		<thead>
+			<th>Seller Name</th>
+			<th>Seller Email</th>
+			<th>Admission</th>
+			<th>Parking</th>
+			<th>Confirmation Number</th>
+			<th>Status</th>
+			<th></th>
+		</thead>
+		<tbody>
+			<%= render @tickets %>
+		</tbody>
+	</table>
+<% else %>
+	<p>No tickets available.</p>
+<% end %>
+
+<%= link_to "Sell your tickets", new_event_ticket_path(@event, user_id: current_user.id), class: "btn btn-primary" %>

@@ -1,0 +1,38 @@
+<% provide(:title, "Ticket for sale") %>
+
+<h1>Tickets for sale</h1>
+<h1><small><%= @event.year %></small></h1>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		
+		<table class="table">
+			<tr>
+				<td>Seller:</td>
+				<td><%= @ticket.name %></td>
+			</tr>
+
+			<tr>
+				<td>Seller Email:</td>
+				<td><%= mail_to @ticket.email %></td>
+			</tr>
+
+			<tr>
+				<td>Number of admission tickets:</td>
+				<td><%= @ticket.admission_qty %></td>
+			</tr>
+
+			<tr>
+				<td>Number of parking passes:</td>
+				<td><%= @ticket.parking_qty %></td>
+			</tr>
+
+			<tr>
+				<td>Ticket confirmation number:</td>
+				<td><%= @ticket.confirmation_number %></td>
+			</tr>
+
+
+		</table>
+	</div>
+</div>
