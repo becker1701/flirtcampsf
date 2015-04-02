@@ -1,10 +1,10 @@
 <h1>Listing Activities</h1>
 <h1><small><%= @event.year %></small></h1>
 
-<table width="100%">
+<table class="table">
   <thead>
     <tr>
-      
+      <th width="10%"></th>
       <th>Title</th>
       <th>Time</th>
       <th>Creator</th>
@@ -17,11 +17,12 @@
 
         <% @event.date_range.each do |date| %>
             <div id="event_date_<%= date %>">
-                <tr><td colspan="6"><h4><%= strf_day(date) %></h4></td></tr>
+                <tr><td colspan="7"><h4><%= strf_day(date) %></h4></td></tr>
 
                 <% @activities.each do |activity| %>
                     <% if activity.day == date %>
                         <tr id="activity_id_<%= activity.id %>">
+                        <td></td>
                         <td><strong><%= link_to activity.title, [@event, activity] %></strong></td>
                         <!-- <td><%#= strf_day(activity.day) %></td> -->
                         <td><%= strf_time(activity.time) %></td>

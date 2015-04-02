@@ -9,6 +9,7 @@
 					<%= gravatar_for current_user %>	
 					<%= display_name(current_user) %>
 				</h1>
+				<small><%= link_to "Edit profile", edit_user_path(current_user) %></small>
 			</section>
 			
 			<% if @next_event.present? %>

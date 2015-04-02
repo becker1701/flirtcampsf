@@ -4,26 +4,27 @@
     <%#= f.hidden_field :event_id, class: "form-control" %>
     <%= f.hidden_field :user_id, class: "form-control" %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :title %><br>
     <%= f.text_field :title, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :day %><br>
     <%#= f.date_field :day, class: "form-control" %>
     <%= f.select :day, options_for_select(Event.next_event.date_range.map { |date| event_extended_date_select_formatter(@event, date) }, selected: @activity.day), {include_blank: "Select day"}, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :time %><br>
     <%= f.time_field :time, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :description %><br>
     <%= f.text_area :description, class: "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :publish %><br>
-    <%= f.check_box :publish %>
+  <div class="form-group">
+    <%= f.label :publish, class: "checkbox" do %>
+      <%= f.check_box :publish %>Publish this event in the What, When, Where? Guide?
+    <% end %>
   </div>
   <div class="actions">
     <%= f.submit nil, class: "btn btn-primary" %>
