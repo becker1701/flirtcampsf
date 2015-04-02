@@ -161,4 +161,5 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		end
 	end
 
+
 end
