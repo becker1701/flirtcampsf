@@ -44,7 +44,7 @@ class TicketsControllerTest < ActionController::TestCase
   	end
   	assert assigns(:event)
   	assert assigns(:ticket)
-  	assert_redirected_to [@event, assigns(:ticket)]
+  	assert_redirected_to root_path
 
   end
 
@@ -60,7 +60,7 @@ class TicketsControllerTest < ActionController::TestCase
 
 
   test "success on show" do
-  	@event.tickets << @ticket
+  	# @event.tickets << @ticket
   	get :show, event_id: @event, id: @ticket
 
   	assert_response :success
@@ -69,12 +69,11 @@ class TicketsControllerTest < ActionController::TestCase
   	assert_select 'title', full_title("Ticket for sale")
   end
 
-  test "redirect when ticket returns nil" do
+  # test "redirect when ticket returns nil" do
+  # 	get :show, event_id: @event, id: @ticket
 
-  	get :show, event_id: @event, id: @ticket
-
-  	assert_response :redirect
-  end
+  # 	assert_response :redirect
+  # end
 
   test "redirected on index if not logged in" do
   	get :index, event_id: @event.id
@@ -89,6 +88,41 @@ class TicketsControllerTest < ActionController::TestCase
   	assert assigns(:tickets)
   end
 
+  test "success on edit if logged in" do
+    log_in_as @user
+    get :edit, event_id: @event.id, id: @ticket.id, status: :sold
+    assert_redirected_to event_tickets_path(@event)
+    assert @ticket.reload.sold?
+  end
 
+  test "redirect on edit if not logged in" do
+    get :edit, event_id: @event.id, id: @ticket.id, status: :sold
+    assert_redirected_to login_url
+  end
 
+  test "redirect on delete if not admin" do
+    assert_no_difference 'Ticket.count' do 
+      delete :destroy, event_id: @event.id, id: @ticket.id
+    end
+    assert_redirected_to login_path
+
+    log_in_as @user
+    assert_no_difference 'Ticket.count' do 
+      delete :destroy, event_id: @event.id, id: @ticket.id
+    end
+    assert_redirected_to root_path
+  end
+
+  test "success on delete for admin user" do
+    admin = users(:admin)
+    log_in_as admin
+
+    assert_difference 'Ticket.count', -1 do 
+      delete :destroy, event_id: @event.id, id: @ticket.id
+    end
+    assert_redirected_to event_tickets_path(@event)
+    assert_not flash.empty?
+    assert_select 'tr[id=?]', "ticket_id_#{@ticket.id}", false
+
+  end
 end

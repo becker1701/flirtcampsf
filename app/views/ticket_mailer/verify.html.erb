@@ -1,0 +1,11 @@
+<h4>Hello, <%= @ticket.name %></h4>
+
+<p>Thank you for submitting your tickets for sale!</p>
+
+<p>We need to verify your email address in order to list your tickets.</p>
+<%= link_to "Click here to verify your email address and list your tickets.", edit_verify_ticket_url(@ticket.verification_token, email: @ticket.email, ticket_id: @ticket.id) %>
+
+<p>If you want to remove or update your listing, email <%= mail_to 'campmaster@flirtcampsf.com' %>.</p>
+
+<p>Thanks again!<br>
+~Camp Master</p>

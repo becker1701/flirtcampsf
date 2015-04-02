@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401010411) do
+ActiveRecord::Schema.define(version: 20150402001012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,9 +112,12 @@ ActiveRecord::Schema.define(version: 20150401010411) do
     t.integer  "parking_qty"
     t.string   "confirmation_number"
     t.integer  "event_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "status",              default: 1
+    t.string   "verification_digest"
+    t.datetime "verified_at"
+    t.boolean  "verified",            default: false
   end
 
   add_index "tickets", ["event_id"], name: "index_tickets_on_event_id", using: :btree

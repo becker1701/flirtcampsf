@@ -6,8 +6,11 @@ one:
   admission_qty: 1
   parking_qty: 1
   confirmation_number: 123ABC
-  event_id: future
+  event: future
   status: 1
+  verification_digest: <%= Ticket.digest('tickets') %>
+  verified: true
+  verified_at: <%= Time.zone.now %>
 
 two:
   name: Another Person
@@ -15,5 +18,20 @@ two:
   admission_qty: 2
   parking_qty: 1
   confirmation_number: 234BCD
-  event_id: future
+  event: future
   status: 1
+  verification_digest: <%= Ticket.digest('tickets') %>
+  verified: true
+  verified_at: <%= Time.zone.now %>
+
+three_not_verified:
+  name: Another Person
+  email: anothsder@example.com
+  admission_qty: 2
+  parking_qty: 1
+  confirmation_number: 234BCD
+  event: future
+  status: 1
+  verification_digest: <%= Ticket.digest('tickets') %>
+  verified: false
+  verified_at: <%= Time.zone.now %>

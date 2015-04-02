@@ -91,4 +91,18 @@ class TicketTest < ActiveSupport::TestCase
   	assert @ticket.sold?
   end
 
+  test "verified tickets" do
+    verified_tickets = @event.tickets.verified
+    assert_equal 2, verified_tickets.count
+    verified_tickets.each do |ticket|
+      assert ticket.verified?
+    end
+
+
+  end
+
+  # test "responds to verification_token" do
+  #   assert @ticket.verification_token
+  # end
+
 end

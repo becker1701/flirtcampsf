@@ -1,0 +1,12 @@
+Hello, <%= @ticket.name %>
+
+Thank you for submitting your tickets for sale!
+
+We need to verify your email address in order to list your tickets. Paste this URL into the address bar in your browser.
+
+<%= edit_verify_ticket_url(@ticket.verification_token, email: @ticket.email, ticket_id: @ticket.id) %>
+
+If you want to remove or update your listing, email campmaster@flirtcampsf.com.
+
+Thanks again!
+~Camp Master

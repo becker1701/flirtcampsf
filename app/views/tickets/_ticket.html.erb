@@ -11,4 +11,9 @@
 	<% else %>
 		<td></td>
 	<% end %>
+
+	<% if admin_user? %>
+		<%= content_tag(:td, link_to("Remove", event_ticket_path(@event, ticket), method: :delete, class: "btn btn-danger btn-xs btn-block", data: { confirm: "Are you sure?" })) %>
+	<% end %>
+
 </tr>

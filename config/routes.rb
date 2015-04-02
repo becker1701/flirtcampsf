@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       get 'decline'
     end
   end
+  resources :verify_tickets, only: :edit
   resources :existing_member_requests, only: [:new, :create]
   resources :account_activations, only: [:new, :create, :edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
@@ -38,7 +39,7 @@ Rails.application.routes.draw do
     resources :activities
     resources :intentions, only: [:create, :edit, :update]
     resources :early_arrivals, only: [:index, :create, :destroy]
-    resources :tickets, only: [:new, :create, :show, :index, :edit]
+    resources :tickets, only: [:new, :create, :show, :index, :edit, :destroy]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
