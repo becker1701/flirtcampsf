@@ -1,7 +1,7 @@
 class MembershipApplicationsController < ApplicationController
 
-	before_action :logged_in_user, only: [:index, :edit, :approve, :decline]
-	before_action :admin_user, only: [:index, :edit, :approve, :decline]
+	before_action :logged_in_user, only: [:index, :edit, :approve, :decline, :destroy]
+	before_action :admin_user, only: [:index, :edit, :approve, :decline, :destroy]
 	before_action :get_membership_app, only: [:edit, :approve, :decline, :thank_you]
 
 
@@ -57,6 +57,13 @@ class MembershipApplicationsController < ApplicationController
 	# 		render :existing_member
 	# 	end
 	# end
+
+
+	def destroy
+		@member_app = MembershipApplication.find_by(id: params[:id]).destroy
+		flash[:success] = "Application removed"
+		redirect_to membership_applications_url
+	end
 
 private
 # 

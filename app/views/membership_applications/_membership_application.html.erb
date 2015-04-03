@@ -1,3 +1,5 @@
+
+
 <% if membership_application.approved.nil? %>
 	<tr id="member_app_<%= membership_application.id %>">
 <% elsif membership_application.approved? %>
@@ -20,10 +22,12 @@
 			<%= link_to "Approve", approve_membership_application_path(membership_application), class:"btn btn-success btn-xs" %>
 			<%= link_to "Decline", decline_membership_application_path(membership_application), class:"btn btn-danger btn-xs" %>
 		<% end %>
+
 	</td>
+
+	<td><%= link_to "X", membership_application_path(membership_application), method: :delete, data: { confirm: "Are you sure?"} %></td>
 	
 </tr>
-
 
 
 

@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :users
   
-  resources :membership_applications, only: [:index, :new, :create, :edit] do
+  resources :membership_applications, only: [:index, :new, :create, :edit, :destroy] do
     member do
       get 'thank_you'
       get 'approve'

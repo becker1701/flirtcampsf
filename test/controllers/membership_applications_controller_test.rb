@@ -33,11 +33,37 @@ class MembershipApplicationsControllerTest < ActionController::TestCase
 		assert_response :redirect
 		assert_redirected_to thank_you_membership_application_path(member_app)
 
-		
+	end
+
+	test "redirect on delete if not admin" do
+		member_app = membership_applications(:member_app_1)
+
+		assert_no_difference 'MembershipApplication.count' do
+			delete :destroy, id: member_app
+		end
+
+		assert_redirected_to login_path
+
+		log_in_as users(:archer)
+		assert_no_difference 'MembershipApplication.count' do
+			delete :destroy, id: member_app
+		end
+
+		assert_redirected_to root_path
 
 	end
 
+	test "success on delete when admin" do
+		member_app = membership_applications(:member_app_1)
+		log_in_as users(:brian)
+		
+		assert_difference 'MembershipApplication.count', -1 do
+			delete :destroy, id: member_app
+		end
 
+		assert_redirected_to membership_applications_path
+		assert_not flash.empty?
 
+	end
 
 end
