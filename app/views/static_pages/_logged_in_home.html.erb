@@ -40,13 +40,14 @@
 						<li>
 							<span id="camp_ea_date">EA Date: <%= ea_date_presenter(@next_event) %></span>
 						</li>	
-
-						<% if @next_event.early_arrival_list.any? %>
-
+					</ul>
+						
+					<% if @next_event.early_arrival_list.any? %>
+						<ol id="ea-list">
 							<% @next_event.early_arrival_list .each do |ea| %>
 								<%= content_tag(:li, display_name(ea.user)) %>
 							<% end %>
-						</ul>
+						</ol>
 					<% else %>
 						None
 					<% end %>
