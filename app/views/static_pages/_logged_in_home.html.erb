@@ -1,0 +1,127 @@
+
+<div class="row">
+	<aside class="col-md-4">
+		<section class="user_info">
+			<h1>
+				<%= gravatar_for current_user %>	
+				<%= display_name(current_user) %>
+			</h1>
+			<small><%= link_to "Edit profile", edit_user_path(current_user) %></small>
+		</section>
+
+		<% if @next_event.present? %>
+			<section>
+
+				<div id="camp_info">
+
+					<p><strong>Camp Info</strong></p>
+
+					<ul class="camp_info_side">
+						<li>Address: <%= @next_event.camp_address %></li>
+					</ul>
+
+				</div>
+
+				<div id="camp_organizer">
+					<p><strong>Camp Organizer:</strong></p>
+
+					<ul class="camp_info_side">
+						<li>Camp Master</li>
+						<li><%= mail_to "campmaster@flirtcampsf.com" %></li>
+					</ul>
+				</div>
+
+
+				<div id="ea_team">
+
+					<p><strong>EA Team:</strong></p>
+
+					<ul class="camp_info_side">
+						<li>
+							<span id="camp_ea_date">EA Date: <%= @next_event.early_arrival_date.strftime("%B %e") %></span>
+						</li>	
+
+						<% if @next_event.early_arrival_list.any? %>
+
+							<% @next_event.early_arrival_list .each do |ea| %>
+								<%= content_tag(:li, display_name(ea.user)) %>
+							<% end %>
+						</ul>
+					<% else %>
+						None
+					<% end %>
+
+				</div>
+			</section>
+		<% end %>
+
+		<div id="prev_years">
+
+			<p><strong>Previous Years:</strong></p>
+
+			<ul style="list-style-type: none; margin-left: 5px; padding: 2px;">
+				<li>Coming Soon...</li>
+			</ul>
+		</div>
+
+
+	</aside>
+	<div class="col-md-8">
+
+
+		<% if @next_event.present? %>
+			<div class="event_user_header">
+				<div class="row">
+					<div class="col-md-9">
+
+						<h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
+						<h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
+						<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
+					</div>
+					<div class="col-md-3">
+						<%= link_to "Sell/Buy Tickets", event_tickets_path(@next_event), class: "btn btn-danger btn-block", style: "margin-top: 20px;" %>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="user_intention">
+				<% if @intention.new_record? %>
+					<%= render 'intentions/change_status' %>
+				<% else %>
+
+
+
+					<%= render "intentions/status", user: current_user %> <!-- , user: current_user %> -->
+					<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
+
+					<hr>
+
+					<h3>Activites <span id="activity-count">(<%= @next_event.activities.size %>)</span><br>
+					<small>Flirt Camp on-playa activities.</small></h3>
+					<p class="help-block">Do you want to host an on-playa camp activity or a What-When-Where activity to get puclished in the book?</p>
+
+					<%= link_to "View Activities", event_activities_path(@next_event), class: "btn btn-primary" %>
+
+					<hr>
+					<h3>Camp Roster<br>
+					<small>Who is going to <%= @next_event.year %></small></h3>
+					<% if User.attending_next_event.any? %>
+						<% User.attending_next_event.each do |user| %>
+							<%= link_to(gravatar_for(user, size: 50), user_path(user), 
+							data: { toggle: "tooltip", placement: "left", title: display_name(user) }) %>
+						<% end %>
+					<% else %>
+						<p>No one has responded yet.</p>
+					<% end %>
+
+
+				<% end %>
+			</div>
+		<% else %>
+
+			<h3>No event scheduled</h3>
+		<% end %>
+	</div>
+</div>

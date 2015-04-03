@@ -22,6 +22,10 @@ class EventTest < ActiveSupport::TestCase
 		assert_includes @event.errors.full_messages, "Start date must be before event end date"
 	end
 
+	test "valid if no early arrival date" do
+		@event.early_arrival_date = nil
+		assert @event.valid?
+	end
 
 	test "invalid if early_arrival_date after start_date" do
 		@event.early_arrival_date = @event.start_date + 1.day

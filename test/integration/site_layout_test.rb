@@ -73,4 +73,23 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   
   end
 
+  test "hide sell tickets on root if no next event" do
+    
+    @event = events(:future)
+    assert_not Event.next_event.nil?
+    get root_path
+
+    # debugger
+    assert_select 'p.lead', text: "Sell your tickets!", count: 1
+    assert_select 'a[href=?]', new_event_ticket_path(@event), count: 1
+
+    @event.destroy
+    assert Event.next_event.nil?
+    get root_path
+
+    assert_select 'p.lead', text: "Sell your tickets!", count: 0
+    assert_select 'a[href=?]', new_event_ticket_path(@event), count: 0
+
+  end
+
 end

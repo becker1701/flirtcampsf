@@ -40,7 +40,7 @@ private
 	end
 
 	def early_arrival_date_before_start_date
-		if self.start_date && self.early_arrival_date > self.start_date
+		if self.start_date && self.early_arrival_date && self.early_arrival_date > self.start_date
 			errors.add(:early_arrival_date, "must be before event start date")
 		end
 	end
