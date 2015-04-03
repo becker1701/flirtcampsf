@@ -147,7 +147,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_select 'span[id=?]', "activity-count", text: "(12)"
 	end
 
-	test "attending members link is on page" do
+	test "camp-roster shows attending members and link" do
 		@event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
 		@event.intentions.create!(status: :going_has_ticket, user: @admin, logistics: "who")
 		
@@ -156,10 +156,31 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		
 		# assert_equal 2, User.attending_next_event.count
 		
-		User.attending_next_event.each do |user|
-			assert_select 'a[href=?]', user_path(user)
+		assert_select 'ul#camp-roster' do
+			User.attending_next_event.each do |user|
+				assert_select 'li[id=?]', "user_id_#{user.id}" do
+					assert_select 'a[href=?]', user_path(user)
+				end
+			end
 		end
+
+		assert_select 'h3', text: "Camp Roster (#{User.attending_next_event.count})"
 	end
 
+	test "profile page success when no early arrival date" do
+		
+		log_in_as @user
+		follow_redirect!
 
+		assert_select 'span#camp_ea_date', "EA Date: #{ ea_date_presenter(@event) }"
+
+		@event.early_arrival_date = nil
+		@event.save
+
+		get root_url
+		
+		assert_response :success
+		assert_select 'span#camp_ea_date', "EA Date: TBD"
+
+	end
 end

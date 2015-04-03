@@ -42,4 +42,13 @@ module ApplicationHelper
 		end
 	end
 	
+	def ea_date_presenter(event)
+		if event && event.early_arrival_date
+			strf_day(event.early_arrival_date)
+		else
+			"TBD"
+		end
+	end
+
+
 end

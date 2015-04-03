@@ -7,7 +7,8 @@ class Event < ActiveRecord::Base
 
 	#TODO: belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
 
-	validates :year, presence: true
+
+	validates :year, :start_date, presence: true
 	validate :start_date_before_end_date
 	validate :early_arrival_date_before_start_date
 
@@ -24,7 +25,19 @@ class Event < ActiveRecord::Base
 	end
 
 	def extended_date_range
-		((self.early_arrival_date - 2.days)..(self.end_date + 2.days)).to_a
+		if self.early_arrival_date && self.end_date
+			((self.early_arrival_date - 2.days)..(self.end_date + 2.days)).to_a
+		
+		elsif self.early_arrival_date.nil? && self.end_date
+			((self.start_date - 7.days)..(self.end_date + 2.days)).to_a
+		
+		elsif self.early_arrival_date.nil? && self.end_date.nil?
+			((self.start_date - 3.days)..(self.start_date + 3.days)).to_a
+		
+		elsif self.early_arrival_date && self.end_date.nil?
+			((self.early_arrival_date - 2.days)..(self.start_date + 3.days)).to_a
+		
+		end
 	end
 
 	def early_arrival_list
@@ -34,7 +47,7 @@ class Event < ActiveRecord::Base
 private
 
 	def start_date_before_end_date
-		if self.end_date && self.start_date > self.end_date
+		if self.start_date && self.end_date && self.start_date > self.end_date
 			errors.add(:start_date, "must be before event end date")
 		end
 	end

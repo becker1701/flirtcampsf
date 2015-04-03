@@ -38,7 +38,7 @@
 
 					<ul class="camp_info_side">
 						<li>
-							<span id="camp_ea_date">EA Date: <%= @next_event.early_arrival_date.strftime("%B %e") %></span>
+							<span id="camp_ea_date">EA Date: <%= ea_date_presenter(@next_event) %></span>
 						</li>	
 
 						<% if @next_event.early_arrival_list.any? %>
@@ -105,13 +105,16 @@
 					<%= link_to "View Activities", event_activities_path(@next_event), class: "btn btn-primary" %>
 
 					<hr>
-					<h3>Camp Roster<br>
-					<small>Who is going to <%= @next_event.year %></small></h3>
+					<h3>Camp Roster (<%= User.attending_next_event.count %>)</h3>
+					<h3><small>Who is going to <%= @next_event.year %></small></h3>
 					<% if User.attending_next_event.any? %>
-						<% User.attending_next_event.each do |user| %>
-							<%= link_to(gravatar_for(user, size: 50), user_path(user), 
-							data: { toggle: "tooltip", placement: "left", title: display_name(user) }) %>
-						<% end %>
+						<ul id="camp-roster" class="users">
+							<% User.attending_next_event.each do |user| %>
+								<%= content_tag :li, id: "user_id_#{user.id}", style: "margin-top: 3px;" do %>
+									<%= link_to(gravatar_for(user, size: 50), user_path(user)) %> <%= link_to display_name(user), user_path(user) %>
+								<% end %>
+							<% end %>
+						</ul>
 					<% else %>
 						<p>No one has responded yet.</p>
 					<% end %>

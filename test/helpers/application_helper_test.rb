@@ -41,6 +41,15 @@ class ApplicationHelperTest < ActionView::TestCase
 		assert_equal "12:00 PM", strf_time(time)
 	end
 
+	test "early_arrival_date_presenter" do
+		@event = events(:future)
+		assert_equal strf_day(@event.early_arrival_date), ea_date_presenter(@event)
+
+		@event.early_arrival_date = nil
+		# @event.save
+		assert_equal "TBD", ea_date_presenter(@event)
+	end
+
 
 end
 

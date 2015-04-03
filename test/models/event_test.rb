@@ -93,4 +93,44 @@ class EventTest < ActiveSupport::TestCase
 		assert_operator 18, :>=, edr.size
 	end
 
+	test "#extended date range without EAD" do
+		@event.early_arrival_date = nil
+		@event.save
+
+		edr = @event.extended_date_range
+		assert_includes edr, @event.start_date - 7.days
+		assert_includes edr, @event.start_date
+		# assert_includes edr, @event.end_date
+		# assert_includes edr, @event.end_date + 2.days
+		assert_operator 18, :>=, edr.size
+	end
+
+	test "#extended date range without end_date" do
+		@event.end_date = nil
+		@event.save
+
+		edr = @event.extended_date_range
+		assert_includes edr, @event.early_arrival_date - 2.days
+		assert_includes edr, @event.early_arrival_date
+		assert_includes edr, @event.start_date
+		assert_includes edr, @event.start_date + 3.days
+		# assert_operator 18, :>=, edr.size
+	end
+
+	test "#extended date range without end_date and early_arrival_date" do
+		@event.end_date = nil
+		@event.early_arrival_date = nil
+		@event.save
+
+		edr = @event.extended_date_range
+		assert_includes edr, @event.start_date - 3.days
+		assert_includes edr, @event.start_date + 3.days
+		# assert_operator 18, :>=, edr.size
+	end
+
+	test "invlalid without start date" do
+		@event.start_date = nil
+		assert_not @event.valid?
+	end
+
 end
