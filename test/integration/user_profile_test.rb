@@ -8,7 +8,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		@admin = users(:brian)
 		@user = users(:archer)
 		@event = events(:future)
-		@user.intentions.delete_all
+		# @user.intentions.delete_all
 	end
 
 	test "redirect new intention to root with status message" do
@@ -148,13 +148,11 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 	end
 
 	test "camp-roster shows attending members and link" do
-		@event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
-		@event.intentions.create!(status: :going_has_ticket, user: @admin, logistics: "who")
 		
 		log_in_as @user
 		get root_url
-		
-		# assert_equal 2, User.attending_next_event.count
+
+		assert_equal 2, User.attending_next_event.count
 		
 		assert_select 'ul#camp-roster' do
 			User.attending_next_event.each do |user|

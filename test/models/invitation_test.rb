@@ -88,4 +88,6 @@ class InvitationTest < ActiveSupport::TestCase
     assert_equal 1, ActionMailer::Base.deliveries.count
   end
 
+
+
 end

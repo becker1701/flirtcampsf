@@ -26,7 +26,7 @@ for_brian:
 for_archer:
   user: archer
   event: future
-  status: 1
+  status: 2
   arrival_date: <%= Date.today + 120.days %>
   departure_date: <%= Date.today + 125.days %>
   transportation: 1
@@ -49,7 +49,7 @@ for_archer:
 for_kurt:
   user: kurt
   event: future
-  status: 1
+  status: 3
   arrival_date: <%= Date.today + 120.days %>
   departure_date: <%= Date.today + 125.days %>
   transportation: 1
@@ -69,6 +69,29 @@ for_kurt:
   lodging_num_occupants: 2
   shipping_yurt: false
   
+for_elisabeth:
+  user: elisabeth
+  event: future
+  status: 4
+  arrival_date: <%= Date.today + 120.days %>
+  departure_date: <%= Date.today + 125.days %>
+  transportation: 1
+  seats_available: 1
+  lodging: 1
+  yurt_owner: true
+  yurt_storage: true
+  yurt_panel_size: 1
+  yurt_user: Lilly and Michelle
+  opt_in_meals: true
+  food_restrictions: none
+  logistics: I need a few bins transported
+  tickets_for_sale: 1
+  storage_bikes: 1
+  logistics_bike: 2
+  logistics_bins: 2
+  lodging_num_occupants: 2
+  shipping_yurt: false
+
 past_1:
   user: brian
   event: past

@@ -22,7 +22,7 @@ class User < Application
 	before_create :generate_activation_digest
 
 	def User.attending_next_event
-		joins(:intentions).merge(Intention.for_next_event)
+		joins(:intentions).merge(Intention.going_to_next_event)
 	end
 
 	def User.activated
