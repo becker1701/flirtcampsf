@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
   def new
     
+    # debugger
     if @invite
       @user = User.new(name: @invite.name, email: @invite.email)
     else
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
   	@user = User.new(user_params)
   	if @user.save
       
-      if params[:invite].present?
+      if params[:invite].present? && @invite.email == @user.email
         @user.activate!
         log_in @user
         flash[:info] = "Welcome!"

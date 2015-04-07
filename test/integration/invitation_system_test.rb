@@ -82,17 +82,19 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert flash.empty?	
 
 		#test for invalid token
-		# debugger
+		#****  Not testing for token values
+		
 		get edit_invitation_path('invalid_token', email: invitation.email)
-		assert_redirected_to root_path
+		assert_redirected_to signup_path(invite: invitation.id)
 		assert_not flash.empty?
 
 		# delete logout_path
 		assert_not is_logged_in?
 
 		#test invalid email
+		#*****  user will be sent to a blank signup_path without invite_id
 		get edit_invitation_path(invitation.invite_token, email: "incorrect email")
-		assert_redirected_to root_path
+		assert_redirected_to signup_path
 		assert_not flash.empty?		
 
 		# valid token and email
@@ -104,8 +106,9 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		# delete logout_path
 		assert_not is_logged_in?
 
-		assert_redirected_to signup_path(invite: invitation.id)
+		assert_redirected_to signup_path(invite: invitation.id)		
 		follow_redirect!
+		assert_equal invitation, assigns(:invite)
 		assert_template 'users/new'
 		# debugger
 		
@@ -130,15 +133,18 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		# make sure the email was sent
 		assert_equal 1, ActionMailer::Base.deliveries.count
 		
+		#******  Delete the invitation and make sure the user is sent to the signup page anyways, but without the invite_id
 		delete invitation_path(new_invite)
 
 		delete logout_path
 		assert_not is_logged_in?
 
 		get edit_invitation_path(new_invite.invite_token, email: new_invite.email)
-		assert_redirected_to root_url
+		assert_redirected_to signup_path
 		assert_not is_logged_in?
 		assert_not flash.empty?
+
+
 
 	end
 
@@ -319,6 +325,81 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 
 		#if invitation sent, make sure the email recipient can not get to the user create page
 
+
+	end
+
+
+	test "admin add invite and reset invite token still works" do
+=begin
+		When Admin enters an invitation, the invitation_token and invitation_digest will be set. The
+		Invitation_token is a virtual attribute and will not persist.  The goal of this test is to test:
+		1. Admin creates an invitation complete with token and digest
+		2. Admin "resends" invitation, thus updating the digest with a new token
+		3. User can access the invitaion via the initial link with the old token and still reach the signup_path
+		without error
+
+		admin is :brian
+
+=end
+		# @user.invitations.destroy_all
+
+		log_in_as @admin
+
+		assert_difference 'Invitation.count', 1 do
+			post invitations_path, invitation: { name: "Some Person 123", email: "someperson123@example.com" }
+		end
+		
+		# assert_equal 1, ActionMailer::Base.deliveries.count
+
+		invite = assigns(:invitation)
+		assert_not invite.nil?
+
+		# old_invite_token = invite.invite_token
+		
+		# debugger
+		get resend_invitation_path(invite)
+		
+		new_invite = assigns(:invite)
+
+		# ensure the same invite is pulled back from the resend method
+		assert_equal invite.id, new_invite.id
+		#and the check to see if the token changed
+		assert_not_equal invite.invite_token, new_invite.invite_token
+		assert_redirected_to new_invitation_path
+
+		#log out admin so there is no session as user clicks links in email
+		delete logout_path
+		assert_not is_logged_in?
+
+		#user clicks link in email
+		# puts "Old token: #{invite.invite_token}"
+		# puts "New token: #{new_invite.invite_token}"
+
+		assert_not new_invite.authenticated?(:invite, invite.invite_token)
+
+		get edit_invitation_url(invite.invite_token, email: invite.email)
+		# debugger
+		assert_redirected_to signup_path(invite: invite.id)
+		follow_redirect!
+		assert_not assigns(:invite).nil?
+
+	end
+
+	test "user signup from invite activated on create with correct invite ID" do
+		
+		log_in_as @admin
+		
+		invite = Invitation.create!(name: "Some Person 123", email: "someperson123@example.com")
+
+		delete logout_path
+		assert_not is_logged_in?
+		
+		get edit_invitation_url(invite.invite_token, email: invite.email)
+
+
+	end
+
+	test "user signup from invite not activated on create with incorrect invite ID" do
 
 	end
 

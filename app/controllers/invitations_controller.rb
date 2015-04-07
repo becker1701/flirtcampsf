@@ -24,12 +24,14 @@ class InvitationsController < ApplicationController
 	def edit
 		# debugger
 		@invitation = Invitation.find_by(email: params[:email]) if params[:email]
-		if @invitation && @invitation.authenticated?(:invite, params[:id])
-			flash[:success] = "Create your Flirt Camp Profile!"
+
+		if @invitation #&& @invitation.authenticated?(:invite, params[:id])
+			flash[:info] = "Create your Flirt Camp Profile!"
 			redirect_to signup_url(invite: @invitation.id)
+		
 		else
-			flash[:danger] = "Ah, darn it.  Something went wrong."
-			redirect_to root_url
+			flash[:info] = "Create your Flirt Camp Profile!"
+			redirect_to signup_url
 		end
 	end
 
@@ -45,6 +47,7 @@ class InvitationsController < ApplicationController
 	end
 
 	def resend
+		# debugger
 		@invite = Invitation.find_by(id: params[:id])
 		if @invite
 			@invite.resend

@@ -81,9 +81,16 @@ class InvitationTest < ActiveSupport::TestCase
     assert_equal 0, ActionMailer::Base.deliveries.count
   end
 
-  test "sends email on #resend" do
+  test "sends email on #resend and resets token" do
+    @invitation.save
+
     assert_not @invitation.replied?
+    assert_not @invitation.invite_token.nil?
+    old_token = @invitation.invite_token
+
     @invitation.resend
+
+    assert_not_equal old_token, @invitation.invite_token
     assert_not @invitation.invite_token.empty?
     assert_equal 1, ActionMailer::Base.deliveries.count
   end

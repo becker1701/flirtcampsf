@@ -22,6 +22,7 @@ class Invitation < Application
 		return false if replied? 
 		self.invite_token = Invitation.new_token
 		self.invite_digest = Invitation.digest(self.invite_token)
+		# debugger
 		self.save
 		self.send_invitation_email
 	end

@@ -17,7 +17,7 @@ class UserSignupTest < ActionDispatch::IntegrationTest
       get signup_path(invite: @invite)
       assert_template 'users/new'
 
-      #POST valid fields without invite attribute creates user
+      #POST valid fields without invite attribute creates user that will NOT be activated
       assert_difference 'User.count', 1 do
         post users_path, user: { name: @invite.name, email: @invite.email, password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
       end
@@ -82,6 +82,34 @@ class UserSignupTest < ActionDispatch::IntegrationTest
 
   	end
   	
+
+    test "valid signup information with incorrect invite" do
+      
+      wrong_invite = invitations(:one_1)
+      
+      get signup_path(invite: @invite)
+
+      assert_not assigns(:invite).nil?
+      assert_select 'p.form-static-control', text: @invite.email
+      assert_select 'input[type=?]', 'hidden', value: @invite.email
+      assert_select 'input[id=?]', "user_name", value: @invite.name
+
+      assert_difference 'User.count', 1 do
+        post users_path, invite: wrong_invite.id, user: { name: @invite.name, email: @invite.email, password: "123456", password_confirmation: "123456", playa_name: "Flirter1" }
+      end
+
+      #do NOT send an activation email. Activation happens automatically
+      assert_equal 1, ActionMailer::Base.deliveries.size
+      user = assigns(:user)
+      assert_not user.activated?
+
+      follow_redirect!
+      assert_template 'static_pages/home'
+      assert_not flash.empty?
+      assert_not is_logged_in?
+
+    end
+
 
     test "valid signup information without invite" do
       
