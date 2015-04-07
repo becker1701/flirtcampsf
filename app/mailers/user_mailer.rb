@@ -2,7 +2,7 @@ class UserMailer < ApplicationMailer
 
   def account_activation(user)
     @user = user
-    mail to: @user.email, subject: "Activate your account"
+    mail to: @user.email, subject: "Activate your Flirt Camp profile"
   end
 
   def password_reset(user)

@@ -6,12 +6,21 @@ class UsersControllerTest < ActionController::TestCase
 		@user = users(:brian)
 		@other_user = users(:archer)
     @admin = users(:admin)
+    @invite = invitations(:for_archer)
 	end
 
-  test "get new" do
+  test "get new if no invitation" do
     get :new
-    assert_response :redirect
-    assert_redirected_to root_url
+    assert_response :success
+    assert assigns(:invite).nil?
+  end
+
+  test "get new and set invite if invite exists" do
+
+    get :new, invite: @invite.id
+    assert_response :success
+    assert_not assigns(:invite).nil?
+    assert_equal @other_user.email, assigns(:invite).email
   end
 
   test "redirect index when not logged in" do

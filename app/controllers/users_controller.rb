@@ -2,37 +2,41 @@ class UsersController < ApplicationController
 
   before_action :get_user, only: [:show, :edit, :update, :destroy]
   before_action :get_invite, only: [:new, :create]
-  before_action :invited, only: [:new, :create]
+  # before_action :invited, only: [:new, :create]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
   before_action :next_event, only: [:index, :show]
 
-  def index
-    
+  def index  
     @users = User.activated.paginate(page: params[:page])
-    # @users = User.where(activated: true).order(:name).paginate(page: params[:page])
-    # @users = User.next_event_intentions.order(:name).paginate(page: params[:page])
-    
   end
+
 
   def new
     
-    # if @invite
+    if @invite
       @user = User.new(name: @invite.name, email: @invite.email)
-    # else
-    #   @user = User.new
-    # end
+    else
+      @user = User.new
+    end
   end
 
   def create
     # debugger
   	@user = User.new(user_params)
   	if @user.save
-      # @user.send_activation_email
-      @user.activate!
-      log_in @user
-  		flash[:info] = "Welcome!"
+      
+      if params[:invite].present?
+        @user.activate!
+        log_in @user
+        flash[:info] = "Welcome!"
+      else
+        flash[:info] = "Check your email to activate your profile"
+        @user.send_activation_email
+      end
+
+  		
   		redirect_to root_url
   	else
   		render :new

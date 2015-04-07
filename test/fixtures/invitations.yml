@@ -5,6 +5,11 @@ one:
   email: someemail@example.com
   invite_digest: <%= Invitation.digest('invite_012345') %>
 
+for_archer: 
+  name: Archer
+  email: fbi_guy@example.com
+  invite_digest: <%= Invitation.digest('invite_012345') %>
+
 <% 10.times do |n| %>
 one_<%= n %>:
   name: <%= Faker::Name.name %>

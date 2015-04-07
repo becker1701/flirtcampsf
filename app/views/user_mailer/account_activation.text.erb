@@ -1,4 +1,4 @@
 Greetings, <%= @user.name %>!
 
-Welcome to the Sample App! Click the link below to verify your email and activate your account:
+Click the link below to verify your email and activate your account:
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>

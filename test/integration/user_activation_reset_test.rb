@@ -89,7 +89,7 @@ class UserActivationResetTest < ActionDispatch::IntegrationTest
 		#test for valid token and email
 		get edit_account_activation_path(na_user.activation_token), email: na_user.email
 		assert is_logged_in?
-		assert assert_redirected_to na_user
+		assert assert_redirected_to root_path#na_user
 		assert_not flash.empty?
 		assert na_user.reload.activated?
 

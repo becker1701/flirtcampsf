@@ -73,11 +73,13 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 
 		delete logout_path
 		assert_not is_logged_in?
+
 		
-		#test for missing token
+		#test for no invitation token
 		get signup_path
-		assert_redirected_to root_path
-		assert flash.empty?		
+		assert_template 'users/new'
+		assert assigns(:invite).nil?
+		assert flash.empty?	
 
 		#test for invalid token
 		# debugger
@@ -239,9 +241,9 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_template 'invitations/new'
 
 		invites = assigns(:invitations)
-		assert_equal 11, invites.count
+		assert_equal 12, invites.count
 
-		invites.first(3).each do |invite|
+		invites.last(3).each do |invite|
 			User.create!(name: invite.name, email: invite.email, password: "123456", password_confirmation: "123456")
 		end
 		invites.reload
