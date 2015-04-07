@@ -113,7 +113,7 @@
 						<ul id="camp-roster" class="users">
 							<% User.attending_next_event.each do |user| %>
 								<%= content_tag :li, id: "user_id_#{user.id}", style: "margin-top: 3px;" do %>
-									<%= link_to(gravatar_for(user, size: 50), user_path(user)) %> <%= link_to "#{user.playa_name} (aka #{user.name})", user %>
+									<%= link_to(gravatar_for(user, size: 80), user_path(user)) %> <%= link_to "#{user.playa_name} (aka #{user.name})", user %>
 								<% end %>
 							<% end %>
 						</ul>
