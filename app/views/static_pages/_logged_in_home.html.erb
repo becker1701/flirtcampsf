@@ -4,8 +4,9 @@
 		<section class="user_info">
 			<h1>
 				<%= gravatar_for current_user %>	
-				<%= display_name(current_user) %>
+				<%= current_user.playa_name %>
 			</h1>
+			<small><%= "(aka #{current_user.name})" %></small><br>
 			<small><%= link_to "Edit profile", edit_user_path(current_user) %></small>
 		</section>
 
@@ -112,7 +113,7 @@
 						<ul id="camp-roster" class="users">
 							<% User.attending_next_event.each do |user| %>
 								<%= content_tag :li, id: "user_id_#{user.id}", style: "margin-top: 3px;" do %>
-									<%= link_to(gravatar_for(user, size: 50), user_path(user)) %> <%= link_to display_name(user), user_path(user) %>
+									<%= link_to(gravatar_for(user, size: 50), user_path(user)) %> <%= link_to "#{user.playa_name} (aka #{user.name})", user %>
 								<% end %>
 							<% end %>
 						</ul>

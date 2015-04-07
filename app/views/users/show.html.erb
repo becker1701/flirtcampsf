@@ -6,7 +6,18 @@
 			<h1>
 				<%= gravatar_for @user %>	
 				<%= @user.playa_name %>
+
 			</h1>
+			<small><%= "(aka #{@user.name})" %></small>
+		</section>
+		<section>
+			<strong>Contact:</strong>
+			<div class="contact-info">
+				<ul class="list-unstyled">
+					<%= content_tag(:li, number_to_phone(@user.phone, area_code: true), id: "user-phone") unless @user.phone.blank? %>
+					<%= content_tag(:li, mail_to(@user.email)) %>
+				</ul>
+			</div>
 		</section>
 	</aside>
 	<div class="col-md-8">

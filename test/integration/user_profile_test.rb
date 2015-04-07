@@ -114,6 +114,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_template 'users/show'
 		assert_match @admin.name, response.body
 		assert_match "Lilly and Michelle", response.body
+		assert_match @admin.email, response.body
 
 		assert_no_match "blah", response.body
 
@@ -124,6 +125,22 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_no_match "Lilly and Michelle", response.body
 
 		assert_no_match "blah", response.body
+
+	end
+
+	test "phone number on user profile page" do
+		log_in_as @admin
+		get user_path @user
+
+		assert @user.phone.blank?
+		assert_select 'li[id=?]', "user-phone", count: 0
+
+		@user.phone = "1231231234"
+		@user.save
+		assert @user.phone.present?
+		get user_path(@user)
+		assert_select 'li[id=?]', "user-phone", count: 1
+		assert_match "(123) 123-1234", response.body
 
 	end
 
