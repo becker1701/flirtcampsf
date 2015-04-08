@@ -1,0 +1,14 @@
+<% provide(:title, "Notes for #{display_name(@user)}") %>
+
+<h1>Notes for <%= display_name(@user) %></h1>
+
+<%= link_to "New Note", new_user_user_note_path(@user), class: "btn btn-primary" %>
+
+<% if @user_notes.any? %>
+	<table class="table">
+		<%= render @user_notes %>
+	</table>
+<% else %>
+
+<% end %>
+

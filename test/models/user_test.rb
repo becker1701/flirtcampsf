@@ -165,4 +165,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
 
+  test "user notes are deleted when user is deleted" do
+    user = users(:archer)
+    assert_not user.user_notes.empty?
+    assert_equal 5, user.user_notes.count
+
+    assert_difference 'UserNote.count', -5 do
+      user.destroy
+    end
+  end
+
 end

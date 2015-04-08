@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: kurt
+  note: Notes for brian
+
+<% 5.times do |n| %>
+archer_note_<%= n %>:
+  user: archer
+  note: Note <%= n %>
+<% end %>

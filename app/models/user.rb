@@ -7,6 +7,7 @@ class User < Application
 	has_many :intentions, dependent: :destroy
 	has_many :activities, dependent: :nullify
 	has_many :early_arrivals, dependent: :destroy
+	has_many :user_notes, dependent: :destroy
 	# has_many :events
 
 	validates :name, presence: true, length: { maximum: 50 }

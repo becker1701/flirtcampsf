@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
   # resources :change_status, only: [:edit, :update]
 
-  resources :users
+  resources :users do
+    resources :user_notes
+  end
   
   resources :membership_applications, only: [:index, :new, :create, :edit, :destroy] do
     member do
@@ -34,6 +36,7 @@ Rails.application.routes.draw do
       get 'resend'
     end
   end
+
 
   resources :events do 
     resources :activities

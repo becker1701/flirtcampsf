@@ -1,0 +1,5 @@
+<tr id="user_note_id_<%= user_note.id %>">
+	<%= content_tag(:td, user_note.note) %>
+	<%= content_tag(:td, link_to("Edit", edit_user_user_note_path(@user, user_note))) %>
+	<%= content_tag(:td, link_to("Delete", user_user_note_path(@user, user_note), method: :delete, data: { confirm: "Are you sure?" })) %>
+</tr>
