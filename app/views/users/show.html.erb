@@ -44,6 +44,13 @@
 					
 					<div id="admin-user-notes">
 						<%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
+						<% if @user.user_notes.any? %>
+							<ul class="list" id="admin-user-notes-list">
+								<% @user.user_notes.each do |note| %>
+									<%= content_tag(:li, note.note, id: "admin_user_note_id_#{note.id}") %>
+								<% end %>
+							</ul>
+						<% end %>
 					</div>
 
 				</div>

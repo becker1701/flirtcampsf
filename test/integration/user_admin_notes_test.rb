@@ -5,6 +5,7 @@ class UserAdminNotesTest < ActionDispatch::IntegrationTest
 	def setup
 		@admin = users(:brian)
 		@user = users(:archer)
+		@other_user = users(:kurt)
 	end
 
 	test "non admin can not see notes" do
@@ -62,13 +63,37 @@ class UserAdminNotesTest < ActionDispatch::IntegrationTest
 
 		assigns(:users).each do |user|
 			if @admin == user
-				assert_select 'a[href=?]', new_user_user_note_path(user), count: 0
+				assert_select 'a[href=?]', user_user_notes_path(user), count: 0
 			else
-				assert_select 'a[href=?]', new_user_user_note_path(user), count: 1
+				assert_select 'a[href=?]', user_user_notes_path(user), count: 1
 			end
 		end
 	end
 
+	test "do not list notes on profile for non admin user" do
+		log_in_as @other_user
+		get user_path(@user)
 
+		assert_select 'div[id=?]', "admin-user-notes", count: 0
+	end
+
+	test "list notes on user profile page for admin" do
+		log_in_as @admin
+		get user_path(@user)
+
+		assert_select 'div[id=?]', "admin-user-notes", count: 1
+
+		@user.user_notes.each do |note|
+			assert_select 'li[id=?]', "admin_user_note_id_#{note.id}"
+			assert_match note.note, response.body
+		end
+	end
+
+	test "link back to user profile exists" do
+		log_in_as @admin
+		get user_user_notes_path(@user)
+
+		assert_select 'a[href=?]', user_path(@user), text: "Profile"
+	end
 
 end
