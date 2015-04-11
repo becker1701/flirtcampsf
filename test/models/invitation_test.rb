@@ -118,13 +118,13 @@ class InvitationTest < ActiveSupport::TestCase
   end
 
   test "invitation has user" do
-    #when an invitation exists and a matching user email exists
-    skip
+    invite = invitations(:for_archer)
+    assert_not invite.user.nil?
   end
 
   test "invitation does not have user" do
-    #when an invitation exists and a matching email does not exist
-    skip
+    @invitation.save
+    assert @invitation.user.nil?
   end
 
 end
