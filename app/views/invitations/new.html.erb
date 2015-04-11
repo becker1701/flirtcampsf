@@ -27,13 +27,15 @@
 
 <h3>Existing Invitations</h3>
 
-<% if @invitations.present? && @invitations.any? %>
+<%= link_to "Resend All Invites", resend_all_invitations_path, class: "btn btn-primary", data: { confirm: "Resend all invitations?" } %>
 
+<% if @invitations.present? && @invitations.any? %>
+	
 	<table class="table">
 		<thead>
 			<th>Name</th>
 			<th>Email</th>
-			<th>Invited On</th>
+			<th>Last Sent</th>
 			<th>Replied</th>
 			<th></th>
 		</thead>
@@ -41,7 +43,6 @@
 			<%= render @invitations %>
 		</tbody>
 	</table>
-
 
 	
 <% else %>

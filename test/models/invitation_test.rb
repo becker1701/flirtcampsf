@@ -95,6 +95,36 @@ class InvitationTest < ActiveSupport::TestCase
     assert_equal 1, ActionMailer::Base.deliveries.count
   end
 
+  test "last_sent updated" do
+    
+    
+    assert @invitation.last_sent_at.nil?
+    @invitation.save
+    @invitation.send_invitation_email
+    assert_not @invitation.last_sent_at.nil?
+    sent_datetime = @invitation.last_sent_at
 
+    @invitation.resend
+    assert_not_equal sent_datetime, @invitation.reload.last_sent_at
+
+  end
+
+  test "not_replied returns array of users whos email does not match invitation table" do
+    invites_not_replied = Invitation.not_replied
+    assert_equal 11, invites_not_replied.count
+    invites_not_replied.each do |invite|
+      assert_not invite.replied?
+    end
+  end
+
+  test "invitation has user" do
+    #when an invitation exists and a matching user email exists
+    skip
+  end
+
+  test "invitation does not have user" do
+    #when an invitation exists and a matching email does not exist
+    skip
+  end
 
 end

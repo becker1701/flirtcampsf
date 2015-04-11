@@ -52,6 +52,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 
 		invitation = assigns(:invitation)
 		invitation.reload
+		assert_not invitation.last_sent_at.nil?
 
 		assert_not flash.empty?
 		assert_redirected_to new_invitation_path
@@ -255,22 +256,34 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		invites.reload
 		get new_invitation_path
 
-		invites.each do |invite|
+		# invites.first.update_attribute(:last_sent_at, nil)
 
-			if invite.replied?
-				assert_select 'span.label-success', text: "Yes"
-				assert_select 'a[href=?]', resend_invitation_path(invite), count: 0
-			else
+		invites.each do |invite|
+			assert_select 'div[id=?]', "invite_id_#{invite.id}", count: 1 do
+				if invite.replied?
+					assert_select 'span.label-success', text: "Yes"
+					assert_select 'a[href=?]', resend_invitation_path(invite), count: 0
+				else
+					# debugger
+					assert_select 'span.label-warning', text: "No"
+					assert_select 'a[href=?]', resend_invitation_path(invite), count: 1
+				end
+
 				# debugger
-				assert_select 'span.label-warning', text: "No"
-				assert_select 'a[href=?]', resend_invitation_path(invite), count: 1
+				if invite.last_sent_at.nil?
+					assert_select 'td[id=?]', "last_sent_at_#{invite.id}", text: "Not Sent"
+				else
+					assert_select 'td[id=?]', "last_sent_at_#{invite.id}", invite.last_sent_at.localtime.strftime("%m/%d/%Y at %I:%M%p")
+				end
 			end
 		end
 	end
 
+
 	test "resend invitation from index" do
 		
 		invite = invitations(:one)
+		invite_last_sent = invite.last_sent_at
 
 		log_in_as @admin
 		assert is_logged_in?
@@ -279,6 +292,9 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_template 'invitations/new'
 
 		get resend_invitation_path(invite)
+
+		assert_equal invite.id, assigns(:invite).id
+		assert_not_equal invite_last_sent, assigns(:invite).last_sent_at
 
 		assert_equal 1, ActionMailer::Base.deliveries.count
 		#mailer already tested
@@ -399,7 +415,21 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 
 	end
 
-	test "user signup from invite not activated on create with incorrect invite ID" do
+	test "resend invites to all unanswered invitations" do
+		log_in_as @admin
+		get resend_all_invitations_path
+
+		not_replied_count = 0
+
+		Invitation.all.each do |invite|
+			if invite.replied?
+				#do nothing
+			else
+				not_replied_count += 1
+			end
+		end
+
+		assert_equal not_replied_count, ActionMailer::Base.deliveries.count
 
 	end
 

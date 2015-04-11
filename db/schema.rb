@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408001557) do
+ActiveRecord::Schema.define(version: 20150410225742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,7 +88,10 @@ ActiveRecord::Schema.define(version: 20150408001557) do
     t.string   "invite_digest"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.datetime "last_sent_at"
   end
+
+  add_index "invitations", ["email"], name: "index_invitations_on_email", unique: true, using: :btree
 
   create_table "membership_applications", force: :cascade do |t|
     t.string   "name"

@@ -51,4 +51,30 @@ class InvitationsControllerTest < ActionController::TestCase
   	assert_redirected_to login_url
   end
 
+  test "redirect on resend_all_invitations_path when not admin" do
+    get :resend_all
+    assert_redirected_to login_url
+
+    log_in_as @other_user
+    get :resend_all
+    assert_redirected_to root_path    
+  end
+
+  test "success on resend_all when admin" do
+    log_in_as @admin
+    get :resend_all
+    assert_redirected_to new_invitation_url
+    assert_not flash.empty?
+    assert_equal 11, assigns(:invitations).count
+    
+    Invitation.all.each do |invite|
+      if invite.replied?
+        refute_includes assigns(:invitations), invite
+      else
+        assert_includes assigns(:invitations), invite
+      end
+    end
+
+  end
+
 end

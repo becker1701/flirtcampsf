@@ -21,13 +21,13 @@
 			<% if @next_event.nil? %>
 				No event scheduled yet...
 			<% else %>
-				<span id="intention_status_<%= user.id %>"><%= user.next_event_intention.new_record? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %></span><br>
-				<span id="ea_status_<%= user.id %>"><%= user.ea_exists?(@next_event) ? "Early Arrival Team" : "" %></span>
+				<span id="intention_status_<%= user.id %>"><%= user.next_event_intention.nil? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %></span><br>
+				<span id="ea_status_<%= user.id %>"><%= user.next_event_early_arrival.present? ? "Early Arrival Team" : "" %></span>
 			<% end %>
 		</div>
 
 		<% if @next_event.present? %>
-		<% unless user.next_event_intention.new_record?  %>
+		<% unless user.next_event_intention.nil?  %>
 			<div class="col-md-4">
 				<!-- Tickets for sale: <%#= user.next_event_intention.tickets_for_sale.to_i %> <br> -->
 				<% if user.next_event_intention.going? %>

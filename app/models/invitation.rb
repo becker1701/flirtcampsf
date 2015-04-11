@@ -2,6 +2,10 @@ class Invitation < Application
 
 	attr_accessor :invite_token
 	
+	default_scope -> { includes(:user) }
+
+	belongs_to :user, foreign_key: :email, primary_key: :email
+
 	validates :name, presence: true
 	validates :email, presence: true, uniqueness: { case_sensitive: false }
 	validates :email, format: { with: VALID_EMAIL_REGEX, message: "is not a recognized format." }
@@ -11,11 +15,22 @@ class Invitation < Application
 
 
 	def send_invitation_email
+		self.update_attribute(:last_sent_at, Time.zone.now)
 		InvitationMailer.invite(self).deliver_now
 	end
 
+	def self.not_replied
+		includes(:user).merge(User.unscoped.where(id: nil)).references(:users)
+		# merge(User.where(id: nil)).references(:users)
+	end
+
+	def self.all_replied
+		joins(:user)
+	end
+
 	def replied?
-		User.find_by(email: self.email)
+		user
+		
 	end
 
 	def resend

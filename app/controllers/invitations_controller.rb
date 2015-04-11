@@ -56,6 +56,21 @@ class InvitationsController < ApplicationController
 		redirect_to new_invitation_url
 	end
 
+	def resend_all
+		@invitations = Invitation.not_replied
+
+		if @invitations.any?
+			@invitations.each do |invite|
+				# debugger
+				invite.resend
+			end
+			flash[:success] = "All invitations resent"
+		else
+			flash[:success] = "No invitations to resend"
+		end
+		redirect_to new_invitation_url
+	end
+
 private
 
 	def invitation_params

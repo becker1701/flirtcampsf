@@ -4,6 +4,7 @@ one:
   name: Some Person
   email: someemail@example.com
   invite_digest: <%= Invitation.digest('invite_012345') %>
+  last_sent_at: <%= Time.zone.now - 1.day %>
 
 for_archer: 
   name: Archer
@@ -15,4 +16,5 @@ one_<%= n %>:
   name: <%= Faker::Name.name %>
   email: someemail_<%= n %>_invite@example.com
   invite_digest: <%= Invitation.digest('invite_012345') %>
+  last_sent_at: <%= Time.zone.now - 1.hour %>
 <% end %>

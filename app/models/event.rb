@@ -7,13 +7,14 @@ class Event < ActiveRecord::Base
 
 	#TODO: belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
 
+	scope :event_early_arrivals, ->{ joins(early_arrivals: :user) }
 
 	validates :year, :start_date, presence: true
 	validate :start_date_before_end_date
 	validate :early_arrival_date_before_start_date
 
 	def self.next_event
-		self.where( "end_date > ?", Date.today ).first
+		self.where( "end_date > ?", Date.today ).order(:start_date).limit(1).first
 	end
 
 	def days
@@ -40,9 +41,9 @@ class Event < ActiveRecord::Base
 		end
 	end
 
-	def early_arrival_list
-		self.early_arrivals.includes(:user)
-	end
+	# def self.early_arrival_list
+	# 	joins(early_arrivals: :user).uniq
+	# end
 
 private
 

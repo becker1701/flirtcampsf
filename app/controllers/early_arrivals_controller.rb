@@ -8,7 +8,7 @@ class EarlyArrivalsController < ApplicationController
 	
 
 	def index
-		@early_arrivals = @event.early_arrival_list
+		@early_arrivals = EarlyArrival.next_event_early_arrivals
 	end
 
 	def create

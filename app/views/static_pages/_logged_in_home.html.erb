@@ -43,9 +43,9 @@
 						</li>	
 					</ul>
 						
-					<% if @next_event.early_arrival_list.any? %>
+					<% if @early_arrivals.any? %>
 						<ol id="ea-list">
-							<% @next_event.early_arrival_list .each do |ea| %>
+							<% @early_arrivals.each do |ea| %>
 								<%= content_tag(:li, display_name(ea.user)) %>
 							<% end %>
 						</ol>

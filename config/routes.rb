@@ -35,6 +35,10 @@ Rails.application.routes.draw do
     member do
       get 'resend'
     end
+
+    collection do
+      get 'resend_all'
+    end
   end
 
 

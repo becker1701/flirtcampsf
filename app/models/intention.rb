@@ -2,6 +2,12 @@ class Intention < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :event
+  scope :for_next_event, -> { joins(:event).merge(Event.next_event) }
+
+  # belongs_to :next_event, -> { merge(Event.next_event) }, class_name: 'Event'
+
+
+  # scope :for_next_event, -> { joins(:event).merge(Event.next_events) }
 
   validates :status, :user_id, :event_id, presence: true
   validate :arrival_date_before_departure_date

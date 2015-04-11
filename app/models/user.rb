@@ -4,11 +4,18 @@ class User < Application
 
 	attr_accessor :remember_token, :activation_token, :password_reset_token
 
+	
+
 	has_many :intentions, dependent: :destroy
 	has_many :activities, dependent: :nullify
 	has_many :early_arrivals, dependent: :destroy
 	has_many :user_notes, dependent: :destroy
-	# has_many :events
+	has_one :invitation, foreign_key: :email
+
+	has_one :next_event_intention, ->{ where(event: Event.next_event) }, class_name: 'Intention'
+	has_one :next_event_early_arrival, ->{ where(event: Event.next_event) }, class_name: 'EarlyArrival'
+
+	default_scope -> { includes(:next_event_intention, :next_event_early_arrival) }
 
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :playa_name, length: { maximum: 50 }
@@ -16,11 +23,11 @@ class User < Application
 	validates :email, format: { with: VALID_EMAIL_REGEX, message: "is not a recognized format." }
 	validates :password, length: { minimum: 6 }, allow_blank: true
 	validates :phone, length: { maximum: 30 }
-	# validate :check_email_existance
 
 	
 	before_save :downcase_email
 	before_create :generate_activation_digest
+
 
 	def User.attending_next_event
 		joins(:intentions).merge(Intention.going_to_next_event)
@@ -64,14 +71,20 @@ class User < Application
 		errors.add(:password, 'can not be blank')
 	end
 
-	def next_event_intention
-		# self.intentions.find_by(event: Event.next_event) 
-		event = Event.next_event
-		return nil if event.nil?
-		self.intentions.find_by(event: event) || event.intentions.build(user: self)
+	# def next_event_intention
 
-		# self.intentions.for_next_event	
-	end
+	# 	# event = Event.next_event
+	# 	# return nil if event.nil?
+	# 	# self.intentions.find_by(event: event) || event.intentions.build(user: self)
+
+	# 	# self.includes(:intentions).merge(Intention.where(event: Event.next_event)).references(:intentions)
+	# 	intentions.for_next_event
+	
+	# end
+	
+	# def next_event_intentions
+	# scope :next_event_intentions, -> {joins(:intentions).where(intention: {event: Event.next_event}).references(:intentions)}
+	# end
 
 	def assign_ea(event)
 		self.early_arrivals.create!(event: event)
@@ -86,22 +99,11 @@ class User < Application
 		self.early_arrivals.find_by(event: event)
 	end
 
-	# def test_intentions
-	# 	Event.next_event.intentions.pluck(:user.id)
+	# def User.next_event_intentions
+	# 	#TODO: test next_event_intentions
+	# 	self.activated.includes(:intentions).merge(Intention.for_next_event).references(:intentions)
 	# end
 
-
-
-	def User.next_event_intentions
-
-		# self.where(activated: true).includes(:intentions).where('intentions.event_id = ?', Event.next_event.id.to_s).references(:intentions)
-	end
-
-	# def check_email_existance
-	# 	if Application.email_exists(self.email)
-	# 		errors.add(:email, "has already been taken")
-	# 	end
-	# end
 
 private
 
