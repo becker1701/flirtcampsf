@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
 
   	if logged_in? && @next_event
   		@intention = current_user.next_event_intention || current_user.intentions.build(event: @next_event)
+      @payments = current_user.payments.where(event: @next_event)
       @early_arrivals = EarlyArrival.next_event_early_arrivals
   	end
   end

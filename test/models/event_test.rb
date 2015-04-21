@@ -4,7 +4,7 @@ class EventTest < ActiveSupport::TestCase
 
 	def setup
 		# Event.destroy_all
-		@event = Event.new(year: "2015", start_date: Date.today + 150.days, end_date: Date.today + 157.days, theme: "Some Theme", camp_address: "9:00 & F", early_arrival_date: Date.today + 145.days)
+		@event = Event.new(year: "2015", start_date: Date.today + 150.days, end_date: Date.today + 157.days, theme: "Some Theme", camp_address: "9:00 & F", early_arrival_date: Date.today + 145.days, camp_dues: 100, camp_dues_food: 50)
 	end
 
 	test "is valid" do
@@ -130,6 +130,16 @@ class EventTest < ActiveSupport::TestCase
 
 	test "invlalid without start date" do
 		@event.start_date = nil
+		assert_not @event.valid?
+	end
+
+	test "invalid if camp_dues nil" do
+		@event.camp_dues = nil
+		assert_not @event.valid?
+	end
+
+	test "invalid if camp_dues_food is nil" do
+		@event.camp_dues_food = nil
 		assert_not @event.valid?
 	end
 

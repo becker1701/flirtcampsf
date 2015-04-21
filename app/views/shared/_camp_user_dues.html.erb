@@ -1,0 +1,88 @@
+<% if user.next_event_intention.going? %>
+	<div id="user-camp-dues">
+
+			<h3>Dues Breakdown</h3>
+
+				<table class="table">
+					<tr>
+						<td>Camp Dues:</td>
+						<td><%= number_to_currency(@next_event.camp_dues, precision: 0) %></td>
+					</tr>
+
+					<tr>
+						<td>Camp Meals:</td>
+						<td>
+							<% if user.next_event_intention.opt_in_meals %>
+								<%= number_to_currency(@next_event.camp_dues_food, precision: 0) %>
+							<% else %>
+								<strong>Opted out</strong>
+							<% end %> 
+						</td>
+					</tr>
+
+					<% if user.next_event_intention.storage_tenent? %>
+						<tr>
+							<td>Annual Yurt Storage:</td>
+							<td><%= number_to_currency(user.next_event_intention.camp_due_storage, precision: 0) %></td>
+						</tr>
+					<% end %>
+
+				</table>
+
+				<h3>Payments Made</h3>
+
+					<% if user.payments.for_next_event.any? %>
+
+						<table class="table">
+							<thead>
+								<th>Date</th>
+								<th>Amount</th>
+								<th>Description</th>
+								<th></th>
+								<th></th>
+							</thead>
+							<tbody>
+								
+								<% user.payments.for_next_event.each do |payment| %>
+									<tr id="user_payment_id_<%= payment.id %>">
+										<%= content_tag(:td, payment.payment_date.strftime("%a, %b %-e")) %>
+										<%= content_tag(:td, number_to_currency(payment.amount, precision: 0)) %>
+										<%= content_tag(:td, payment.description) %>
+										<% if current_user.admin? %>
+											<%= content_tag(:td, link_to("Edit", edit_user_payment_path(user, payment))) %>
+											<%= content_tag(:td, link_to("Delete", user_payment_path(user, payment), method: :delete, data: { confirm: "Are you sure?"})) %>
+										<% end %>
+									</tr>
+								<% end %>
+
+
+							</tbody>
+						</table>
+					<% else %>
+						<strong>No payments recorded.</strong>
+					<% end %> 					
+				
+					<%= link_to "Add payment", new_user_payment_path(user), class: "btn btn-sm btn-primary" if current_user.admin? %>
+
+				<h3>Totals</h3></div>
+					<table class="table">
+						<tr>
+							<td>Total Camp Dues:</td>
+							<td><%= number_to_currency(user.sum_camp_dues, precision: 0) %></td>
+						</tr>
+
+						<tr>
+							<td>Total Payments:</td>
+							<td><%= number_to_currency(user.sum_next_event_payments, precision: 0) %></td>
+						</tr>
+
+						<tr>
+							<td><strong>Balance:</strong></td>
+							<td><strong><%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %></strong></td>
+						</tr>
+					</table>
+
+		<%= render 'shared/payment_options' %>
+
+	</div>
+<% end %>

@@ -4,12 +4,13 @@ class Event < ActiveRecord::Base
 	has_many :activities, dependent: :destroy
 	has_many :early_arrivals, dependent: :destroy
 	has_many :tickets, dependent: :nullify
+	has_many :payments, dependent: :restrict_with_error
 
 	#TODO: belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
 
 	scope :event_early_arrivals, ->{ joins(early_arrivals: :user) }
 
-	validates :year, :start_date, presence: true
+	validates :year, :start_date, :camp_dues, :camp_dues_food, presence: true
 	validate :start_date_before_end_date
 	validate :early_arrival_date_before_start_date
 

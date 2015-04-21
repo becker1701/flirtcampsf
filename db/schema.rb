@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410225742) do
+ActiveRecord::Schema.define(version: 20150420234205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,9 +48,11 @@ ActiveRecord::Schema.define(version: 20150410225742) do
     t.string   "theme"
     t.string   "camp_address"
     t.date     "early_arrival_date"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "camp_org"
+    t.decimal  "camp_dues",          default: 0.0
+    t.decimal  "camp_dues_food",     default: 0.0
   end
 
   create_table "intentions", force: :cascade do |t|
@@ -77,6 +79,8 @@ ActiveRecord::Schema.define(version: 20150410225742) do
     t.integer  "logistics_bins"
     t.integer  "lodging_num_occupants"
     t.boolean  "shipping_yurt"
+    t.decimal  "camp_due_storage",      default: 0.0
+    t.boolean  "storage_tenent",        default: false
   end
 
   add_index "intentions", ["user_id", "event_id"], name: "index_intentions_on_user_id_and_event_id", using: :btree
@@ -107,6 +111,19 @@ ActiveRecord::Schema.define(version: 20150410225742) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "payments", force: :cascade do |t|
+    t.date     "payment_date"
+    t.decimal  "amount",       default: 0.0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.text     "description"
+  end
+
+  add_index "payments", ["event_id"], name: "index_payments_on_event_id", using: :btree
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "tickets", force: :cascade do |t|
     t.string   "name"
@@ -159,6 +176,8 @@ ActiveRecord::Schema.define(version: 20150410225742) do
   add_foreign_key "early_arrivals", "events"
   add_foreign_key "early_arrivals", "users"
   add_foreign_key "intentions", "users"
+  add_foreign_key "payments", "events"
+  add_foreign_key "payments", "users"
   add_foreign_key "tickets", "events"
   add_foreign_key "user_notes", "users"
 end

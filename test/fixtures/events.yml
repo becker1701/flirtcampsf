@@ -7,6 +7,8 @@ past:
   theme: Past Event
   camp_address: 9:00 & I
   early_arrival_date: <%= Date.today - 105.days %>
+  camp_dues: 100
+  camp_dues_food: 50
 
 future:
   year: 2015
@@ -15,3 +17,5 @@ future:
   theme: Future Event
   camp_address: 9:00 & F
   early_arrival_date: <%= Date.today + 95.days %>
+  camp_dues: 100
+  camp_dues_food: 50

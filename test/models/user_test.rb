@@ -176,4 +176,10 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  test "sum of user camp dues" do 
+    
+    user = users(:archer)
+    assert_equal 225, user.sum_camp_dues
+  end
+
 end

@@ -47,10 +47,19 @@ class EventsController < ApplicationController
     redirect_to events_url
   end
 
+  def camp_dues_overview
+    
+    @event = Event.find_by(id: params[:id])
+    redirect_to users_path if @event.nil?
+
+    @users = User.attending_next_event
+
+  end
+
 private
 
   def event_params
-    params.require(:event).permit(:year, :start_date, :end_date, :theme, :camp_address, :early_arrival_date)
+    params.require(:event).permit(:year, :start_date, :end_date, :theme, :camp_address, :early_arrival_date, :camp_dues, :camp_dues_food)
   end
 
 end

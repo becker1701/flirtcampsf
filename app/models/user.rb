@@ -11,6 +11,7 @@ class User < Application
 	has_many :early_arrivals, dependent: :destroy
 	has_many :user_notes, dependent: :destroy
 	has_one :invitation, foreign_key: :email
+	has_many :payments, dependent: :restrict_with_error
 
 	has_one :next_event_intention, ->{ where(event: Event.next_event) }, class_name: 'Intention'
 	has_one :next_event_early_arrival, ->{ where(event: Event.next_event) }, class_name: 'EarlyArrival'
@@ -27,7 +28,6 @@ class User < Application
 	
 	before_save :downcase_email
 	before_create :generate_activation_digest
-
 
 	def User.attending_next_event
 		joins(:intentions).merge(Intention.going_to_next_event)
@@ -69,6 +69,34 @@ class User < Application
 
 	def blank_password_reset_error
 		errors.add(:password, 'can not be blank')
+	end
+
+	def sum_camp_dues
+		if Event.next_event && self.next_event_intention.going?
+
+			sum_dues = Event.next_event.camp_dues
+
+			if self.next_event_intention.storage_tenent
+				sum_dues = sum_dues + self.next_event_intention.camp_due_storage
+			end
+
+			if self.next_event_intention.opt_in_meals
+				sum_dues = sum_dues + Event.next_event.camp_dues_food
+			end
+		else
+			sum_dues = 0
+		end
+		 
+		sum_dues
+
+	end	
+
+	def sum_next_event_payments
+		self.payments.where(event: Event.next_event).sum(:amount)
+	end
+
+	def next_event_camp_dues_balance
+		self.sum_camp_dues - self.sum_next_event_payments
 	end
 
 	# def next_event_intention

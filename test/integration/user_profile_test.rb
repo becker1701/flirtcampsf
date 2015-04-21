@@ -104,28 +104,44 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 	test "go to another users page and see intention status" do
 		log_in_as @user
 
+		#check for no intention
+		other_user = users(:kurt)
+		intention = @event.intentions.find_by(user: other_user)
+		intention.destroy
+
+
+		get user_path(other_user)
+		assert_response :success
+		
 		#admin intention set in fixtures
 
-		@event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
-		get user_path(@admin)
+		intention = @event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
 
-		assert_equal @admin, assigns(:user)
+		# get user_path(@admin)
+
+		Intention.statuses.each do |status, id|
+			intention.status = status.to_sym
+			intention.save
+		# @event.intentions.create!(status: :going_needs_ticket, user: @user, logistics: "blah")
+			get user_path(@admin)
+
+			assert_equal @admin, assigns(:user)
 		
-		assert_template 'users/show'
-		assert_match @admin.name, response.body
-		assert_match "Lilly and Michelle", response.body
-		assert_match @admin.email, response.body
+			assert_template 'users/show'
+			assert_match @admin.name, response.body
+			assert_match "Lilly and Michelle", response.body
+			assert_match @admin.email, response.body
 
-		assert_no_match "blah", response.body
+			assert_no_match "blah", response.body
 
-		get root_url
+			get root_url
 
-		assert_template 'static_pages/home'
-		# assert_no_match @admin.name, response.body
-		assert_no_match "Lilly and Michelle", response.body
+			assert_template 'static_pages/home'
+			# assert_no_match @admin.name, response.body
+			assert_no_match "Lilly and Michelle", response.body
 
-		assert_no_match "blah", response.body
-
+			assert_no_match "blah", response.body
+		end
 	end
 
 	test "phone number on user profile page" do

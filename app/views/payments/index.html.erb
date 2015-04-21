@@ -1,0 +1,29 @@
+<% provide(:title, "Camp Dues for #{@user.name}") %>
+
+<h1>Camp Dues for <%= @user.name %></h1>
+<h1><small><%= @event.year %></small></h1>
+
+
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+
+		<%= link_to "Back to profile", current_user?(@user) ? root_path : user_path(@user) %>
+		
+		<%= render 'shared/camp_user_dues', user: @user %>
+<!-- 		<%# if @payments.any? %>
+			<ul>
+				<%# @payments.each do |payment| %>
+					<%#= content_tag(:li, id: "user_payment_id_#{payment.id}") do %>
+						Payment on <%#= payment.payment_date.strftime("%a, %b %-e") %> for <%#= number_to_currency(payment.amount) %>
+					<%# end %>
+				<%# end %>
+			</ul>
+		<%# else %>
+			<strong>No payments recorded.</strong>
+		<%# end %>
+
+		<%#= link_to "Add payment", new_user_payment_path(@user), class: "btn btn-primary" if current_user.admin? %> -->
+
+	</div>
+</div>

@@ -98,6 +98,9 @@
 					<%= render "intentions/status", user: current_user %> <!-- , user: current_user %> -->
 					<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
 
+					
+					<%= render 'shared/camp_user_dues_summary', user: current_user %>
+					
 					<hr>
 
 					<h3>Activites <span id="activity-count">(<%= @next_event.activities.size %>)</span><br>

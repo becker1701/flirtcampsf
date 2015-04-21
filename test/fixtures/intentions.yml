@@ -22,6 +22,8 @@ for_brian:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
+  storage_tenent: true
+  camp_due_storage: 75
 
 for_archer:
   user: archer
@@ -45,6 +47,8 @@ for_archer:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
+  storage_tenent: true
+  camp_due_storage: 75
 
 for_kurt:
   user: kurt
@@ -68,6 +72,8 @@ for_kurt:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
+  storage_tenent: true
+  camp_due_storage: 75
   
 for_elisabeth:
   user: elisabeth
@@ -91,6 +97,8 @@ for_elisabeth:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
+  storage_tenent: false
+  camp_due_storage: 0
 
 past_1:
   user: brian
@@ -114,6 +122,8 @@ past_1:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
+  storage_tenent: false
+  camp_due_storage: 0
 
 past_2:
   user: archer
@@ -137,3 +147,6 @@ past_2:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
+  storage_tenent: false
+  camp_due_storage: 0
+

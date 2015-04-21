@@ -349,3 +349,19 @@ div.user_intention {
 #admin-user-notes-list {
 	margin-top: 10px;
 }
+
+.unstyled_list {
+	list-style-type: none;
+		margin-left: 0;
+		padding-left: 20px;
+	
+}
+
+/* Payment Options on user root_path */
+#payment-options {
+	padding: 5px 20px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: $gray-med-light;
+
+}

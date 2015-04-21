@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
@@ -16,8 +16,11 @@ Rails.application.routes.draw do
 
   # resources :change_status, only: [:edit, :update]
 
+  
+
   resources :users do
     resources :user_notes
+    resources :payments
   end
   
   resources :membership_applications, only: [:index, :new, :create, :edit, :destroy] do
@@ -47,6 +50,10 @@ Rails.application.routes.draw do
     resources :intentions, only: [:create, :edit, :update]
     resources :early_arrivals, only: [:index, :create, :destroy]
     resources :tickets, only: [:new, :create, :show, :index, :edit, :destroy]
+    member do
+      get 'camp_dues_overview'
+    end
+
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

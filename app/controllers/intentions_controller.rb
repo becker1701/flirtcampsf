@@ -8,7 +8,8 @@ class IntentionsController < ApplicationController
 	# before_action :get_next_event, only: [:edit, :update]
 
 	def create
-		# debugger
+		# binding.pry
+
 		intention_status = params[:status]
 		# next_event = Event.find_by(id: params[:event])
 
@@ -44,7 +45,28 @@ class IntentionsController < ApplicationController
 private
 
 	def intention_params
-		params.require(:intention).permit(:status, :arrival_date, :departure_date, :transportation, :seats_available, :lodging, :yurt_owner, :yurt_storage, :yurt_panel_size, :yurt_user, :opt_in_meals, :food_restrictions, :logistics, :user_id, :event_id, :storage_bikes, :logistics_bike, :logistics_bins, :lodging_num_occupants, :shipping_yurt)
+		params.require(:intention).permit(:status,
+										  :arrival_date,
+										  :departure_date,
+										  :transportation,
+										  :seats_available,
+										  :lodging,
+										  :yurt_owner,
+										  :yurt_storage,
+										  :yurt_panel_size,
+										  :yurt_user,
+										  :opt_in_meals,
+										  :food_restrictions,
+										  :logistics,
+										  :user_id,
+										  :event_id,
+										  :storage_bikes,
+										  :logistics_bike,
+										  :logistics_bins,
+										  :lodging_num_occupants,
+										  :shipping_yurt,
+										  :camp_due_storage,
+										  :storage_tenent)
 		#:tickets_for_sale, 
 	end
 

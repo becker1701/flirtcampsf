@@ -124,6 +124,31 @@ class UsersControllerTest < ActionController::TestCase
 
   end
 
+  test "delete user when payments present returns error" do
 
+    log_in_as @admin
+
+      @other_user.payments.create!(event: events(:future), payment_date: Date.today-5.days, amount: 100)
+      @other_user.payments.create!(event: events(:future), payment_date: Date.today-3.days, amount: 75)
+
+      assert @other_user.errors.empty?
+
+      assert_no_difference 'User.count' do
+        delete :destroy, id: @other_user
+      end
+
+      user = assigns(:user)
+      assert_not user.errors.empty?
+      assert_includes user.errors.full_messages, "Cannot delete record because dependent payments exist"
+
+      user.payments.destroy_all
+
+      assert user.payments.empty?
+
+      assert_difference 'User.count', -1 do
+        delete :destroy, id: @other_user
+      end
+
+  end
 
 end

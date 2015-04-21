@@ -63,8 +63,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    flash[:success] = "User deleted."
+    if @user.destroy
+      flash[:success] = "User deleted."
+    else
+      @user.errors.full_messages.each do |msg|
+        flash[:danger] = msg
+      end
+    end
     redirect_to users_url
   end
 

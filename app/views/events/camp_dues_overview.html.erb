@@ -1,0 +1,33 @@
+<% provide(:title, "Camp Dues Overview") %>
+
+<h1>Camp Dues Overview</h1>
+<h1><small><%= @event.year %></small></h1>
+
+<% if @users.any? %>
+
+	<table class="table">
+		<thead>
+			<th>User</th>
+			<th>Dues</th>
+			<th>Payments</th>
+			<th>Balance</th>
+			<th>Add Payment</th>
+			<th>View Breakdown</th>
+		</thead>
+		<tbody>
+
+			<% @users.each do |user| %>
+				<%= content_tag(:tr, id: "user_id_#{user.id}") do %>
+					<%= content_tag(:td, user.name) %>
+					<%= content_tag(:td, number_to_currency(user.sum_camp_dues, precision: 0)) %>
+					<%= content_tag(:td, number_to_currency(user.sum_next_event_payments, precision: 0)) %>
+					<%= content_tag(:td, number_to_currency(user.next_event_camp_dues_balance, precision: 0)) %>
+					<%= content_tag(:td, link_to("Add Payment", new_user_payment_path(user))) %>
+					<%= content_tag(:td, link_to("View Breakdown", user_payments_path(user))) %>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>
+<% else %>
+	<strong>No one is going yet.</strong>
+<% end %>

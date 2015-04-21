@@ -42,6 +42,8 @@
 						<% end %>
 					</div>
 					
+					<%= render 'shared/camp_user_dues_summary', user: @user %>
+
 					<div id="admin-user-notes">
 						<%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
 						<% if @user.user_notes.any? %>
@@ -58,7 +60,7 @@
 			<% end %>
 
 		
-			<% if @user.next_event_intention.new_record? %>
+			<% if @user.next_event_intention.nil? %>
 				<h3>Not responded yet...</h3>
 			<% else %>
 				<%= render "intentions/status", user: @user %>

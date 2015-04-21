@@ -25,7 +25,9 @@ class IntentionTest < ActiveSupport::TestCase
 			  logistics_bike: 2,
 			  logistics_bins: 2,
 			  lodging_num_occupants: 2,
-			  shipping_yurt: false
+			  shipping_yurt: false,
+			  storage_tenent: false,
+			  camp_due_storage: 75
 			  )
 	end
 
@@ -143,5 +145,13 @@ class IntentionTest < ActiveSupport::TestCase
 		refute_includes intentions_for_going_to_next_event, intentions(:for_elisabeth)
 
 	end 
+
+	test "invalid when camp_due_storage is nil" do
+		@intention.camp_due_storage = nil
+		assert_not @intention.valid?
+	end
+
+
+
 
 end
