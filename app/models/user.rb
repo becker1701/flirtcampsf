@@ -133,6 +133,11 @@ class User < Application
 	# end
 
 
+	def send_camp_dues_notification
+		CampDuesNotificationsMailer.camp_dues_notification(self).deliver_now
+		self.next_event_intention.update_attribute(:dues_last_sent, DateTime.now)
+	end
+
 private
 
 

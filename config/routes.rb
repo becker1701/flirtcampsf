@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :user_notes
     resources :payments
+    get 'camp_dues_notification', on: :member
   end
   
   resources :membership_applications, only: [:index, :new, :create, :edit, :destroy] do

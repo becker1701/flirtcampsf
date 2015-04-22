@@ -151,4 +151,31 @@ class UsersControllerTest < ActionController::TestCase
 
   end
 
+  test "redirect on camp_due_notifications if not admin" do
+      
+    ActionMailer::Base.deliveries.clear 
+
+    assert_not is_logged_in?
+    get :camp_dues_notification, id: @user
+    assert_redirected_to login_url
+    assert_equal 0, ActionMailer::Base.deliveries.count
+
+    log_in_as @other_user
+    assert_not @other_user.admin?
+    get :camp_dues_notification, id: @other_user
+    assert_redirected_to root_path
+    assert_equal 0, ActionMailer::Base.deliveries.count
+  end
+
+  test "send camp_dues_notification when admin" do
+    log_in_as @admin
+    ActionMailer::Base.deliveries.clear
+
+    get :camp_dues_notification, id: @other_user
+    assert_equal @other_user, assigns(:user)
+    assert_equal 1, ActionMailer::Base.deliveries.count
+    assert_redirected_to camp_dues_overview_event_path(events(:future))
+    assert_not flash.nil?
+  end
+
 end

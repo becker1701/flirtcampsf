@@ -1,12 +1,17 @@
 class UsersController < ApplicationController
 
-  before_action :get_user, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, only: [:show, :edit, :update, :destroy, :camp_dues_notification]
+  
+  
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification]
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: [:destroy, :camp_dues_notification]
+  
   before_action :get_invite, only: [:new, :create]
   # before_action :invited, only: [:new, :create]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: :destroy
-  before_action :next_event, only: [:index, :show]
+  before_action :next_event, only: [:index, :show, :camp_dues_notification]
+  
+
 
   def index  
     @users = User.activated.paginate(page: params[:page])
@@ -72,6 +77,14 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
+
+
+  def camp_dues_notification
+    @user.send_camp_dues_notification
+    flash[:success] = "Notification Sent"
+    redirect_to camp_dues_overview_event_url(@next_event)
+  end
+
 
 private
 
