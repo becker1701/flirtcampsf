@@ -29,6 +29,10 @@ class User < Application
 	before_save :downcase_email
 	before_create :generate_activation_digest
 
+	def first_name
+		name.split(" ")[0]
+	end
+
 	def User.attending_next_event
 		joins(:intentions).merge(Intention.going_to_next_event)
 	end

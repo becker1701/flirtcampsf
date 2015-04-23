@@ -1,5 +1,7 @@
 class CampDuesNotificationsMailer < ApplicationMailer
 
+  helper :membership_applications
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -9,6 +11,6 @@ class CampDuesNotificationsMailer < ApplicationMailer
   	@user = user
   	@event = Event.next_event
 
-    mail to: @user.email, subject: "Flirt Camp camp dues", from: "campmaster@flirtcampsf.com"
+    mail to: @user.email, subject: "Flirt Camp - Camp Dues!!", from: "campmaster@flirtcampsf.com"
   end
 end

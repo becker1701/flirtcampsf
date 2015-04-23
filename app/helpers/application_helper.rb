@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-	# include MembershipApplicationsHelper
+	include MembershipApplicationsHelper
 
 	def full_title(title='')
 		base_title = "Flirt Camp SF"
@@ -49,6 +49,7 @@ module ApplicationHelper
 			"TBD"
 		end
 	end
+
 
 
 

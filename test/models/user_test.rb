@@ -182,4 +182,22 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 225, user.sum_camp_dues
   end
 
+  test "#first_name returns first name" do
+
+    user = users(:archer)
+    assert_equal "Archer Baker", user.name
+    assert_equal "Archer", user.first_name
+
+    user.name = "Archer Baker Something"
+
+    assert_equal "Archer", user.first_name
+
+    user.name = "Archer"
+    assert_equal "Archer", user.first_name
+
+    user.name = " "
+    assert_nil user.first_name
+    
+  end
+
 end

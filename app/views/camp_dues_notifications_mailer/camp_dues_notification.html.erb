@@ -1,4 +1,4 @@
-<h3>Howdy, <%= @user.name %></h3>
+<h3>Howdy <%= display_name(@user, first_name_only: true) %>!</h3>
 
 <p>I have included your camp dues for this years event! Please send your camp contributions as soon as you can so we can reserve our cistern and pottie. These two items are ~$2200.</p>
 
@@ -20,7 +20,7 @@
 </ul>
 
 
-<p><strong>Contributions</strong></p>
+<p><strong>Payments</strong></p>
 
 <% if @user.payments.for_next_event.any? %>
 	<ul>
@@ -29,18 +29,18 @@
 		<% end %>
 	</ul>
 <% else %>
-	<p><strong>No contributions yet</strong></p>
+	<p><strong>No payments recorded yet</strong></p>
 <% end %>
 
 
 <p><strong>Totals</strong></p>
 <ul>
 	<li>Total Dues: <%= number_to_currency(@user.sum_camp_dues, precision: 0) %></li>
-	<li>Total Contributions: <%= number_to_currency(@user.sum_next_event_payments, precision: 0) %></li>
+	<li>Total Payments: <%= number_to_currency(@user.sum_next_event_payments, precision: 0) %></li>
 	<li>Dues Remaining: <%= number_to_currency(@user.next_event_camp_dues_balance, precision: 0) %></li>
 </ul>
 
-<p><strong>Options for contribution:</strong></p>
+<p><strong>Options for payment:</strong></p>
 <ul>
 	<li>PayPal <strong>becker1701@gmail.com</strong> as a "Freinds and Family" transfer</li>
 	<li>Mail check to Brian Becker, 330 Scott St #2, San Francisco, CA  94117</li>
