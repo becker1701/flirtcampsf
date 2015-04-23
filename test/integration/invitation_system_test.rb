@@ -433,4 +433,14 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 
 	end
 
+	test "email links located on page" do
+		log_in_as @admin
+		get new_invitation_path
+		invites = assigns(:invitations)
+		invites.each do |invite|
+			# binding.pry
+			assert_select 'a[href=?]', "mailto:#{invite.email}"
+		end
+	end
+
 end
