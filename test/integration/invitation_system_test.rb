@@ -439,7 +439,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		invites = assigns(:invitations)
 		invites.each do |invite|
 			# binding.pry
-			assert_select 'a[href=?]', "mailto:#{invite.email}"
+			assert_match "mailto:#{invite.email}", response.body
 		end
 	end
 

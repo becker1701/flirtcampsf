@@ -12,7 +12,9 @@ class StorageTenentIntegrationTest < ActionDispatch::IntegrationTest
 		log_in_as @admin
 
 		intention = @user.next_event_intention
-
+		intention.storage_tenent = false
+		intention.save!
+		
 		get user_path(@user)
 
 		assert_not intention.storage_tenent?

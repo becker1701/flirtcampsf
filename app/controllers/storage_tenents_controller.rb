@@ -1,5 +1,6 @@
 class StorageTenentsController < ApplicationController
   
+  	before_filter :logged_in_user
 	before_filter :admin_user
 	before_filter :get_event
 
