@@ -24,40 +24,7 @@
 
 		<% if @next_event.present? %>
 
-			<% if logged_in? and admin_user? %>
-				<div class="admin">
-					<h3>Admin</h3>
-
-					<div id="admin-early-arrival">
-						<% if @user.ea_exists?(@next_event) %> 
-							<%= form_for([@next_event, @next_event.early_arrivals.find_by(user_id: @user.id)], html: {method: :delete}) do |f| %>
-								<%#= f.hidden_field :user_id, value: @user.id %>
-								<%= f.submit "Unassign from Early Arrival", class: "btn" %>
-							<% end %>
-						<% else %>
-							<%= form_for([@next_event, @next_event.early_arrivals.build]) do |f| %>				
-								<%= f.hidden_field :user_id, value: @user.id %>
-								<%= f.submit "Assign to Early Arrival", class: "btn btn-primary" %>
-							<% end %>
-						<% end %>
-					</div>
-					
-					<%= render 'shared/camp_user_dues_summary', user: @user %>
-
-					<div id="admin-user-notes">
-						<%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
-						<% if @user.user_notes.any? %>
-							<ul class="list" id="admin-user-notes-list">
-								<% @user.user_notes.each do |note| %>
-									<%= content_tag(:li, note.note, id: "admin_user_note_id_#{note.id}") %>
-								<% end %>
-							</ul>
-						<% end %>
-					</div>
-
-				</div>
-
-			<% end %>
+			<%= render 'admin_user_funtions' %>
 
 		
 			<% if @user.next_event_intention.nil? %>

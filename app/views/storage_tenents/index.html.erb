@@ -1,0 +1,39 @@
+
+
+<h1>Yurts</h1>
+<h1><small><%= @event.year %></small></h1>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		
+
+		<% if @tenents.any? %>
+			<h4>Total: <%= @tenents.count %></h4>
+			<table class="table">
+				<thead>
+					<th>Name</th>
+					<th>Panel Size</th>
+					<th>Storage Requested</th>
+					<th>Tenent</th>
+					<th>Due</th>
+				</thead>
+				<tbody>
+					<% @tenents.each do |tenent| %>
+						<tr>
+							<td><%= tenent.user.name %></td>
+							<td><%= tenent.yurt_panel_size %></td>
+							<td><%= tenent.yurt_storage %></td>
+							<td><%= tenent.storage_tenent %></td>
+							<td><%= tenent.camp_due_storage %></td>
+
+						</tr>
+					<% end %>
+				</tbody>
+			</table>	
+		<% else %>
+			<strong>No tenents assigned</strong>
+
+		<% end %>
+
+	</div>
+</div>

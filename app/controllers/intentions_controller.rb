@@ -1,8 +1,9 @@
 class IntentionsController < ApplicationController
 	
 	before_action :logged_in_user
+	before_action :admin_user, only: :edit_storage_tenent
 	before_action :get_event
-	before_action :get_intention,  only: [:edit, :update]
+	before_action :get_intention,  only: [:edit, :update, :edit_storage_tenent]
 	before_action :correct_user, only: [:edit, :update]
 
 	# before_action :get_next_event, only: [:edit, :update]
@@ -26,6 +27,22 @@ class IntentionsController < ApplicationController
 	end
 
 	def edit
+	end
+
+	def edit_storage_tenent
+		# binding.pry
+		if params[:intention][:storage_tenent] == "0"
+			params[:intention][:camp_due_storage] = 0
+		end
+
+		# binding.pry
+
+		if @intention.update_attributes(intention_params)
+			flash[:success] = "Storage tenent option updated"
+		else
+			flash[:danger] = "The storage option update failed"
+		end
+		redirect_to user_path(@intention.user)
 	end
 
 	def update

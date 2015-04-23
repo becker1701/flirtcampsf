@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  
+
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
@@ -47,8 +49,11 @@ Rails.application.routes.draw do
 
 
   resources :events do 
+    resources :storage_tenents, only: :index
     resources :activities
-    resources :intentions, only: [:create, :edit, :update]
+    resources :intentions, only: [:create, :edit, :update] do 
+      patch :edit_storage_tenent, on: :member
+    end
     resources :early_arrivals, only: [:index, :create, :destroy]
     resources :tickets, only: [:new, :create, :show, :index, :edit, :destroy]
     member do

@@ -3,7 +3,8 @@
 	<%= link_to "EA Team", event_early_arrivals_path(event) %> | 
 	<%= link_to "Meal Menu", '#' %> |
 	<%= link_to "Activities", event_activities_path(event) %> |
-	<%= link_to "Camp Dues Overview", camp_dues_overview_event_path(event) %>
+	<%= link_to "Camp Dues Overview", camp_dues_overview_event_path(event) %> |
+	<%= link_to "Storage Tenents", event_storage_tenents_path(event) %> |
 	<%= link_to "Remove event", event_path(event), method: :delete, data: { confirm: "Are you sure you want to remove this event and all associated records?"} %>
 <% end %>
 

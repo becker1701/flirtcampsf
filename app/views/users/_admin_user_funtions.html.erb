@@ -1,0 +1,67 @@
+<% if logged_in? and admin_user? %>
+	<div class="admin">
+		<h3>Admin</h3>
+
+		<div id="admin-early-arrival">
+			<% if @user.ea_exists?(@next_event) %> 
+				<%= form_for([@next_event, @next_event.early_arrivals.find_by(user_id: @user.id)], html: {method: :delete}) do |f| %>
+					<%#= f.hidden_field :user_id, value: @user.id %>
+					<%= f.submit "Unassign from Early Arrival", class: "btn" %>
+				<% end %>
+			<% else %>
+				<%= form_for([@next_event, @next_event.early_arrivals.build]) do |f| %>				
+					<%= f.hidden_field :user_id, value: @user.id %>
+					<%= f.submit "Assign to Early Arrival", class: "btn btn-primary" %>
+				<% end %>
+			<% end %>
+		</div>
+
+		<br>	
+		<div id="admin-storage-tenent">
+
+			<% if @user.next_event_intention %>
+
+				<fieldset style="border: 1px solid #bbb; padding: 15px; border-radius: 5px; width: 40%;">
+					<strong>Yurt owner:</strong> <%= @user.next_event_intention.yurt_owner? ? "Yes" : "No" %><br>
+					<strong>Yurt Panel Size:</strong> <%= @user.next_event_intention.yurt_panel_size.nil? ? "Not Specified" : "#{@user.next_event_intention.yurt_panel_size}\"" %><br>
+					<strong>Yurt Storage Requested:</strong> <%= @user.next_event_intention.yurt_storage? ? "Yes" : "No" %>
+
+					<%= form_for(
+							[@next_event, @user.next_event_intention], 
+							url: edit_storage_tenent_event_intention_path(@next_event, @user.next_event_intention)) do |f| %>
+
+						<div class="checkbox">
+							<%= f.label :storage_tenent do %>
+								<%= f.check_box :storage_tenent %><strong>Storage Tenent</strong>
+							<% end %>
+						</div>
+						
+						<div class="form-group">
+							<%= f.label :camp_due_storage, "Storage Dues" %>
+							<%= f.number_field :camp_due_storage, class: "form-control" %>
+						</div>	
+						
+						<%= f.submit "Update", class: "btn btn-default" %>
+					
+					<% end %>
+				</fieldset>
+			<% end %>
+		
+		</div>
+
+		<%= render 'shared/camp_user_dues_summary', user: @user %>
+
+		<div id="admin-user-notes">
+			<%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
+			<% if @user.user_notes.any? %>
+				<ul class="list" id="admin-user-notes-list">
+					<% @user.user_notes.each do |note| %>
+						<%= content_tag(:li, note.note, id: "admin_user_note_id_#{note.id}") %>
+					<% end %>
+				</ul>
+			<% end %>
+		</div>
+
+	</div>
+
+<% end %>
