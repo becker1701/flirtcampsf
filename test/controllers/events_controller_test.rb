@@ -139,4 +139,11 @@ class EventsControllerTest < ActionController::TestCase
     assert_select 'title', full_title("Camp Dues Overview")
   end
 
+  test "returns event by desc start date" do
+    log_in_as @admin
+    get :index
+    events = assigns(:events)
+    assert_equal Event.next_event, events.first
+  end
+
 end

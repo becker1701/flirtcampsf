@@ -54,6 +54,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
 
     get events_path
     assert_select 'a[href=?]', camp_dues_overview_event_path(@event)
+    assert_select 'a[href=?]', event_storage_tenents_path(@event)
 
   end
 

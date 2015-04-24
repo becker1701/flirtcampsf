@@ -6,7 +6,7 @@ class StorageTenentsController < ApplicationController
 
   def index
 
-  	@tenents = Intention.for_next_event.where(yurt_owner: true)
+  	@tenents = @event.intentions.where(yurt_owner: true)
 
   end
 
@@ -14,6 +14,6 @@ class StorageTenentsController < ApplicationController
 private
 
 	def get_event
-		@event = next_event
+		@event = Event.find_by(id: params[:event_id])
 	end
 end

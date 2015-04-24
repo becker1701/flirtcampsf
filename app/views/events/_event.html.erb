@@ -1,11 +1,11 @@
 <%= content_tag :li, id: "event_id_#{event.id}" do %>
 	<h3><%= link_to event.year, edit_event_path(event) %></h3>
-	<%= link_to "EA Team", event_early_arrivals_path(event) %> | 
-	<%= link_to "Meal Menu", '#' %> |
-	<%= link_to "Activities", event_activities_path(event) %> |
-	<%= link_to "Camp Dues Overview", camp_dues_overview_event_path(event) %> |
-	<%= link_to "Storage Tenents", event_storage_tenents_path(event) %> |
-	<%= link_to "Remove event", event_path(event), method: :delete, data: { confirm: "Are you sure you want to remove this event and all associated records?"} %>
+	<%= link_to "EA Team", event_early_arrivals_path(event), class: "btn btn-xs btn-default" %> | 
+	<%= link_to "Meal Menu", '#', class: "btn btn-xs btn-default" %> |
+	<%= link_to "Activities", event_activities_path(event), class: "btn btn-xs btn-default" %> |
+	<%= link_to "Camp Dues Overview", camp_dues_overview_event_path(event), class: "btn btn-xs btn-default" %> |
+	<%= link_to "Storage Tenents", event_storage_tenents_path(event), class: "btn btn-xs btn-default" %> |
+	<%= link_to "Remove event", event_path(event), class: "btn btn-xs btn-danger", method: :delete, data: { confirm: "Are you sure you want to remove this event and all associated records?"} %>
 <% end %>
 
 

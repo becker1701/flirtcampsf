@@ -21,7 +21,7 @@
 
 			<% if @user.next_event_intention %>
 
-				<fieldset style="border: 1px solid #bbb; padding: 15px; border-radius: 5px; width: 40%;">
+				<fieldset style="width: 40%;">
 					<strong>Yurt owner:</strong> <%= @user.next_event_intention.yurt_owner? ? "Yes" : "No" %><br>
 					<strong>Yurt Panel Size:</strong> <%= @user.next_event_intention.yurt_panel_size.nil? ? "Not Specified" : "#{@user.next_event_intention.yurt_panel_size}\"" %><br>
 					<strong>Yurt Storage Requested:</strong> <%= @user.next_event_intention.yurt_storage? ? "Yes" : "No" %>

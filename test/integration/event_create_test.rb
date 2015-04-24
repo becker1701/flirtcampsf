@@ -51,7 +51,12 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		get events_path
 		assert_template 'events/index'
 
-		assert_equal Event.all, assigns(:events)
+		events = Event.all
+
+		events.each do |event|
+			assert_includes assigns(:events), event
+		end
+		# assert_equal Event.all, assigns(:events)
 		events = assigns(:events)
 		assert_equal 2, events.count
 
@@ -162,7 +167,7 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		assert_redirected_to events_url
 		follow_redirect!
 		assert_equal 1, assigns(:events).count
-		assert_equal Event.all, assigns(:events)
+		assert_includes assigns(:events), Event.first
 
 	end
 

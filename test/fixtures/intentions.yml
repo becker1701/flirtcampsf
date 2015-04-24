@@ -11,7 +11,7 @@ for_brian:
   lodging: 1
   yurt_owner: true
   yurt_storage: true
-  yurt_panel_size: 1"
+  yurt_panel_size: 1
   yurt_user: Lilly and Michelle
   opt_in_meals: true
   food_restrictions: none
@@ -36,7 +36,7 @@ for_archer:
   lodging: 1
   yurt_owner: true
   yurt_storage: true
-  yurt_panel_size: 1"
+  yurt_panel_size: 1
   yurt_user: Lilly and Michelle
   opt_in_meals: true
   food_restrictions: none
