@@ -29,6 +29,24 @@ class User < Application
 	before_save :downcase_email
 	before_create :generate_activation_digest
 
+	def User.next_event_camp_dues
+		next_event_camp_dues = 0
+		# binding.pry
+		attending_next_event.each do |u|
+			next_event_camp_dues = next_event_camp_dues + u.sum_camp_dues
+		end
+
+		next_event_camp_dues
+	end
+
+	def User.next_event_payments
+		Payment.where(event: Event.next_event).sum(:amount)
+	end
+
+	def User.next_event_balance
+		User.next_event_camp_dues - User.next_event_payments
+	end
+
 	def first_name
 		name.split(" ")[0]
 	end
@@ -75,23 +93,33 @@ class User < Application
 		errors.add(:password, 'can not be blank')
 	end
 
-	def sum_camp_dues
-		if Event.next_event && self.next_event_intention.going?
-
-			sum_dues = Event.next_event.camp_dues
-
-			if self.next_event_intention.storage_tenent
-				sum_dues = sum_dues + self.next_event_intention.camp_due_storage
-			end
-
-			if self.next_event_intention.opt_in_meals
-				sum_dues = sum_dues + Event.next_event.camp_dues_food
-			end
-		else
-			sum_dues = 0
+	def camp_dues
+		if self.next_event_intention.going?
+			Event.next_event.camp_dues
+		else 
+			0
 		end
-		 
-		sum_dues
+	end
+
+	def camp_dues_food
+		if self.next_event_intention.going? && self.next_event_intention.opt_in_meals?
+			Event.next_event.camp_dues_food
+		else
+			0
+		end
+	end
+
+	def camp_dues_storage
+		if self.next_event_intention.going? && self.next_event_intention.storage_tenent?
+			self.next_event_intention.camp_due_storage
+		else
+			0	
+		end
+	end
+
+	def sum_camp_dues
+		sum_dues = 0
+		sum_dues = self.camp_dues + self.camp_dues_food + self.camp_dues_storage
 
 	end	
 

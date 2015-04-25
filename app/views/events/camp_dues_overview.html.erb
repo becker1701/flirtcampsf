@@ -30,6 +30,15 @@
 					<%= content_tag(:td, user.next_event_intention.dues_last_sent.nil? ? "NA" : user.next_event_intention.dues_last_sent.strftime("%a, %b %-e")) %>
 				<% end %>
 			<% end %>
+
+			<tr>
+				<td><strong>Totals</strong></td> 
+				<td><strong><span id="camp_dues_total"><%= number_to_currency(User.next_event_camp_dues, precision: 0) %></span></strong></td>
+				<td><strong><span id="camp_payments_total"><%= number_to_currency(User.next_event_payments, precision: 0) %></span></strong></td>
+				<td><strong><span id="camp_balance_total"><%= number_to_currency(User.next_event_balance, precision: 0) %></span></strong></td>
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
 <% else %>

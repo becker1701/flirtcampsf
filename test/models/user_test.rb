@@ -179,7 +179,12 @@ class UserTest < ActiveSupport::TestCase
   test "sum of user camp dues" do 
     
     user = users(:archer)
+    #with fod_option
     assert_equal 225, user.sum_camp_dues
+
+    #without food option
+    user.next_event_intention.toggle!(:opt_in_meals)
+    assert_equal 175, user.sum_camp_dues.to_i    
   end
 
   test "#first_name returns first name" do
@@ -198,6 +203,25 @@ class UserTest < ActiveSupport::TestCase
     user.name = " "
     assert_nil user.first_name
     
+  end
+
+  test "next_event_total_camp_dues" do
+    assert_equal 450, User.next_event_camp_dues
+  end
+
+  test "next_event_payments" do
+    @user.save
+    @user.payments.create(event: events(:future), payment_date: Date.today, amount: 100)
+    @user.payments.create(event: events(:past), payment_date: Date.today, amount: 100)
+    assert_equal 100, User.next_event_payments
+  end
+
+  test "next_event_camp_due_balance" do
+
+    @user.save
+    @user.payments.create(event: events(:future), payment_date: Date.today, amount: 100)
+    @user.payments.create(event: events(:past), payment_date: Date.today, amount: 100)
+    assert_equal 350, User.next_event_balance
   end
 
 end

@@ -36,6 +36,22 @@ class CampDuesTest < ActionDispatch::IntegrationTest
 
 	end
 
+	test "opted out of food" do
+		log_in_as @admin
+		
+		@user.next_event_intention.toggle!(:opt_in_meals)
+		assert_not @user.next_event_intention.opt_in_meals?
+
+		get user_path(@user)
+		assert_match "Balance: $175", response.body
+
+		get user_payments_path(@user)
+		assert_match "Opted out", response.body
+		# assert_select 'td', text: "<strong>Balance: $175</strong>"
+
+
+	end
+
 	test "user home page camp dues and payment information" do
 		log_in_as @user
   		get root_path
@@ -92,6 +108,7 @@ class CampDuesTest < ActionDispatch::IntegrationTest
 
 
 	end
+
 
   test "user show page has camp dues when admin" do
 
