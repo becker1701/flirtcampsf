@@ -214,4 +214,15 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		assert_select 'span#camp_ea_date', "EA Date: TBD"
 
 	end
+
+	test "user next event intention.going? nil when no intention error" do
+		log_in_as @admin
+
+		user_w_no_intention = users(:aaa)
+		assert user_w_no_intention.next_event_intention.nil?
+
+		get user_path(user_w_no_intention)
+		assert_response :success
+	end
+
 end

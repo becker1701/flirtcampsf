@@ -1,27 +1,30 @@
-<% if user.next_event_intention.going? %>
-	<hr>
-	<div id="user-camp-dues">
-		<h3>Camp Dues</h3>		
+<% if user.next_event_intention %>
 
-		<div class="row">
-			<div class="col-md-5">
-				<ul class="unstyled_list">
-					<li>Total Camp Dues: <%= number_to_currency(user.sum_camp_dues, precision: 0) %></li>
-					<li>Total Payments: <%= number_to_currency(user.sum_next_event_payments, precision: 0) %><br>
-					<%= link_to "Add Payment", new_user_payment_path(user), class: "btn btn-xs btn-primary" if current_user.admin? %></li>
-					<li><strong>Balance: <%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %></strong></li>
-					<li><%= link_to "Camp Dues Breakdown", user_payments_path(user), class: "btn btn-default btn-sm" %></li>
-				</ul>
+	<% if user.next_event_intention.going? %>
+		<hr>
+		<div id="user-camp-dues">
+			<h3>Camp Dues</h3>		
+
+			<div class="row">
+				<div class="col-md-5">
+					<ul class="unstyled_list">
+						<li>Total Camp Dues: <%= number_to_currency(user.sum_camp_dues, precision: 0) %></li>
+						<li>Total Payments: <%= number_to_currency(user.sum_next_event_payments, precision: 0) %><br>
+						<%= link_to "Add Payment", new_user_payment_path(user), class: "btn btn-xs btn-primary" if current_user.admin? %></li>
+						<li><strong>Balance: <%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %></strong></li>
+						<li><%= link_to "Camp Dues Breakdown", user_payments_path(user), class: "btn btn-default btn-sm" %></li>
+					</ul>
+				</div>
+				<div class="col-md-7">
+					<%= render 'shared/payment_options' %>
+				</div>
 			</div>
-			<div class="col-md-7">
-				<%= render 'shared/payment_options' %>
-			</div>
+			
+
+
+
+
 		</div>
-		
 
-
-
-
-	</div>
-
+	<% end %>
 <% end %>
