@@ -23,7 +23,7 @@
 					<% if user.next_event_intention.storage_tenent? %>
 						<tr>
 							<td>Annual Yurt Storage:</td>
-							<td><%= number_to_currency(user.next_event_intention.camp_due_storage, precision: 0) %></td>
+							<td><%= number_to_currency(user.next_event_intention.storage_amount_due, precision: 0) %></td>
 						</tr>
 					<% end %>
 

@@ -14,7 +14,47 @@ class UsersController < ApplicationController
 
 
   def index  
-    @users = User.activated.paginate(page: params[:page])
+      
+      # binding.pry
+    if params[:q].present?
+
+      if params[:q] == "attending_next_event"
+        @subtitle = "Members attending #{@next_event.year}"
+        @users = User.activated.attending_next_event.paginate(page: params[:page])
+        
+      elsif params[:q] == "not_attending_next_event"
+        @subtitle = "Members not attending #{@next_event.year}"
+        @users = User.activated.not_attending_next_event.paginate(page: params[:page])
+        
+      elsif params[:q] == "not_responded_to_next_event"
+        @subtitle = "Members not responded to #{@next_event.year}"
+        @users = User.activated.not_responded_to_next_event.paginate(page: params[:page])
+        
+      elsif params[:q] == "has_ticket_to_next_event"
+        @subtitle = "Members who have tickets to #{@next_event.year}"
+        @users = User.activated.has_ticket_to_next_event.paginate(page: params[:page])
+
+      elsif params[:q] == "needs_ticket_to_next_event"
+        @subtitle = "Members who need tickets to #{@next_event.year}"
+        @users = User.activated.needs_ticket_to_next_event.paginate(page: params[:page])
+
+      elsif params[:q] == "driving_to_next_event"
+        @subtitle = "Members who are driving to #{@next_event.year}"
+        @users = User.activated.driving_to_next_event.paginate(page: params[:page])
+
+      elsif params[:q] == "early_arrivals_next_event"
+        @subtitle = "Early Arrival Team for #{@next_event.year}"
+        @users = User.activated.early_arrivals_next_event.paginate(page: params[:page])
+
+      end
+
+    else
+      @subtitle = "All Camp Members"
+      @users = User.activated.paginate(page: params[:page])
+
+    end
+
+
   end
 
 

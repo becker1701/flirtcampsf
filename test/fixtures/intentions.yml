@@ -21,7 +21,7 @@ for_brian:
   logistics_bike: 2
   logistics_bins: 2
   lodging_num_occupants: 2
-  shipping_yurt: false
+  shipping_yurt: true
   storage_tenent: true
   camp_due_storage: 75
 
@@ -31,8 +31,8 @@ for_archer:
   status: 2
   arrival_date: <%= Date.today + 120.days %>
   departure_date: <%= Date.today + 125.days %>
-  transportation: 1
-  seats_available: 1
+  transportation: 2
+  seats_available: 0
   lodging: 1
   yurt_owner: true
   yurt_storage: true
@@ -56,8 +56,33 @@ for_kurt:
   status: 3
   arrival_date: <%= Date.today + 120.days %>
   departure_date: <%= Date.today + 125.days %>
-  transportation: 1
-  seats_available: 1
+  transportation: 3
+  seats_available: 0
+  lodging: 1
+  yurt_owner: true
+  yurt_storage: false
+  yurt_panel_size: 1
+  yurt_user: Lilly and Michelle
+  opt_in_meals: true
+  food_restrictions: none
+  logistics: I need a few bins transported
+  tickets_for_sale: 1
+  storage_bikes: 1
+  logistics_bike: 2
+  logistics_bins: 2
+  lodging_num_occupants: 2
+  shipping_yurt: true
+  storage_tenent: true
+  camp_due_storage: 75
+  
+for_elisabeth:
+  user: elisabeth
+  event: future
+  status: 4
+  arrival_date: <%= Date.today + 120.days %>
+  departure_date: <%= Date.today + 125.days %>
+  transportation: 4
+  seats_available: 0
   lodging: 1
   yurt_owner: true
   yurt_storage: true
@@ -72,13 +97,13 @@ for_kurt:
   logistics_bins: 2
   lodging_num_occupants: 2
   shipping_yurt: false
-  storage_tenent: true
-  camp_due_storage: 75
-  
-for_elisabeth:
-  user: elisabeth
-  event: future
-  status: 4
+  storage_tenent: false
+  camp_due_storage: 0
+
+for_aaa_last_event:
+  user: aaa
+  event: past
+  status: 1
   arrival_date: <%= Date.today + 120.days %>
   departure_date: <%= Date.today + 125.days %>
   transportation: 1
@@ -131,7 +156,7 @@ past_2:
   status: 1
   arrival_date: <%= Date.today - 120.days %>
   departure_date: <%= Date.today - 115.days %>
-  transportation: 1
+  transportation: 2
   seats_available: 1
   lodging: 1
   yurt_owner: true

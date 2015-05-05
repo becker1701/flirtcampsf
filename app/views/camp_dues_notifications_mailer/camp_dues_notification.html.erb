@@ -15,7 +15,7 @@
 		<li>Camp Meals: <strong>Opted Out</strong> (<%= link_to "Opt In by updating your camp questionairre", root_url %>)</li>
 	<% end %>
 	<% if @user.next_event_intention.storage_tenent? %>
-		<li>Annual yurt storage: <%= number_to_currency(@user.next_event_intention.camp_due_storage, precision: 0) %></li>
+		<li>Annual yurt storage: <%= number_to_currency(@user.next_event_intention.storage_amount_due, precision: 0) %></li>
 	<% end %>
 </ul>
 

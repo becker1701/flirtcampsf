@@ -21,29 +21,35 @@
 
 			<% if @user.next_event_intention %>
 
-				<fieldset style="width: 40%;">
-					<strong>Yurt owner:</strong> <%= @user.next_event_intention.yurt_owner? ? "Yes" : "No" %><br>
-					<strong>Yurt Panel Size:</strong> <%= @user.next_event_intention.yurt_panel_size.nil? ? "Not Specified" : "#{@user.next_event_intention.yurt_panel_size}\"" %><br>
-					<strong>Yurt Storage Requested:</strong> <%= @user.next_event_intention.yurt_storage? ? "Yes" : "No" %>
+				<fieldset>
 
-					<%= form_for(
+					<div class="row">
+						<div class="col-md-6">
+							<strong>Yurt owner:</strong> <%= @user.next_event_intention.yurt_owner? ? "Yes" : "No" %><br>
+							<strong>Yurt Panel Size:</strong> <%= @user.next_event_intention.yurt_panel_size.nil? ? "Not Specified" : "#{@user.next_event_intention.yurt_panel_size}\"" %><br>
+							<strong>Yurt Storage Requested:</strong> <%= @user.next_event_intention.yurt_storage? ? "Yes" : "No" %>		
+						</div>
+						<div class="col-md-6">
+							<%= form_for(
 							[@next_event, @user.next_event_intention], 
 							url: edit_storage_tenent_event_intention_path(@next_event, @user.next_event_intention)) do |f| %>
 
-						<div class="checkbox">
-							<%= f.label :storage_tenent do %>
-								<%= f.check_box :storage_tenent %><strong>Storage Tenent</strong>
+								<div class="checkbox">
+									<%= f.label :storage_tenent do %>
+										<%= f.check_box :storage_tenent %><strong>Storage Tenent</strong>
+									<% end %>
+								</div>
+								
+								<div class="form-group">
+									<%= f.label :camp_due_storage, "Storage Dues" %>
+									<%= f.number_field :camp_due_storage, class: "form-control" %>
+								</div>	
+								
+								<%= f.submit "Update", class: "btn btn-default" %>
+							
 							<% end %>
 						</div>
-						
-						<div class="form-group">
-							<%= f.label :camp_due_storage, "Storage Dues" %>
-							<%= f.number_field :camp_due_storage, class: "form-control" %>
-						</div>	
-						
-						<%= f.submit "Update", class: "btn btn-default" %>
-					
-					<% end %>
+					</div>
 				</fieldset>
 			<% end %>
 		

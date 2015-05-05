@@ -178,4 +178,13 @@ class UsersControllerTest < ActionController::TestCase
     assert_not flash.nil?
   end
 
+  test "index with no next event success" do
+    log_in_as @admin
+    Event.destroy_all
+    get :index
+    assert_response :success
+    
+
+  end
+
 end

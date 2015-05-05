@@ -25,6 +25,11 @@ class Intention < ActiveRecord::Base
     for_next_event.where(status: [1,2])
   end 
 
+  def Intention.not_going_to_next_event
+    #TODO: test Intention.going
+    for_next_event.where(status: [3,4])
+  end 
+
 	def going?
 		# debugger
 		if self.going_has_ticket? || self.going_needs_ticket?
@@ -34,6 +39,17 @@ class Intention < ActiveRecord::Base
 		end
 	end
 
+  def storage_amount_due
+    if storage_tenent && yurt_owner
+      camp_due_storage
+    else
+      0
+    end
+  end
+
+  # def self.total_yurts_to_ship(event)
+  #   where(event: event, shipping_yurt: true).count(:shipping_yurt)
+  # end
 
 private
 

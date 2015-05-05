@@ -38,16 +38,21 @@ class UserIndexTest < ActionDispatch::IntegrationTest
         assert_select 'span[id=?]', "ea_status_#{user.id}", text: "Early Arrival Team"
       end
 
+
+
       unless user == @admin
-        assert_select 'a[href=?]', user_path(user), text: 'Delete', method: :delete
+        assert_select 'a[href=?]', user_path(user), text: 'Delete'#, method: :delete
       end
   	end
+
 
     assert_difference 'User.count', -1 do
       delete user_path(@non_admin)
     end
 
   end
+
+
 
   test "nil next_event shows only message" do
       log_in_as @admin    
@@ -57,10 +62,14 @@ class UserIndexTest < ActionDispatch::IntegrationTest
       get users_path
       users = assigns(:users)
       assert_nil assigns(:next_event)
-      
+
+      assert_template 'users/index'
+      assert_select 'div.member_search', count: 0
       users.each do |user|
         assert_select 'div[id=?]', "user_id_#{user.id}", text: "No event scheduled yet..."
       end
+
+
 
   end
 
@@ -83,11 +92,4 @@ class UserIndexTest < ActionDispatch::IntegrationTest
 
   end
 
-  test "intention status shows on index page" do
-    log_in_as @user
-    get users_path
-    users = assigns(:users)
-
-
-  end
 end

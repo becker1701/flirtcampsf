@@ -143,4 +143,24 @@ class EventTest < ActiveSupport::TestCase
 		assert_not @event.valid?
 	end
 
+	test "#count_yurts_to_ship to return 2 for event" do
+
+		assert_equal 2, events(:future).count_yurts_to_ship
+		assert_equal 0, @event.count_yurts_to_ship
+	end
+
+	test "#count_yurt_storage_requested to return 3 for event" do
+		assert_equal 3, events(:future).count_yurt_storage_requested
+		assert_equal 0, @event.count_yurt_storage_requested
+	end
+
+	test "#count_tenant_after_event to return 3 for event" do
+		assert_equal 3, events(:future).count_storage_tenants
+		assert_equal 0, @event.count_storage_tenants
+	end
+
+	test "#sum_storage_dues is 225 for event" do
+		assert_equal 225, events(:future).sum_storage_dues
+	end
+
 end

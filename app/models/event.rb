@@ -46,6 +46,24 @@ class Event < ActiveRecord::Base
 	# 	joins(early_arrivals: :user).uniq
 	# end
 
+	# scope :yurt_owners, -> { joins(:intentions).where(intentions: {yurt_owner: true}) }
+
+	def count_yurts_to_ship
+		self.intentions.where(shipping_yurt: true).count(:shipping_yurt)
+	end
+
+	def count_yurt_storage_requested
+		self.intentions.where(yurt_storage: true).count(:yurt_storage)
+	end
+
+	def count_storage_tenants
+		self.intentions.where(storage_tenent: true).count(:storage_tenent)
+	end
+
+	def sum_storage_dues
+		self.intentions.where(storage_tenent: true, yurt_owner: true).sum(:camp_due_storage)
+	end
+
 private
 
 	def start_date_before_end_date

@@ -146,12 +146,71 @@ class IntentionTest < ActiveSupport::TestCase
 
 	end 
 
+
+	test "users returned for not going to next event" do 
+		intentions_for_not_going_to_next_event = Intention.not_going_to_next_event
+
+		assert_equal 2, intentions_for_not_going_to_next_event.count
+		
+		refute_includes intentions_for_not_going_to_next_event, intentions(:for_brian)
+		refute_includes intentions_for_not_going_to_next_event, intentions(:for_archer)
+		assert_includes intentions_for_not_going_to_next_event, intentions(:for_kurt)
+		assert_includes intentions_for_not_going_to_next_event, intentions(:for_elisabeth)
+
+	end 
+
+
 	test "invalid when camp_due_storage is nil" do
 		@intention.camp_due_storage = nil
 		assert_not @intention.valid?
 	end
 
+	test "storage dues returns 0 for yurt owner not storage tenant" do
+		@intention.yurt_owner = true
+		assert @intention.yurt_owner
+		@intention.storage_tenent = false
+		@intention.camp_due_storage = 75
+		assert_equal 0, @intention.storage_amount_due
+	end
 
+	test "storage dues returns 75 for yurt owner with storage tenant" do
+		@intention.yurt_owner = true
+		assert @intention.yurt_owner
+		@intention.storage_tenent = true
+		@intention.camp_due_storage = 75
+		assert_equal 75, @intention.storage_amount_due
+
+		#if the camp_due_storage is 0 for some reason, return 0
+		@intention.camp_due_storage = 0
+		assert_equal 0, @intention.storage_amount_due		
+	end
+
+	test "storage dues returns 0 for non yurt owner not storage tenant" do
+		@intention.yurt_owner = false
+		assert_not @intention.yurt_owner
+		@intention.storage_tenent = false
+		@intention.camp_due_storage = 75
+		assert_equal 0, @intention.storage_amount_due
+	end
+
+	test "storage dues returns 0 for non yurt owner with storage tenant" do
+		#this should not happen
+		@intention.yurt_owner = false
+		assert_not @intention.yurt_owner
+		@intention.storage_tenent = true
+		@intention.camp_due_storage = 75
+		assert_equal 0, @intention.storage_amount_due
+	end
+
+
+	# test "#total_yurts_to_ship returns count for event" do
+	# 	event= events(:future)
+	# 	assert_equal 2, Intention.total_yurts_to_ship(event)
+
+	# 	yurts_to_ship = Intention.where(event: event, shipping_yurt: true)
+	# 	assert_not yurts_to_ship.nil?
+	# 	assert_equal 2, yurts_to_ship.count	
+	# end
 
 
 end

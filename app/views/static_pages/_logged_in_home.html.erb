@@ -111,18 +111,18 @@
 
 					<hr>
 					<h3>Camp Roster (<%= User.attending_next_event.count %>)</h3>
-					<h3><small>Who is going to <%= @next_event.year %></small></h3>
-					<% if User.attending_next_event.any? %>
+					<h3><small><%= link_to "Who is going to #{@next_event.year}", users_path(q: :attending_next_event) %></small></h3>
+					<!-- <%# if User.attending_next_event.any? %>
 						<ul id="camp-roster" class="users">
-							<% User.attending_next_event.each do |user| %>
-								<%= content_tag :li, id: "user_id_#{user.id}", style: "margin-top: 3px;" do %>
-									<%= link_to(gravatar_for(user, size: 80), user_path(user)) %> <%= link_to "#{user.playa_name} (aka #{user.name})", user %>
-								<% end %>
-							<% end %>
+							<%# User.attending_next_event.each do |user| %>
+								<%#= content_tag :li, id: "user_id_#{user.id}", style: "margin-top: 3px;" do %>
+									<%#= link_to(gravatar_for(user, size: 80), user_path(user)) %> <%#= link_to "#{user.playa_name} (aka #{user.name})", user %>
+								<%# end %>
+							<%# end %>
 						</ul>
-					<% else %>
+					<%# else %>
 						<p>No one has responded yet.</p>
-					<% end %>
+					<%# end %> -->
 
 
 				<% end %>

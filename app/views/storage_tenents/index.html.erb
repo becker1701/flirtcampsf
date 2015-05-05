@@ -1,10 +1,10 @@
 
 
-<h1>Yurts</h1>
+<h1>Yurt Owners / Storage</h1>
 <h1><small><%= @event.year %></small></h1>
 
 <div class="row">
-	<div class="col-md-6 col-md-offset-3">
+	<div class="col-md-8 col-md-offset-2">
 		
 
 		<% if @tenents.any? %>
@@ -13,8 +13,9 @@
 				<thead>
 					<th>Name</th>
 					<th>Panel Size</th>
+					<th>Shipping Requested</th>
 					<th>Storage Requested</th>
-					<th>Tenent</th>
+					<th>Tenant After Event</th>
 					<th>Due</th>
 				</thead>
 				<tbody>
@@ -22,12 +23,22 @@
 						<tr>
 							<td><%= tenent.user.name %></td>
 							<td><%= tenent.yurt_panel_size %></td>
-							<td><%= tenent.yurt_storage %></td>
-							<td><%= tenent.storage_tenent %></td>
-							<td><%= tenent.camp_due_storage %></td>
+							<td><%= tenent.shipping_yurt? ? "Yes": "No" %></td>
+							<td><%= tenent.yurt_storage? ? "Yes" : "No" %></td>
+							<td><%= tenent.storage_tenent? ? "Yes" : "No" %></td>
+							<td><%= number_to_currency(tenent.storage_amount_due, precision: 0) %></td>
 
 						</tr>
 					<% end %>
+
+					<tr class="table-totals">
+						<td></td>
+						<td></td>
+						<td><strong><%= @event.count_yurts_to_ship %></strong></td>
+						<td><strong><%= @event.count_yurt_storage_requested %></strong></td>
+						<td><strong><%= @event.count_storage_tenants %></strong></td>
+						<td><strong><%= number_to_currency(@event.sum_storage_dues, precision: 0) %></strong></td>
+					</tr>
 				</tbody>
 			</table>	
 		<% else %>

@@ -129,6 +129,107 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test "not_attending_next_event" do
+    #return all users whose intention status are attenting the next_event
+    event = events(:future)
+    intentions_user_id = event.intentions.where(status: [3,4]).pluck(:user_id).to_a
+    users = User.where(id: intentions_user_id).order(:id)
+    assert_equal users.to_a, User.not_attending_next_event.order(:id).to_a
+
+  end
+
+
+  test "not_responded_to_next_event" do
+    event = events(:future)
+    User.activated.each do |user|
+      if user.next_event_intention.nil?
+        assert_includes User.activated.not_responded_to_next_event, user
+      else
+        assert_not_includes User.activated.not_responded_to_next_event, user
+      end
+    end
+
+  end
+
+  test "has_ticket_to_next_event" do
+    event = events(:future)
+
+    User.activated.each do |user|
+      if user.next_event_intention.nil?
+        assert_not_includes User.activated.has_ticket_to_next_event, user
+      else
+        # binding.pry
+        if user.next_event_intention.status == "going_has_ticket" || user.next_event_intention.status == "not_going_has_ticket"
+          assert_includes User.activated.has_ticket_to_next_event, user
+        else
+          # puts "intention status: #{user.next_event_intention.status}"
+          assert_not_includes User.activated.has_ticket_to_next_event, user
+        end
+      end
+    end
+
+  end
+
+
+  test "heeds_ticket_to_next_event" do
+    event = events(:future)
+
+    User.activated.each do |user|
+      if user.next_event_intention.nil?
+        assert_not_includes User.activated.needs_ticket_to_next_event, user
+      else
+        # binding.pry
+        if user.next_event_intention.status == "going_needs_ticket"
+
+          assert_includes User.activated.needs_ticket_to_next_event, user
+        else
+          # puts "intention status: #{user.next_event_intention.status}"
+          assert_not_includes User.activated.needs_ticket_to_next_event, user
+        end
+      end
+    end
+
+  end
+
+
+  test "driving_to_next_event" do
+    event = events(:future)
+
+    User.activated.each do |user|
+      if user.next_event_intention.nil?
+        assert_not_includes User.activated.driving_to_next_event, user
+      else
+        # binding.pry
+        if user.next_event_intention.transportation == "driving"
+
+          assert_includes User.activated.driving_to_next_event, user
+        else
+          # puts "intention status: #{user.next_event_intention.status}"
+          assert_not_includes User.activated.driving_to_next_event, user
+        end
+      end
+    end
+
+  end
+
+  test "early_arrival_to_next_event" do
+    event = events(:future)
+
+    assert_equal 3, User.activated.early_arrivals_next_event.count
+
+    User.activated.each do |user|
+      if user.ea_exists?(event)
+        assert_includes User.activated.early_arrivals_next_event, user
+      else
+        assert_not_includes User.activated.early_arrivals_next_event, user
+      end
+    end
+
+  end
+
+
+
+
   test "early arrival association exists" do
     assert_empty @user.early_arrivals
   end

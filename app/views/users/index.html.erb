@@ -1,6 +1,23 @@
-<% provide(:title, "All Camp Members") %>
+<% provide(:title, @subtitle) %>
 
-<h1>All Camp Members</h1>
+<% if @next_event %>
+	<div class="member_search">
+		<h3><small><%= @next_event.year %>:</small></h3>
+		<%= link_to "All Members", users_path %> |
+		<%= link_to "Attending", users_path(q: :attending_next_event) %> |
+		<%= link_to "Not Attending", users_path(q: :not_attending_next_event) %> |
+		<%= link_to "Not Responded", users_path(q: :not_responded_to_next_event) %>
+		<br>
+		<%= link_to "Has Ticket", users_path(q: :has_ticket_to_next_event) %> |
+		<%= link_to "Needs Tickets", users_path(q: :needs_ticket_to_next_event) %> | 
+		<%= link_to "Drivers", users_path(q: :driving_to_next_event) %> |
+		<%= link_to "Early Arrival", users_path(q: :early_arrivals_next_event) %> |
+	</div>
+<% end %>
+
+
+
+<h1><%= @subtitle %></h1>
 
 <%= will_paginate %>
 

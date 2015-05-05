@@ -55,6 +55,30 @@ class User < Application
 		joins(:intentions).merge(Intention.going_to_next_event)
 	end
 
+	def User.not_attending_next_event
+		joins(:intentions).merge(Intention.not_going_to_next_event)
+	end
+
+	def User.not_responded_to_next_event
+		where(intentions: {id: nil})
+	end
+
+	def User.has_ticket_to_next_event
+		where(intentions: {status: [1,3]})
+	end
+
+	def User.needs_ticket_to_next_event
+		where(intentions: {status: 2})
+	end
+
+	def User.driving_to_next_event
+		where(intentions: {transportation: 1})
+	end
+
+	def User.early_arrivals_next_event
+		joins(:next_event_early_arrival)
+	end
+
 	def User.activated
 		where(activated: true).order(:name)
 	end
@@ -111,7 +135,7 @@ class User < Application
 
 	def camp_dues_storage
 		if self.next_event_intention.going? && self.next_event_intention.storage_tenent?
-			self.next_event_intention.camp_due_storage
+			self.next_event_intention.storage_amount_due
 		else
 			0	
 		end

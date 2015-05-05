@@ -1,9 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+ea_brian:
+  event: future
+  user: brian
+
 ea_archer:
   event: future
   user: archer
 
 ea_kurt:
   event: future
+  user: kurt
+
+ea_brian_past:
+  event: past
+  user: brian
+  
+ea_archer_past:
+  event: past
+  user: archer
+
+ea_kurt_past:
+  event: past
   user: kurt
