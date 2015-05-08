@@ -377,7 +377,10 @@ div.user_intention {
 
 .welcome {
 
-	background: url("bm2013.jpeg") no-repeat center center fixed;
+	background-image: image-url("bm2013.jpeg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
 	background-size: cover;
 
 }
