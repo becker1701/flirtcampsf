@@ -27,6 +27,10 @@ gem "letter_opener", group: :development
 # gem "minitest-rails"
 gem 'rack-mini-profiler'
 
+group :development do
+  gem 'meta_request'
+end
+
 group :development, :test do
 
   gem 'jazz_hands', github: 'jkrmr/jazz_hands'

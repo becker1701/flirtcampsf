@@ -3,21 +3,22 @@
 <% if @next_event %>
 	<div class="member_search">
 		<h3><small><%= @next_event.year %>:</small></h3>
-		<%= link_to "All Members", users_path %> |
-		<%= link_to "Attending", users_path(q: :attending_next_event) %> |
-		<%= link_to "Not Attending", users_path(q: :not_attending_next_event) %> |
-		<%= link_to "Not Responded", users_path(q: :not_responded_to_next_event) %>
-		<br>
-		<%= link_to "Has Ticket", users_path(q: :has_ticket_to_next_event) %> |
-		<%= link_to "Needs Tickets", users_path(q: :needs_ticket_to_next_event) %> | 
-		<%= link_to "Drivers", users_path(q: :driving_to_next_event) %> |
-		<%= link_to "Early Arrival", users_path(q: :early_arrivals_next_event) %> |
+		<%= link_to "All Members", users_path, class: "btn btn-info btn-xs" %>
+		<%= link_to "Attending", users_path(q: :attending_next_event), class: "btn btn-info btn-xs" %>
+		<%= link_to "Not Attending", users_path(q: :not_attending_next_event), class: "btn btn-info btn-xs" %> 
+		<%= link_to "Not Responded", users_path(q: :not_responded_to_next_event), class: "btn btn-info btn-xs" %>
+	</div>
+	<div class="member_search">
+		<%= link_to "Has Ticket", users_path(q: :has_ticket_to_next_event), class: "btn btn-info btn-xs" %> 
+		<%= link_to "Needs Tickets", users_path(q: :needs_ticket_to_next_event), class: "btn btn-info btn-xs" %>
+		<%= link_to "Drivers", users_path(q: :driving_to_next_event), class: "btn btn-info btn-xs" %> 
+		<%= link_to "Early Arrival", users_path(q: :early_arrivals_next_event), class: "btn btn-info btn-xs" %> 
 	</div>
 <% end %>
 
 
 
-<h1><%= @subtitle %></h1>
+<h2><%= @subtitle %></h2>
 
 <%= will_paginate %>
 

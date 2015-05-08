@@ -5,60 +5,66 @@
 
 
 <% else %>
-	<div class="center jumbotron">
-		<h1>Welcome to the Flirt Camp App!</h1>
-		<h3>
-			<small>Flirt Camp is a fun year-round community of folks, mainly from the SF Bay Area, who are committed to having extrodinary relationships and love Burning Man.</small>
-		</h3>
-		<span><%#= link_to "Create you Flirt Camp Profile!", signup_path, class: "btn btn-primary btn-lg" %></span>
-	</div>
-
-	<div class="row">
-		<div class="col-md-4">
-			<p class="lead">Join Flirt Camp</p>
-			<p>Fill out our membership application and join us!</p>
-			<%= link_to "Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
-		</div>
-		
-		<div class="col-md-4">
-		
-			<p class="lead">Need Access?</p>
-			<p>Submit an your name and email and we will get you setup.</p>
-			<%= link_to "I am an existing member", new_existing_member_request_path, class: "btn btn-primary btn-block" %>
-		</div>
-
-
-		<% if @next_event %>
-			<div class="col-md-4">
-				<p class="lead">Sell your tickets!</p>
-				<p>Have an extra ticket and want to sell it to a Flirt Camper?</p>
-				<%= link_to "Sell Your Ticket", new_event_ticket_path(@next_event), class: "btn btn-primary btn-block" %>
-			</div>
-		<% end %>
-	</div>
 	
+	<main>	
+		<section class="welcome">
+			<div class="center"><!--  jumbotron"> -->
+				<%= image_tag "lipstick-icon.png", class: "lipstick-icon" %>
+				<h1>Welcome to Flirt Camp SF!</h1>
+				<h3>
+					<small>Flirt Camp is a fun year-round community of folks, mainly from the SF Bay Area, who are committed to having extraodinary relationships and love Burning Man.</small>
+				</h3>
+
+				<div class="container row col-md-6 col-md-offset-3">
+					<%= link_to "Log In", login_path, class: "btn btn-primary btn-block" %>
+					<p class="home-register"><%= link_to "Register", new_existing_member_request_path %> if you have not setup your profile</p>
+				</div>
+		</section>
 
 
-	<div id="home-next-event">
-		<% if @next_event.present? %>
-			<h1>
-				<%= @next_event.year %>
-			<br>	
-			<small>Flirt Camp Address: <%= @next_event.camp_address %></small></h1>
-			<% if @next_event.activities.any? %>
-				<h3>Flirt Camp Activities:</h3>
-				<div>
-					<% @next_event.activities.order(:day,:time).each do |activity| %>
-						<div class="row" id="home_activites_list">
-							<%= content_tag(:div, "#{strf_day(activity.day)} @ #{strf_time(activity.time)}", class: "text-left col-md-3 col-md-offset-2") %>
-							<%= content_tag(:div, "#{activity.title} with #{display_name(activity.user)}", class: "text-left col-md-5") %>
+		<section class="container">
+			<div class="row home-actions">
+				<div class="col-md-6">
+					<p class="lead">Join Flirt Camp</p>
+					<p>Fill out our membership application and join us!</p>
+					<%= link_to "Apply to Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
+				</div>
+				
+
+
+
+				<% if @next_event %>
+					<div class="col-md-6">
+						<p class="lead">Sell your tickets!</p>
+						<p>Have an extra ticket and want to sell it to a Flirt Camper?</p>
+						<%= link_to "Sell Your Ticket", new_event_ticket_path(@next_event), class: "btn btn-primary btn-block" %>
+					</div>
+				<% end %>
+			</div>
+			
+
+
+			<div id="home-next-event">
+				<% if @next_event.present? %>
+					<h1>
+						<%= @next_event.year %>
+					<br>	
+					<small>Flirt Camp Address: <%= @next_event.camp_address %></small></h1>
+					<% if @next_event.activities.any? %>
+						<h3>Flirt Camp Activities:</h3>
+						<div>
+							<% @next_event.activities.order(:day,:time).each do |activity| %>
+								<div class="row" id="home_activites_list">
+									<%= content_tag(:div, "#{strf_day(activity.day)} @ #{strf_time(activity.time)}", class: "text-left col-md-3 col-md-offset-2") %>
+									<%= content_tag(:div, "#{activity.title} with #{display_name(activity.user)}", class: "text-left col-md-5") %>
+								</div>
+							<% end %>
 						</div>
 					<% end %>
-				</div>
-			<% end %>
-		<% end %>
-	</div>
-
+				<% end %>
+			</div>
+		</section>
+	</main>
 
 <% end %>
 

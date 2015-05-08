@@ -1,60 +1,9 @@
 @import "bootstrap-sprockets";
 
 
-/*@import "bootstrap";*/
+@import "bootstrap";
 
-// Core variables and mixins
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
-
-// Reset and dependencies
-@import "bootstrap/normalize";
-@import "bootstrap/print";
-@import "bootstrap/glyphicons";
-
-// Core CSS
-@import "bootstrap/scaffolding";
-@import "bootstrap/type";
-@import "bootstrap/code";
-@import "bootstrap/grid";
-@import "bootstrap/tables";
-@import "bootstrap/forms";
-@import "bootstrap/buttons";
-
-// Components
-@import "bootstrap/component-animations";
-@import "bootstrap/dropdowns";
-/*@import "bootstrap/button-groups";*/
-@import "bootstrap/input-groups";
-@import "bootstrap/navs";
-@import "bootstrap/navbar";
-/*@import "bootstrap/breadcrumbs";*/
-@import "bootstrap/pagination";
-@import "bootstrap/pager";
-@import "bootstrap/labels";
-@import "bootstrap/badges";
-@import "bootstrap/jumbotron";
-@import "bootstrap/thumbnails";
-@import "bootstrap/alerts";
-/*@import "bootstrap/progress-bars";*/
-@import "bootstrap/media";
-@import "bootstrap/list-group";
-@import "bootstrap/panels";
-@import "bootstrap/responsive-embed";
-@import "bootstrap/wells";
-@import "bootstrap/close";
-
-// Components w/ JavaScript
-/*@import "bootstrap/modals";*/
-@import "bootstrap/tooltip";
-@import "bootstrap/popovers";
-/*@import "bootstrap/carousel";*/
-
-// Utility classes
-@import "bootstrap/utilities";
-@import "bootstrap/responsive-utilities";
-
-
+@import url(http://fonts.googleapis.com/css?family=Roboto:500,100,300,700);
 
 /* mixins */
 
@@ -70,10 +19,12 @@ $gray-med-light: #eaeaea;
 
 html {
 	overflow-y: scroll;
+
 }
 
 body {
 	padding-top: 60px;
+	font-family: 'Roboto', sans-serif;
 }
 
 section {
@@ -85,10 +36,15 @@ textarea {
 }
 
 .center {
+	padding: 10%;
+	color: white;
 	text-align: center;
 	
+	h3 small{
+		color: white;
+	}
 	h1 {
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 	}
 }
 
@@ -100,13 +56,13 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
 	font-size: 3em;
-	letter-spacing: -2px;
+	letter-spacing: -1px;
 	margin-bottom: 30px;
 	text-align: center;
 }
 
 h2 {
-	font-size: 1.2em;
+	font-size: 1.5em;
 	letter-spacing: -1px;
 	margin-bottom: 30px;
 	text-align: center;
@@ -114,34 +70,55 @@ h2 {
 	color: $gray-light;
 }
 
-p {
-	font-size: 1.1em;
+p, div, li {
+	font-size: 1em;
 	line-height: 1.7em;
+	font-weight: 300;
+}
+
+.btn {
+	font-weight: 300;
 }
 
 /* header */
+
+.navbar-default {
+	background-color: white;
+	min-height: 60px;
+	/*border-bottom: 0px;*/
+}
+
+.lead {
+	font-size: 1.5em;
+}
 
 #logo {
 	float: left;
 	margin-left: 15px;
 	margin-right: 10px;
 	font-size: 1.7em;
-	color: #fff;
+	color: black;
 	text-transform: uppercase;
 	letter-spacing: -1px;
 	padding-top: 9px;
 	font-weight: bold;	
 
 	&:hover {
-		color: #fff;
+		color: blue;
 		text-decoration: none;
 	}
+}
+
+section, .container {
+
+	margin-top: 20px;
 }
 
 /* footer */
 
 footer {
 	margin-top: 45px;
+	padding: 0 20px;
 	padding-top: 5px;
 	border-top: 1px solid $gray-med-light;
 	color: $gray-light;
@@ -279,6 +256,25 @@ fieldset {
 	border-radius: 5px; 
 }
 
+
+/*home page*/
+
+.home-register {
+	margin: 20px;
+}
+
+.home-actions {
+	padding: 20px 80px;
+	/*background-color: $gray-med-light;*/
+	/*border-bottom: 1px solid $gray;*/
+}
+
+.lipstick-icon {
+	width: 10%;
+	height: 10%;
+	position: 20px 20px;
+}
+
 /* Users index */
 
 .users {
@@ -345,6 +341,7 @@ div.user_intention {
 	#home_activites_list {
 		border-bottom: 1px solid $gray-med-light;
 		border-width: 90%;
+		padding: 10px;
 	}
 }
 
@@ -369,5 +366,18 @@ div.user_intention {
 	border: 1px solid black;
 	border-radius: 5px;
 	background-color: $gray-med-light;
+
+}
+
+.member_search {
+
+	padding: 5px 0;
+}
+/* Welcome page*/
+
+.welcome {
+
+	background: url("bm2013.jpeg") no-repeat center center fixed;
+	background-size: cover;
 
 }
