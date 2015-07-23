@@ -194,6 +194,17 @@ class User < Application
 		self.next_event_intention.update_attribute(:dues_last_sent, DateTime.now)
 	end
 
+	def self.to_csv
+		CSV.generate do |csv|
+			columns_to_export = %w[name playa_name phone email]
+
+			csv << columns_to_export
+			all.each do |user|
+				csv << user.attributes.values_at(*columns_to_export)
+			end
+		end
+	end
+
 private
 
 
