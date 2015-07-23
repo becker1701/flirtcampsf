@@ -10,7 +10,7 @@ class UserActivationResetTest < ActionDispatch::IntegrationTest
 
 
 
-	test "activation reset for non acivated account" do
+	test "activation reset for non activated account" do
 
 		#User visits login page
 		get login_path

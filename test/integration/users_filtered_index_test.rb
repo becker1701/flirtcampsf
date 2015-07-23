@@ -43,7 +43,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :attending_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Members attending #{@event.year}"
+		assert_select 'h2', text: "Members attending #{@event.year}"
 
 		users = User.all
 
@@ -67,7 +67,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :not_attending_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Members not attending #{@event.year}"
+		assert_select 'h2', text: "Members not attending #{@event.year}"
 
 		users = User.all
 
@@ -90,7 +90,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :not_responded_to_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Members not responded to #{@event.year}"
+		assert_select 'h2', text: "Members not responded to #{@event.year}"
 
 		users = User.activated.not_responded_to_next_event.first(20)
 		# puts "User count: #{users.count}"
@@ -112,7 +112,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :has_ticket_to_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Members who have tickets to #{@event.year}"
+		assert_select 'h2', text: "Members who have tickets to #{@event.year}"
 
 		users = User.activated.has_ticket_to_next_event
 		# puts "User count: #{users.count}"
@@ -139,7 +139,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :needs_ticket_to_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Members who need tickets to #{@event.year}"
+		assert_select 'h2', text: "Members who need tickets to #{@event.year}"
 
 		users = User.activated.needs_ticket_to_next_event
 		# puts "User count: #{users.count}"
@@ -166,7 +166,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :driving_to_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Members who are driving to #{@event.year}"
+		assert_select 'h2', text: "Members who are driving to #{@event.year}"
 
 		users = User.activated.driving_to_next_event
 		# puts "User count: #{users.count}"
@@ -193,7 +193,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		get users_path(q: :early_arrivals_next_event)
 		assert_template 'users/index'
-		assert_select 'h1', text: "Early Arrival Team for #{@event.year}"
+		assert_select 'h2', text: "Early Arrival Team for #{@event.year}"
 
 		users = User.activated.early_arrivals_next_event
 		# puts "User count: #{users.count}"

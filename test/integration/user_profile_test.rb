@@ -186,15 +186,7 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		get root_url
 
 		assert_equal 2, User.attending_next_event.count
-		
-		assert_select 'ul#camp-roster' do
-			User.attending_next_event.each do |user|
-				assert_select 'li[id=?]', "user_id_#{user.id}" do
-					assert_select 'a[href=?]', user_path(user)
-				end
-			end
-		end
-
+		assert_select 'a[href=?]', users_path(q: "attending_next_event")
 		assert_select 'h3', text: "Camp Roster (#{User.attending_next_event.count})"
 	end
 

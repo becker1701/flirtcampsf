@@ -98,7 +98,7 @@ private
 
     def correct_user
       # debugger
-      unless current_user?(@intention.user)
+      if !current_user?(@intention.user) && !admin_user?
         redirect_to root_url
       end
     end

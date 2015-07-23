@@ -98,10 +98,10 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		# debugger
 		assert_select 'h1', text: event.year
 
-		assert_select 'a', "I have a ticket and am going!"
-		assert_select 'a', "I want to go, but do not have a ticket :("
-		assert_select 'a', "I am NOT going, but do have ticket(s) for sale :)"
-		assert_select 'a', "None of the above, this year..." 
+		assert_select 'a', "I am camping with Flirt Camp and I do have a ticket!"
+		assert_select 'a', "I want to camp with Flirt Camp, but do not have a ticket :("
+		assert_select 'a', "I am NOT camping with Flirt Camp, but do have ticket(s) for sale :)"
+		assert_select 'a', "I will not be camping with Flirt Camp for this event..."
 
 	end
 
