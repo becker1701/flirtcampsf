@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     resources :intentions, only: [:create, :edit, :update] do 
       patch :edit_storage_tenent, on: :member
     end
-    resources :early_arrivals, only: [:index, :create, :destroy]
+    resources :early_arrivals, only: [:index, :edit, :update, :create, :destroy]
     resources :tickets, only: [:new, :create, :show, :index, :edit, :destroy]
     member do
       get 'camp_dues_overview'

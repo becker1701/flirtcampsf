@@ -183,6 +183,10 @@ class User < Application
 		self.early_arrivals.find_by(event: event)
 	end
 
+	def ea_info(event)
+		self.early_arrivals.find_by(event: event)
+	end
+
 	# def User.next_event_intentions
 	# 	#TODO: test next_event_intentions
 	# 	self.activated.includes(:intentions).merge(Intention.for_next_event).references(:intentions)

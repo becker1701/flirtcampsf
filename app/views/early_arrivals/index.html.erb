@@ -4,26 +4,48 @@
 <h1><small><%= @event.year %></small></h1>
 	
 <div class="row">
+	<div class="col-md-10 col-md-offset-1">
 
-	<% if @early_arrivals.any? %>
-		
-		<% @early_arrivals.each do |ea| %>
-			<div class="row" id="ea_id_<%= ea.id %>">
-				<div class="col-md-2">
-					<%= gravatar_for ea.user %>
-				</div>
+		<% if @early_arrivals.any? %>
+			
+			<table class="table">
+				<thead>
+					<th colspan="2">Member</th>
+					<th>Authorized Arrival Date</th>
+					<th colspan="2"></th>
+				</thead>
 
-				<div class="col-md-10">
-					<%= link_to display_name(ea.user), user_path(ea.user) %> | 
-				
-					<%= link_to "Remove from EA List", event_early_arrival_path(@event, ea), method: :delete, data: { confirm: "Are you sure?"} %>
-				</div>
+				<tbody>
+					<% @early_arrivals.each do |ea| %>
+						<tr id="ea_id_<%= ea.id %>">
+							<td>
+								<%= gravatar_for ea.user %>
+							</td>
+
+							<td>
+								<%= link_to display_name(ea.user), user_path(ea.user) %>
+							</td>
+
+							<td>
+								<%= ea.ea_date %>
+							</td>
+
+							<td >
+								<%= link_to "Edit Early Arrival", edit_event_early_arrival_path(@event, ea), class: "btn btn-default btn-xs" %>
+							</td>
+							<td>
+								<%= link_to "Remove", event_early_arrival_path(@event, ea), method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" %>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+
+
+		<% else %>
+			<div class="col-md-12">
+				<p>No Early Arrival Members assigned.</p>
 			</div>
 		<% end %>
-		
-	<% else %>
-		<div class="col-md-12">
-			<p>No Early Arrival Members assigned.</p>
-		</div>
-	<% end %>
+	</div>
 </div>

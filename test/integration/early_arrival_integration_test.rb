@@ -9,6 +9,7 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
   	@event = events(:future)
   	@user = users(:archer)
   	@admin = users(:brian)
+    @ea = early_arrivals(:ea_archer)
   end
 
   test "only admin user access" do
@@ -40,9 +41,9 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
   	assert_not_nil eas
 
   	eas.each do |ea|
-  		assert_select 'div[id=?]', "ea_id_#{ea.id}" do
+  		assert_select 'tr[id=?]', "ea_id_#{ea.id}" do
   			assert_select 'a[href=?]', user_path(ea.user)
-  			assert_select 'a[href=?]', event_early_arrival_path(@event, ea), text: "Remove from EA List"
+  			assert_select 'a[href=?]', event_early_arrival_path(@event, ea), text: "Remove"
   		end
   	end
 
@@ -84,5 +85,56 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
   	#get list of users NOT already in the EA list
 
   end
+
+
+  test "early arrival auth date shows on user profile" do
+
+    log_in_as @admin
+
+    patch event_early_arrival_path(@event, @ea), early_arrival: { ea_date: @event.extended_date_range.third }
+    
+    assert_equal @event.extended_date_range.third, @ea.reload.ea_date
+
+    log_out
+
+    log_in_as @user
+
+    get root_path
+    assert_select 'h3', text: "Early Arrival Info"
+    assert_select 'span[id=?]', "ea_date", { text: strf_day(@ea.ea_date) }
+
+  end
+
+
+  test "early arrival auth date shows TBD on user profile when nil" do
+
+    log_in_as @admin
+
+    # patch event_early_arrival_path(@event, @ea), early_arrival: { ea_date: @event.extended_date_range.third }
+    
+    assert_nil @ea.reload.ea_date
+
+    log_out
+
+    log_in_as @user
+
+    get root_path
+    assert_select 'h3', text: "Early Arrival Info"
+    assert_select 'span[id=?]', "ea_date", { text: "TBD" }
+
+  end
+
+  test "early arrival does not show for user that is not early arrival" do
+
+    
+
+    log_in_as users(:elisabeth)
+
+    get root_path
+    assert_select 'h3', text: "Early Arrival Info", count: 0
+    assert_select 'span[id=?]', "ea_date", { text: strf_day(@ea.ea_date), count: 0 } 
+
+  end
+
 
 end

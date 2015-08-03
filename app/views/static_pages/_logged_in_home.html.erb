@@ -33,27 +33,29 @@
 				</div>
 
 
-				<div id="ea_team">
+				<!-- <div id="ea_team">
 
 					<p><strong>EA Team:</strong></p>
 
 					<ul class="camp_info_side">
 						<li>
-							<span id="camp_ea_date">EA Date: <%= ea_date_presenter(@next_event) %></span>
+							<span id="camp_ea_date">EA Date: <%#= ea_date_presenter(@next_event) %></span>
 						</li>	
 					</ul>
 						
-					<% if @early_arrivals.any? %>
+					<%# if @early_arrivals.any? %>
 						<ol id="ea-list">
-							<% @early_arrivals.each do |ea| %>
-								<%= content_tag(:li, display_name(ea.user)) %>
-							<% end %>
+							<%# @early_arrivals.each do |ea| %>
+								<%#= content_tag(:li, display_name(ea.user)) %>
+							<%# end %>
 						</ol>
-					<% else %>
+					<%# else %>
 						None
-					<% end %>
+					<%# end %>
 
-				</div>
+				</div> -->
+
+
 			</section>
 		<% end %>
 
@@ -88,6 +90,8 @@
 
 			</div>
 
+
+
 			<div class="user_intention">
 				<% if @intention.new_record? %>
 					<%= render 'intentions/change_status' %>
@@ -98,6 +102,20 @@
 					<%= render "intentions/status", user: current_user %> <!-- , user: current_user %> -->
 					<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention), class: "btn btn-primary" %>
 
+					<% if @next_event && current_user.ea_exists?(@next_event) %>
+						<hr>
+						<h3>Early Arrival Info</h3>
+						<p>
+							You are on the early arrival list for <%= @next_event.year %>.<br>
+							Your Early Arrival pass allows you to show up 
+								<strong><u>NO EARLIER THAN</u> 
+									<span id="ea_date">
+										<%= current_user.ea_info(@next_event).ea_date.blank? ? "TBD" : strf_day(current_user.ea_info(@next_event).ea_date) %>
+									</span>
+								</strong>.
+						</p>
+
+					<% end %>
 					
 					<%= render 'shared/camp_user_dues_summary', user: current_user %>
 					

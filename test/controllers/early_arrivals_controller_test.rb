@@ -109,4 +109,39 @@ class EarlyArrivalsControllerTest < ActionController::TestCase
 	# 	assert_redirected_to event_early_arrivals_path(@event)
 	# end
 
+	test "redirect on edit when not admin" do
+		log_in_as @user
+		get :edit, event_id: @event, id: @ea
+		assert_redirected_to root_path
+	end
+
+	test "redirect on update when not admin" do
+		log_in_as @user
+
+		patch :update, event_id: @event, id: @ea, early_arrival: { ea_date: @event.extended_date_range.second }
+		assert_redirected_to root_path
+		assert_not_equal @event.extended_date_range.second, @ea.reload.ea_date
+	end
+
+
+	test "success on edit when admin" do
+		log_in_as @admin
+		get :edit, event_id: @event, id: @ea
+		assert_response :success
+		assert_template 'early_arrivals/edit'
+		assert_equal @event, assigns(:event)
+		assert_equal @ea, assigns(:ea)
+	end
+
+	test "success on update when admin" do
+		log_in_as @admin
+
+		patch :update, event_id: @event, id: @ea, early_arrival: { ea_date: @event.extended_date_range.second }
+		assert_redirected_to event_early_arrivals_path(@event)
+		assert_equal @event.extended_date_range.second, @ea.reload.ea_date
+		assert_equal @event, assigns(:event)
+		assert_equal @ea, assigns(:ea)
+	end
+
+
 end

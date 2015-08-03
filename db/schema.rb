@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422011725) do
+ActiveRecord::Schema.define(version: 20150803203615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150422011725) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date     "ea_date"
   end
 
   add_index "early_arrivals", ["event_id"], name: "index_early_arrivals_on_event_id", using: :btree
