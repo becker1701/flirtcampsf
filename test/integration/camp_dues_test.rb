@@ -174,7 +174,7 @@ class CampDuesTest < ActionDispatch::IntegrationTest
   	assert_response :success
   	assert_template 'payments/index'
 
-  	assert_select 'a[href=?]', root_path, text: "Back to profile", count: 1
+  	assert_select 'a[href=?]', root_path, text: "View Member Profile", count: 1
 
   	payments = assigns(:payments)
   	
@@ -210,7 +210,7 @@ class CampDuesTest < ActionDispatch::IntegrationTest
 
   	assert_response :success
   	assert_template 'payments/index'
-	assert_select 'a[href=?]', user_path(@user), text: "Back to profile", count: 1
+	assert_select 'a[href=?]', user_path(@user), text: "View Member Profile", count: 1
   	
   	assert_equal @user, assigns(:user)
   	payments = assigns(:payments)

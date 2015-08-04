@@ -13,6 +13,7 @@ class Intention < ActiveRecord::Base
   validate :arrival_date_before_departure_date
 
   enum status: { going_has_ticket: 1, going_needs_ticket: 2, not_going_has_ticket: 3, not_going_no_ticket: 4 }
+  
   enum lodging: { tent: 1, yurt: 2, car: 3, other_lodging: 4 }
   enum transportation: { driving: 1, riding_with_someone: 2, bus: 3, walk: 4, flying_in: 5, other_transportation: 6 }
 
@@ -51,6 +52,10 @@ class Intention < ActiveRecord::Base
   #   where(event: event, shipping_yurt: true).count(:shipping_yurt)
   # end
 
+
+
+
+  
 private
 
   def arrival_date_before_departure_date

@@ -11,23 +11,44 @@
 			<th>Dues</th>
 			<th>Payments</th>
 			<th>Balance</th>
-			<th></th>
-			<td>Dues Last Sent</td>
+			<th colspan="2"></th>
+			<th colspan="2">Dues Last Sent</th>
 		</thead>
 		<tbody>
 
 			<% @users.each do |user| %>
 				<%= content_tag(:tr, id: "user_id_#{user.id}") do %>
-					<%= content_tag(:td, user.name) %>
+					<%= content_tag(:td, link_to(user.name, user)) %>
 					<%= content_tag(:td, number_to_currency(user.sum_camp_dues, precision: 0)) %>
 					<%= content_tag(:td, number_to_currency(user.sum_next_event_payments, precision: 0)) %>
-					<%= content_tag(:td, number_to_currency(user.next_event_camp_dues_balance, precision: 0)) %>
+
+					<%= content_tag :td do %>
+						<% if user.next_event_camp_dues_balance <= 0 %>
+							<span class="label label-success">Paid</span>
+						<% else %>
+							<%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %>
+						<% end %>
+					<% end %>
+
 					<td>
-						<%= link_to "Add Payment", new_user_payment_path(user) %> | 
-						<%= link_to "View Breakdown", user_payments_path(user) %> | 
-						<%= link_to "Send Dues Email", camp_dues_notification_user_path(user) %>
+						<%= link_to "Add Payment", new_user_payment_path(user), class: "btn btn-success btn-xs" %>
 					</td>
-					<%= content_tag(:td, user.next_event_intention.dues_last_sent.nil? ? "NA" : user.next_event_intention.dues_last_sent.strftime("%a, %b %-e")) %>
+					<td>
+						<%= link_to "View Breakdown", user_payments_path(user), class: "btn btn-primary btn-xs" %>
+					</td>
+
+
+					<%= content_tag :td do %>
+						<% if user.next_event_camp_dues_balance > 0 %>
+							<td><%= user.next_event_intention.dues_last_sent.nil? ? "NA" : user.next_event_intention.dues_last_sent.strftime("%a, %b %-e") %> </td>
+							<td><%= link_to "Send Dues Email", camp_dues_notification_user_path(user), class: "btn btn-danger btn-xs" %></td>
+						<% else %>
+							<td colspan="2"></td>
+						<% end %>
+					<% end %>
+
+					
+				
 				<% end %>
 			<% end %>
 

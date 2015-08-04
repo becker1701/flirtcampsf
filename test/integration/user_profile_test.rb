@@ -195,7 +195,8 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		log_in_as @user
 		follow_redirect!
 
-		assert_select 'span#camp_ea_date', "EA Date: #{ ea_date_presenter(@event) }"
+		assert_template partial: 'static_pages/_early_arrival_info'
+		# assert_select 'span#camp_ea_date', "EA Date: #{ ea_date_presenter(@event) }"
 
 		@event.early_arrival_date = nil
 		@event.save
@@ -203,7 +204,8 @@ class UserProfileTest < ActionDispatch::IntegrationTest
 		get root_url
 		
 		assert_response :success
-		assert_select 'span#camp_ea_date', "EA Date: TBD"
+		assert_template partial: 'static_pages/_early_arrival_info'
+		# assert_select 'span#camp_ea_date', "EA Date: TBD"
 
 	end
 

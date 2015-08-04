@@ -3,13 +3,13 @@ class UsersController < ApplicationController
   before_action :get_user, only: [:show, :edit, :update, :destroy, :camp_dues_notification]
   
   
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification, :food_restrictions]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :camp_dues_notification]
+  before_action :admin_user, only: [:destroy, :camp_dues_notification, :food_restrictions]
   
   before_action :get_invite, only: [:new, :create]
   # before_action :invited, only: [:new, :create]
-  before_action :next_event, only: [:index, :show, :camp_dues_notification]
+  before_action :next_event, only: [:index, :show, :camp_dues_notification, :food_restrictions]
   
 
 
@@ -54,6 +54,12 @@ class UsersController < ApplicationController
 
     end
 
+    # binding.pry
+
+    if params[:q_name].present?
+      @users = @users.activated.where("name ILIKE :name or playa_name ILIKE :name", {name: "%#{params[:q_name]}%"})
+    end
+
     respond_to do |format|
       format.html
       format.csv do
@@ -62,6 +68,13 @@ class UsersController < ApplicationController
     end
 
 
+  end
+
+  def food_restrictions
+    @users = User.attending_next_event
+    respond_to do |format|
+      format.csv { send_data @users.dietary_to_csv }
+    end
   end
 
 
@@ -105,7 +118,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    # 
+
     if @user.update_attributes(user_params)
       flash[:success] = "Your profile has been updated!"
       redirect_to @user
@@ -140,13 +153,13 @@ private
 	end
 
 	def user_params
-		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :invitation, :hometown)
+		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :invitation, :hometown, :added_to_google_group)
 	end
 
 
 
   def correct_user
-    redirect_to root_url unless current_user?(@user)
+    redirect_to root_url unless current_user?(@user) || admin_user?
   end
 
   def get_invite

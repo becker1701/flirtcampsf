@@ -1,0 +1,24 @@
+<% if @next_event && current_user.ea_exists?(@next_event) %>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title"><strong>Early Arrival Info for <%= display_name(current_user) %></strong></h3>
+	  </div>
+	  <div class="panel-body">
+		<p>
+			You are on the early arrival list for <%= @next_event.year %>.<br>
+			Your Early Arrival pass allows you to show up 
+			<strong><u>NO EARLIER THAN</u> 
+				<span id="ea_date">
+					<%= current_user.ea_info(@next_event).ea_date.blank? ? "TBD" : strf_day(current_user.ea_info(@next_event).ea_date) %>
+				</span>
+			</strong>.
+		</p>
+		
+	  </div>
+
+	  <div class="panel-footer">
+	  	<%= link_to "View Early Arrival Team", users_path(q: :early_arrivals_next_event) %> 
+	  </div>
+	</div>
+
+<% end %>

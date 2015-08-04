@@ -100,7 +100,8 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
     log_in_as @user
 
     get root_path
-    assert_select 'h3', text: "Early Arrival Info"
+    assert_template partial: 'static_pages/_early_arrival_info'
+    assert_select 'h3', text: "Your Intentions with Flirt Camp for #{@event.year}"
     assert_select 'span[id=?]', "ea_date", { text: strf_day(@ea.ea_date) }
 
   end
@@ -119,7 +120,8 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
     log_in_as @user
 
     get root_path
-    assert_select 'h3', text: "Early Arrival Info"
+    assert_template partial: 'static_pages/_early_arrival_info'
+    assert_select 'h3', text: "Your Intentions with Flirt Camp for #{@event.year}"
     assert_select 'span[id=?]', "ea_date", { text: "TBD" }
 
   end
@@ -131,8 +133,10 @@ class EarlyArrivalIntegrationTest < ActionDispatch::IntegrationTest
     log_in_as users(:elisabeth)
 
     get root_path
-    assert_select 'h3', text: "Early Arrival Info", count: 0
-    assert_select 'span[id=?]', "ea_date", { text: strf_day(@ea.ea_date), count: 0 } 
+    assert_template partial: 'static_pages/_early_arrival_info', count: 1 do
+      assert_select 'h3', text: "Your Intentions with Flirt Camp for #{@event.year}", count: 0
+      assert_select 'span[id=?]', "ea_date", { text: strf_day(@ea.ea_date), count: 0 } 
+    end
 
   end
 

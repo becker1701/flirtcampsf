@@ -31,14 +31,12 @@ class IntentionStatusTest < ActionDispatch::IntegrationTest
 
   	get root_path
   	assert_match "I will NOT be attending #{@event.year} with Flirt Camp.", response.body
-  	assert_match "I will be selling my secured tickets.", response.body
 
 
 	@intention.update_attribute(:status, :not_going_no_ticket)
 
   	get root_path
   	assert_match "I will NOT be attending #{@event.year} with Flirt Camp.", response.body
-  	assert_match "I have NO secured tickets.", response.body
 
   end
 

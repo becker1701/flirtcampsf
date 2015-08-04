@@ -5,12 +5,15 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 
+		<%= link_to "Back to Early Arrivals", event_early_arrivals_path(@event) %>
+		<br><br>
+
 		<%= form_for([@event, @ea]) do |f| %>
 			
 			<%= render 'shared/error_messages', object: f.object %>
 
 			<div class="form-group">
-				<%= f.label :ea_date, "Early Arrival Date" %>
+				<%= f.label :ea_date, "Authorized Early Arrival" %>
 				<%= f.select :ea_date, 
     			options_for_select(@event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) }, 
     				selected: f.object.ea_date),
@@ -18,7 +21,7 @@
     			class: "form-control" %>
 			</div>
 
-			<%= f.submit nil, class: "btn btn-primary" %>
+			<%= f.submit nil, class: "btn btn-primary", style: "width: auto;" %> <%= link_to "Cancel Update", event_early_arrivals_path(@event), class: "btn btn-danger" %>
 
 		<% end %>
 

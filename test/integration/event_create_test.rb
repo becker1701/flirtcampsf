@@ -61,12 +61,15 @@ class EventCreateTest < ActionDispatch::IntegrationTest
 		assert_equal 2, events.count
 
 		assert_select 'a[href=?]', new_event_path, count: 1
+		assert_select 'a[href=?]', users_path(format: "csv")
 
 		events.each do |event|
-			assert_select 'a[href=?]', edit_event_path(event)
-			assert_select 'li[id=?]', "event_id_#{event.id}"
-			assert_match event.year, response.body
-			assert_select 'a[href=?]', event_path(event), method: :delete, text: "Remove event"
+			assert_select 'div[id=?]', "event_id_#{event.id}" do
+				assert_match event.year, response.body
+				assert_select 'a[href=?]', edit_event_path(event)
+				assert_select 'a[href=?]', event_path(event), method: :delete, text: "Remove event"
+				assert_select 'a[href=?]', food_restrictions_users_path(event, format: "csv"), count: 1
+			end
 		end
 
 		get new_event_path

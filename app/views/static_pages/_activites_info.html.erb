@@ -1,0 +1,15 @@
+
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><strong>Activites</strong> <span id="activity-count">(<%= @next_event.activities.size %>)</span><br>
+		<small>Flirt Camp on-playa activities.</small></h3>
+  </div>
+  <div class="panel-body">
+<!-- <p class="help-block">Do you want to host an on-playa camp activity or a What-When-Where activity to get puclished in the book?</p> -->
+<%= link_to "Add an activity to the Flirt Camp On-Playa Calendar", new_event_activity_path(@next_event) %><br>
+<%= link_to "View Activities Calendar", event_activities_path(@next_event) %>
+  </div>
+</div>

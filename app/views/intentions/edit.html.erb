@@ -10,7 +10,10 @@
 			<%= render 'shared/error_messages', object: f.object %>
 
 			<%= f.label :status %>
-			<%= f.select :status, options_for_select(Intention.statuses.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.status), {}, { class: "form-control"} %>
+
+			<%= f.select :status, options_for_select([["Going with Flirt Camp, and I have a ticket", :going_has_ticket], ["Going with Flirt Camp, but I need a ticket", :going_needs_ticket], ["No camping with Flirt Camp this year", :not_going_no_ticket]], selected: @intention.status), {}, { class: "form-control"}  %>
+
+			<%#= f.select :status, options_for_select(Intention.statuses.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.status), {}, { class: "form-control"} %>
 
 			<br>
 <!-- 			<h3>Tickets:</h3>

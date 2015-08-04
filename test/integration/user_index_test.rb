@@ -31,7 +31,7 @@ class UserIndexTest < ActionDispatch::IntegrationTest
         # debugger
         assert_select 'span[id=?]', "intention_status_#{user.id}", text: intention.status.humanize
       else
-        assert_select 'div[id=?]', "user_id_#{user.id}", text: "Not responded to #{next_event.year}"
+        assert_select 'span[id=?]', "intention_status_#{user.id}", text: "Not responded to #{next_event.year}"
       end
 
       if user.ea_exists?(next_event)
@@ -65,9 +65,15 @@ class UserIndexTest < ActionDispatch::IntegrationTest
 
       assert_template 'users/index'
       assert_select 'div.member_search', count: 0
+
       users.each do |user|
-        assert_select 'div[id=?]', "user_id_#{user.id}", text: "No event scheduled yet..."
+        # puts "user_id_#{user.id}"
+        assert_select 'div[id=?]', "user_id_#{user.id}" do
+          assert_select 'a', {text: "Update Intention", count: 0}
+        end
       end
+
+      # assert_select 'span[id=?]', "no-event", {text: "No event scheduled yet...", count: users.count}
 
 
 

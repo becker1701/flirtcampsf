@@ -1,25 +1,47 @@
-<%= render 'shared/error_messages', object: f.object %>
+<%= form_for @event do |f| %>	
 
-<%= f.label :year, "Event Title / Year" %>
-<%= f.text_field :year, class: "form-control" %>
+	<%= render 'shared/error_messages', object: f.object %>
 
-<%= f.label :start_date %>
-<%= f.date_field :start_date, class: "form-control" %>
+	<div class="form-group">
+		<%= f.label :year, "Event Title / Year", class: "control-label" %>
+		<%= f.text_field :year, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :start_date, class: "control-label" %>
+		<%= f.date_field :start_date, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :end_date, class: "control-label" %>
+		<%= f.date_field :end_date, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :theme, class: "control-label" %>
+		<%= f.text_field :theme, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :camp_address, class: "control-label" %>
+		<%= f.text_field :camp_address, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :early_arrival_date, class: "control-label" %>
+		<%= f.date_field :early_arrival_date, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :camp_dues, class: "control-label" %>
+		<%= f.number_field :camp_dues, class: "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :camp_dues_food, class: "control-label" %>
+		<%= f.number_field :camp_dues_food, class: "form-control" %>
+	</div>
+	
+	<%= f.submit nil, class: "btn btn-primary", style: "width: auto" %> <%= link_to "Cancel", events_url, class: "btn btn-danger" %>
 
-<%= f.label :end_date %>
-<%= f.date_field :end_date, class: "form-control" %>
-
-<%= f.label :theme %>
-<%= f.text_field :theme, class: "form-control" %>
-
-<%= f.label :camp_address %>
-<%= f.text_field :camp_address, class: "form-control" %>
-
-<%= f.label :early_arrival_date %>
-<%= f.date_field :early_arrival_date, class: "form-control" %>
-
-<%= f.label :camp_dues %>
-<%= f.number_field :camp_dues, class: "form-control" %>
-
-<%= f.label :camp_dues_food %>
-<%= f.number_field :camp_dues_food, class: "form-control" %>
+<% end %>

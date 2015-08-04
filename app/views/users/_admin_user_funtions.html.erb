@@ -2,16 +2,27 @@
 	<div class="admin">
 		<h3>Admin</h3>
 
+		<% if @user.added_to_google_group? %>
+			<p>This user has been added to the Google Group.</p>
+		<% else %>
+			<%= form_for @user do |f| %>
+				<%= f.hidden_field :added_to_google_group, value: true %>
+				<%= f.submit "Added to Google Group", class: "btn btn-primary", style: "width: auto;" %>
+			<% end %>
+		<% end %>
+
+		<br>
+
 		<div id="admin-early-arrival">
 			<% if @user.ea_exists?(@next_event) %> 
 				<%= form_for([@next_event, @next_event.early_arrivals.find_by(user_id: @user.id)], html: {method: :delete}) do |f| %>
 					<%#= f.hidden_field :user_id, value: @user.id %>
-					<%= f.submit "Unassign from Early Arrival", class: "btn" %>
+					<%= f.submit "Unassign from Early Arrival", class: "btn", style: "width: auto;" %>
 				<% end %>
 			<% else %>
 				<%= form_for([@next_event, @next_event.early_arrivals.build]) do |f| %>				
 					<%= f.hidden_field :user_id, value: @user.id %>
-					<%= f.submit "Assign to Early Arrival", class: "btn btn-primary" %>
+					<%= f.submit "Assign to Early Arrival", class: "btn btn-primary", style: "width: auto;" %>
 				<% end %>
 			<% end %>
 		</div>

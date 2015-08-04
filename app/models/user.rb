@@ -209,6 +209,24 @@ class User < Application
 		end
 	end
 
+
+  def self.dietary_to_csv
+
+  	user_list = User.attending_next_event
+
+    CSV.generate do |csv|
+      columns_to_export = %w[name playa_name food_restrictions]
+
+      csv << columns_to_export
+      user_list.each do |user|
+        csv << [user.name, user.playa_name, user.intentions.for_next_event.first.food_restrictions]
+      end
+    end
+    
+  end
+
+
+
 private
 
 

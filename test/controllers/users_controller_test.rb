@@ -49,15 +49,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "redirect edit if incorrect user" do
-  	log_in_as @user
-  	get :edit, id: @other_user
+  	log_in_as @other_user
+  	get :edit, id: @user
   	assert flash.empty?
   	assert_redirected_to root_url
   end
 
   test "redirect update if incorrect user" do
-  	log_in_as @user
-  	get :update, id: @other_user, user: {name: @other_user.name}
+  	log_in_as @other_user
+  	get :update, id: @user, user: {name: @other_user.name}
   	assert flash.empty?
   	assert_redirected_to root_url
   	@user.reload
@@ -183,8 +183,33 @@ class UsersControllerTest < ActionController::TestCase
     Event.destroy_all
     get :index
     assert_response :success
+  end
+
+  test "redirect on food_restrictions when not admin" do
     
+    get :food_restrictions, format: "csv"
+    assert_redirected_to login_path
+
+    log_in_as @other_user
+    get :food_restrictions, format: "csv"
+    assert_redirected_to root_path
+  end
+
+  test "only members attending returned for food_restrictions" do
+
+    log_in_as @admin
+
+    get :food_restrictions, format: "csv"
+
+    assert_equal events(:future), assigns(:next_event)
+    assert_not assigns(:users).nil?
+    next_event_members = User.attending_next_event
+
+    assigns(:users).each do |user|
+      assert_includes next_event_members, user
+    end
 
   end
+
 
 end

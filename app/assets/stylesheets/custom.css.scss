@@ -1,6 +1,4 @@
 @import "bootstrap-sprockets";
-
-
 @import "bootstrap";
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:500,100,300,700);
@@ -208,7 +206,6 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  margin-bottom: 15px;
   @include box_sizing;
 }
 
@@ -278,13 +275,12 @@ fieldset {
 /* Users index */
 
 .users {
-	list-style: none;
-	margin: 0;
-	li {
-		overflow: auto;
-		padding: 10px 0;
-		border-bottom: 1px solid $gray-med-light;
-	}
+
+	margin-bottom: 30px;
+	padding: 20px 0px;
+	border: 1px solid $gray-med-light;
+	border-radius: 3px;
+	
 }
 
 
@@ -317,7 +313,16 @@ div.event_user_header {
 	h1 {
 		text-align: left;
 	}
-	border-bottom: 1px solid $gray-med-light;
+
+	padding: 40px 0;
+	background-image: asset-url("lipstick-icon.png");
+	background-size: 30%; 
+	/*background-attachment: fixed;*/
+	background-repeat: no-repeat;
+	background-position: right center;
+
+
+	/*border-bottom: 1px solid $gray-med-light;*/
 }
 
 div.user_intention {
@@ -344,6 +349,17 @@ div.user_intention {
 		padding: 10px;
 	}
 }
+
+
+.admin {
+
+	border: 1px solid $gray-med-light;
+	background-color: $gray-lighter;
+	border-radius: 5px;
+	padding: 15px;
+
+}
+
 
 #admin-user-notes {
 	padding: 10px 0;

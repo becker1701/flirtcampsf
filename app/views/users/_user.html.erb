@@ -1,35 +1,43 @@
-<%= content_tag :li, id: "user_id_#{user.id}" do %>
 
-	<div class="row" >
-		<div class="col-md-1">
-			<%= gravatar_for user, size: 80 %>
-		</div>
+<div class="row users" id="user_id_<%= user.id %>">
+	<div class="col-md-6">
+		<div class="media" >
+		  	<div class="media-left">
+		      <%= link_to((gravatar_for user, size: 100), user) %>
+		  	</div>
 
-		<div class="col-md-4">
-			<%= link_to "#{user.playa_name} (aka #{user.name})", user %>
-			<% if current_user.admin? && !current_user?(user) %>
-				<br>
-				<%= link_to "Notes", user_user_notes_path(user), class: "btn btn-default btn-xs" %>
-				<%= link_to "Update Intention", [:edit, @next_event, user.next_event_intention], class: "btn btn-success btn-xs" if @next_event %>
-				<%= link_to "Delete", user, method: :delete, data: {confirm: 'Are you sure you want to delete this member?'}, class: "btn btn-danger btn-xs" %>
-			<% end %><br>	
-			<%= user.hometown unless user.hometown.blank? %>
+		  	<div class="media-body" style="width: 100%;">
+		    	<h4 class="media-heading"><%= link_to "#{user.playa_name} (aka #{user.name})", user %> <br>
+		    		<small><%= user.hometown unless user.hometown.blank? %></small>
+		    	</h4>
+		    	
+
+
+		    	<% if @next_event.nil? %>
+					<!-- <span id="no-event">No event scheduled yet...</span> -->
+				<% else %>
+					<span id="intention_status_<%= user.id %>"><%= user.next_event_intention.nil? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %></span><br>
+					<span id="ea_status_<%= user.id %>"><%= user.next_event_early_arrival.present? ? "Early Arrival Team" : "" %></span>
+				<% end %>
 				
-			
+				<% if current_user.admin? && !current_user?(user) %>
+
+					<div class="admin">
+						<%= link_to "Notes", user_user_notes_path(user), class: "btn btn-default btn-xs" %>
+						<%= link_to "Update Intention", [:edit, @next_event, user.next_event_intention], class: "btn btn-success btn-xs" if @next_event %>
+						<%= link_to "Delete", user, method: :delete, data: {confirm: 'Are you sure you want to delete this member?'}, class: "btn btn-danger btn-xs" %>
+					</div>
+				<% end %>
+
+		  	</div>
 		</div>
 
-		<div class="col-md-2", id="user_id_<%= user.id %>">
-			<% if @next_event.nil? %>
-				No event scheduled yet...
-			<% else %>
-				<span id="intention_status_<%= user.id %>"><%= user.next_event_intention.nil? ?  "Not responded to #{@next_event.year}" : user.next_event_intention.status.humanize %></span><br>
-				<span id="ea_status_<%= user.id %>"><%= user.next_event_early_arrival.present? ? "Early Arrival Team" : "" %></span>
-			<% end %>
-		</div>
+	</div>
 
-		<% if @next_event.present? %>
-		<% unless user.next_event_intention.nil?  %>
-			<div class="col-md-4">
+	<div class="col-md-6">
+
+   		<% if @next_event.present? %>
+			<% unless user.next_event_intention.nil?  %>
 				<!-- Tickets for sale: <%#= user.next_event_intention.tickets_for_sale.to_i %> <br> -->
 				<% if user.next_event_intention.going? %>
 
@@ -55,10 +63,12 @@
 
 				<% end %>
 
-			</div>
-		<% end %>
+			<% end %>
 		<% end %>
 
 	</div>
+</div>
 
-<% end %>
+
+
+	

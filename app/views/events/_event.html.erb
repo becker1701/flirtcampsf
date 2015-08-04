@@ -1,13 +1,21 @@
-<%= content_tag :li, id: "event_id_#{event.id}" do %>
-	<h3><%= link_to event.year, edit_event_path(event) %></h3>
-	<ul>
-		<li><%= link_to "EA Team", event_early_arrivals_path(event), class: "btn btn-xs btn-default" %></li>
-		<li><%= link_to "Meal Menu", '#', class: "btn btn-xs btn-default" %></li>
-		<li><%= link_to "Activities", event_activities_path(event), class: "btn btn-xs btn-default" %></li>
-		<li><%= link_to "Camp Dues Overview", camp_dues_overview_event_path(event), class: "btn btn-xs btn-default" %></li>
-		<li><%= link_to "Storage Tenents", event_storage_tenents_path(event), class: "btn btn-xs btn-default" %></li>
+<%= link_to "Download Camp Member Contact List", users_path(format: "csv"), class: "btn btn-primary" %><br><br>
+
+
+<div class="panel panel-default" id="event_id_<%= event.id %>">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= event.year %></h3>
+  </div>
+  <div class="panel-body">
+	<ul class="no-styling">
+		<li><%= link_to "Edit Event", edit_event_path(event) %></li>
+		<li><%= link_to "EA Team", event_early_arrivals_path(event) %></li>
+		<li><%= link_to "Meal Menu", '#' %></li>
+		
+		<li><%= link_to "Activities", event_activities_path(event) %></li>
+		<li><%= link_to "Camp Dues Overview", camp_dues_overview_event_path(event) %></li>
+		<li><%= link_to "Storage Tenents", event_storage_tenents_path(event) %></li>
+		<li><%= link_to "Download Food Restrictions", food_restrictions_users_path(event, format: "csv"), class: "btn btn-xs btn-info" %></li>
 		<li><%= link_to "Remove event", event_path(event), class: "btn btn-xs btn-danger", method: :delete, data: { confirm: "Are you sure you want to remove this event and all associated records?"} %></li>
 	</ul>
-<% end %>
-
-
+  </div>
+</div>

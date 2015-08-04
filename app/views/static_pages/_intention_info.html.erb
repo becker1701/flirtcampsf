@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		<h3 class="panel-title"><strong>Your Intentions with Flirt Camp for <%= @next_event.year %></strong></h3>
+	</div>
+
+	<div class="panel-body <%= @intention.going_has_ticket? || @intention.going_needs_ticket? ? "bg-success" : "bg-danger" %>">
+
+		<%= render "intentions/status", user: current_user %>
+	
+	</div>
+
+	<div class="panel-footer">
+		<%= link_to "Edit your camp questionaire and status", edit_event_intention_path(@next_event, @intention) %>
+	</div>
+
+</div>
+

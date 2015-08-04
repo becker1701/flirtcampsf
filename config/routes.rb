@@ -18,12 +18,15 @@ Rails.application.routes.draw do
 
   # resources :change_status, only: [:edit, :update]
 
-  
+  # get 'food_restrictions', to: 'users#food_restrictions'
 
   resources :users do
     resources :user_notes
     resources :payments
     get 'camp_dues_notification', on: :member
+    collection do
+      get 'food_restrictions', to: 'users#food_restrictions'
+    end
   end
   
   resources :membership_applications, only: [:index, :new, :create, :edit, :destroy] do
