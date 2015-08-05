@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   # get 'food_restrictions', to: 'users#food_restrictions'
 
+  patch 'set_added_to_google_group/:id', to: 'users#added_to_google_group', as: 'set_added_to_google_group'
+
   resources :users do
     resources :user_notes
     resources :payments

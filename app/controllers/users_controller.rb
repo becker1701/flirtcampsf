@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
 
-  before_action :get_user, only: [:show, :edit, :update, :destroy, :camp_dues_notification]
+  before_action :get_user, only: [:show, :edit, :update, :destroy, :camp_dues_notification, :added_to_google_group]
   
   
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification, :food_restrictions]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :camp_dues_notification, :food_restrictions]
+  before_action :admin_user, only: [:destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group]
   
   before_action :get_invite, only: [:new, :create]
   # before_action :invited, only: [:new, :create]
-  before_action :next_event, only: [:index, :show, :camp_dues_notification, :food_restrictions]
+  before_action :next_event, only: [:index, :show, :camp_dues_notification, :food_restrictions, :added_to_google_group]
   
 
 
@@ -144,6 +144,15 @@ class UsersController < ApplicationController
     flash[:success] = "Notification Sent"
     redirect_to camp_dues_overview_event_url(@next_event)
   end
+
+  def added_to_google_group
+    if @user.update_attributes(user_params)
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
+  end 
 
 
 private
