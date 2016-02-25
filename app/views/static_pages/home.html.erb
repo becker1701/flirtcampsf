@@ -25,7 +25,7 @@
 
 		<section class="container">
 			<div class="row home-actions">
-				<div class="col-md-6">
+				<div class="col-md-6 col-sm-12 home-content">
 
 					<p class="lead">Join Flirt Camp</p>
 					<p>Fill out our membership application for Burning Man 2016!</p>
@@ -36,36 +36,38 @@
 				
 
 
-
-				<% if @next_event %>
-					<div class="col-md-6">
+				<div class="col-md-6 col-sm-12 home-content">
+					<% if @next_event %>
+					
 						<p class="lead">Sell your tickets!</p>
 						<p>Have an extra ticket and want to sell it to a Flirt Camper?</p>
 						<%= link_to "Sell Your Ticket", new_event_ticket_path(@next_event), class: "btn btn-primary btn-block" %>
-					</div>
-				<% end %>
+					<% end %>
+				</div>
 			</div>
 			
 
 
-			<div id="home-next-event">
-				<% if @next_event.present? %>
-					<h1>
-						<%= @next_event.year %>
-					<br>	
-					<small>Flirt Camp Address: <%= @next_event.camp_address %></small></h1>
-					<% if @next_event.activities.any? %>
-						<h3>Flirt Camp Activities:</h3>
-						<div>
-							<% @next_event.activities.order(:day,:time).each do |activity| %>
-								<div class="row" id="home_activites_list">
-									<%= content_tag(:div, "#{strf_day(activity.day)} @ #{strf_time(activity.time)}", class: "text-left col-md-3 col-md-offset-2") %>
-									<%= content_tag(:div, "#{activity.title} with #{display_name(activity.user)}", class: "text-left col-md-5") %>
-								</div>
-							<% end %>
-						</div>
+			<div class="row" id="home-next-event">
+				<div class="col-md-12">
+					<% if @next_event.present? %>
+						<h1>
+							<%= @next_event.year %>
+						<br>	
+						<small>Flirt Camp Address: <%= @next_event.camp_address %></small></h1>
+						<% if @next_event.activities.any? %>
+							<h3>Flirt Camp Activities:</h3>
+							<div>
+								<% @next_event.activities.order(:day,:time).each do |activity| %>
+									<div class="row" id="home_activites_list">
+										<%= content_tag(:div, "#{strf_day(activity.day)} @ #{strf_time(activity.time)}", class: "text-left col-md-3 col-md-offset-2") %>
+										<%= content_tag(:div, "#{activity.title} with #{display_name(activity.user)}", class: "text-left col-md-5") %>
+									</div>
+								<% end %>
+							</div>
+						<% end %>
 					<% end %>
-				<% end %>
+				</div>
 			</div>
 		</section>
 	</main>

@@ -266,7 +266,7 @@ fieldset {
 }
 
 .home-actions {
-	padding: 20px 80px;
+	/*padding: 20px 80px;*/
 	/*background-color: $gray-med-light;*/
 	/*border-bottom: 1px solid $gray;*/
 }
@@ -405,4 +405,8 @@ div.user_intention {
 	background-size: cover;
 	min-height: 500px;
 
+}
+
+.home-content {
+	margin-bottom: 20px;
 }
