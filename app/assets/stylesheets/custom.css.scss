@@ -34,7 +34,8 @@ textarea {
 }
 
 .center {
-	padding: 10%;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	color: white;
 	text-align: center;
 	
@@ -44,6 +45,10 @@ textarea {
 	h1 {
 		margin-bottom: 20px;
 	}
+}
+
+.pad {
+	margin-top: 40%;
 }
 
 /* typography */
@@ -267,9 +272,9 @@ fieldset {
 }
 
 .lipstick-icon {
-	width: 10%;
-	height: 10%;
-	position: 20px 20px;
+	width: 25%;
+	height: 25%;
+	/*position: 10px 10px;*/
 }
 
 /* Users index */
@@ -393,10 +398,11 @@ div.user_intention {
 
 .welcome {
 
-	background-image: image-url("bm2013.jpeg");
+	background-image: image-url("FC_2015.jpg");
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-attachment: fixed;
 	background-size: cover;
+	min-height: 500px;
 
 }
