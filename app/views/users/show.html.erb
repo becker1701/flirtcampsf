@@ -1,42 +1,42 @@
 <% provide(:title, @user.playa_name) %>
 
 <div class="row">
-	<aside class="col-md-4">
-		<section class="user_info">
-			<h1>
-				<%= gravatar_for @user %>	
-				<%= @user.playa_name %>
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %> 
+        <%= @user.playa_name %>
 
-			</h1>
-			<small><%= "(aka #{@user.name})" %></small>
-		</section>
-		<section>
-			<strong>Contact:</strong>
-			<div class="contact-info">
-				<ul class="list-unstyled">
-					<%= content_tag(:li, number_to_phone(@user.phone, area_code: true), id: "user-phone") unless @user.phone.blank? %>
-					<%= content_tag(:li, mail_to(@user.email)) %>
-				</ul>
-			</div>
-		</section>
-	</aside>
-	<div class="col-md-8">
+      </h1>
+      <small><%= "(aka #{@user.name})" %></small>
+    </section>
+    <section>
+      <strong>Contact:</strong>
+      <div class="contact-info">
+        <ul class="list-unstyled">
+          <%= content_tag(:li, number_to_phone(@user.phone, area_code: true), id: "user-phone") unless @user.phone.blank? %>
+          <%= content_tag(:li, mail_to(@user.email)) %>
+        </ul>
+      </div>
+    </section>
+  </aside>
+  <div class="col-md-8">
 
-		<% if @next_event.present? %>
+    <% if @next_event.present? %>
 
-			<%= render 'admin_user_funtions' %>
+      <%= render 'admin_user_funtions' %>
 
-		
-			<% if @user.next_event_intention.nil? %>
-				<h3>Not responded yet...</h3>
-			<% else %>
-				<%= render "intentions/status", user: @user %>
-				<%= render "intentions/intention", user: @user %>
-			<% end %>
-		<% else %>
-			<h3>No event scheduled</h3>		
-		<% end %>
-	</div>
+    
+      <% if @user.next_event_intention.nil? %>
+        <h3>Not responded yet...</h3>
+      <% else %>
+        <%= render "intentions/status", user: @user %>
+        <%= render "intentions/intention", user: @user %>
+      <% end %>
+    <% else %>
+      <h3>No event scheduled</h3>   
+    <% end %>
+  </div>
 </div>
 
 

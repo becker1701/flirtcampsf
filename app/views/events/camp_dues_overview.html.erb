@@ -5,63 +5,68 @@
 
 <% if @users.any? %>
 
-	<table class="table">
-		<thead>
-			<th>User</th>
-			<th>Dues</th>
-			<th>Payments</th>
-			<th>Balance</th>
-			<th colspan="2"></th>
-			<th colspan="2">Dues Last Sent</th>
-		</thead>
-		<tbody>
+  <table class="table">
+    <thead>
+      <th>User</th>
+      <th>Intention</th>
+      <th>Dues</th>
+      <th>Payments</th>
+      <th>Balance</th>
+      <th colspan="2"></th>
+      <th colspan="2">Dues Last Sent</th>
+    </thead>
+    <tbody>
 
-			<% @users.each do |user| %>
-				<%= content_tag(:tr, id: "user_id_#{user.id}") do %>
-					<%= content_tag(:td, link_to(user.name, user)) %>
-					<%= content_tag(:td, number_to_currency(user.sum_camp_dues, precision: 0)) %>
-					<%= content_tag(:td, number_to_currency(user.sum_next_event_payments, precision: 0)) %>
+      <% @users.each do |user| %>
+        <%= content_tag(:tr, id: "user_id_#{user.id}") do %>
+          <%= content_tag(:td, link_to(user.name, user)) %>
+          <%= content_tag(:td, user.next_event_intention.nil? ? 'Not Responded' : user.next_event_intention.status ) %>
+          <%= content_tag(:td, number_to_currency(user.sum_camp_dues, precision: 0)) %>
+          <%= content_tag(:td, number_to_currency(user.sum_next_event_payments, precision: 0)) %>
 
-					<%= content_tag :td do %>
-						<% if user.next_event_camp_dues_balance <= 0 %>
-							<span class="label label-success">Paid</span>
-						<% else %>
-							<%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %>
-						<% end %>
-					<% end %>
+          <%= content_tag :td do %>
+            <% if user.next_event_intention && user.next_event_intention.going? && user.next_event_camp_dues_balance <= 0 %>
+              <span class="label label-success">Paid</span>
+            <% elsif user.next_event_intention && !user.next_event_intention.going? %>
+              --
+            <% else %>
+              <%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %>
+            <% end %>
+          <% end %>
 
-					<td>
-						<%= link_to "Add Payment", new_user_payment_path(user), class: "btn btn-success btn-xs" %>
-					</td>
-					<td>
-						<%= link_to "View Breakdown", user_payments_path(user), class: "btn btn-primary btn-xs" %>
-					</td>
+          <td>
+            <%= link_to "Add Payment", new_user_payment_path(user), class: "btn btn-success btn-xs" %>
+          </td>
+          <td>
+            <%= link_to "View Breakdown", user_payments_path(user), class: "btn btn-primary btn-xs" %>
+          </td>
 
 
-					<%= content_tag :td do %>
-						<% if user.next_event_camp_dues_balance > 0 %>
-							<td><%= user.next_event_intention.dues_last_sent.nil? ? "NA" : user.next_event_intention.dues_last_sent.strftime("%a, %b %-e") %> </td>
-							<td><%= link_to "Send Dues Email", camp_dues_notification_user_path(user), class: "btn btn-danger btn-xs" %></td>
-						<% else %>
-							<td colspan="2"></td>
-						<% end %>
-					<% end %>
+          <%= content_tag :td do %>
+            <% if user.next_event_camp_dues_balance > 0 %>
+              <td><%= user.next_event_intention.dues_last_sent.nil? ? "NA" : user.next_event_intention.dues_last_sent.strftime("%a, %b %-e") %> </td>
+              <td><%= link_to "Send Dues Email", camp_dues_notification_user_path(user), class: "btn btn-danger btn-xs" %></td>
+            <% else %>
+              <td colspan="2"></td>
+            <% end %>
+          <% end %>
 
-					
-				
-				<% end %>
-			<% end %>
+          
+        
+        <% end %>
+      <% end %>
 
-			<tr>
-				<td><strong>Totals</strong></td> 
-				<td><strong><span id="camp_dues_total"><%= number_to_currency(User.next_event_camp_dues, precision: 0) %></span></strong></td>
-				<td><strong><span id="camp_payments_total"><%= number_to_currency(User.next_event_payments, precision: 0) %></span></strong></td>
-				<td><strong><span id="camp_balance_total"><%= number_to_currency(User.next_event_balance, precision: 0) %></span></strong></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
+      <tr>
+        <td><strong>Totals</strong></td> 
+        <td></td>
+        <td><strong><span id="camp_dues_total"><%= number_to_currency(User.next_event_camp_dues, precision: 0) %></span></strong></td>
+        <td><strong><span id="camp_payments_total"><%= number_to_currency(User.next_event_payments, precision: 0) %></span></strong></td>
+        <td><strong><span id="camp_balance_total"><%= number_to_currency(User.next_event_balance, precision: 0) %></span></strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 <% else %>
-	<strong>No one is going yet.</strong>
+  <strong>No one is going yet.</strong>
 <% end %>

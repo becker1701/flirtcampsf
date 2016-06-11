@@ -52,7 +52,7 @@ class EventsController < ApplicationController
     @event = Event.find_by(id: params[:id])
     redirect_to users_path if @event.nil?
 
-    @users = User.attending_next_event
+    @users = User.all.order(:name)
 
   end
 
