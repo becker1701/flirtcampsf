@@ -8,141 +8,141 @@
 $gray-med-light: #eaeaea;
 
 @mixin box-sizing {
-	-moz-box-sizing: 	border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: 		border-box;
+  -moz-box-sizing:  border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:     border-box;
 
 }
 /* universal */
 
 html {
-	overflow-y: scroll;
+  overflow-y: scroll;
 
 }
 
 body {
-	padding-top: 60px;
-	font-family: 'Roboto', sans-serif;
+  padding-top: 60px;
+  font-family: 'Roboto', sans-serif;
 }
 
 section {
-	overflow: auto;
+  overflow: auto;
 }
 
 textarea {
-	resize: vertical;
+  resize: vertical;
 }
 
 .center {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	color: white;
-	text-align: center;
-	
-	h3 small{
-		color: white;
-	}
-	h1 {
-		margin-bottom: 20px;
-	}
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: white;
+  text-align: center;
+
+  h3 small{
+    color: white;
+  }
+  h1 {
+    margin-bottom: 20px;
+  }
 }
 
 .pad {
-	margin-top: 40%;
+  margin-top: 40%;
 }
 
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
-	line-height: 1;
+  line-height: 1;
 }
 
 h1 {
-	font-size: 3em;
-	letter-spacing: -1px;
-	margin-bottom: 30px;
-	text-align: center;
+  font-size: 3em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 h2 {
-	font-size: 1.5em;
-	letter-spacing: -1px;
-	margin-bottom: 30px;
-	text-align: center;
-	font-weight: normal;
-	color: $gray-light;
+  font-size: 1.5em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
 }
 
 p, div, li {
-	font-size: 1em;
-	line-height: 1.7em;
-	font-weight: 300;
+  font-size: 1em;
+  line-height: 1.7em;
+  font-weight: 300;
 }
 
 .btn {
-	font-weight: 300;
+  font-weight: 300;
 }
 
 /* header */
 
 .navbar-default {
-	background-color: white;
-	min-height: 60px;
-	/*border-bottom: 0px;*/
+  background-color: white;
+  min-height: 60px;
+  /*border-bottom: 0px;*/
 }
 
 .lead {
-	font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 #logo {
-	float: left;
-	margin-left: 15px;
-	margin-right: 10px;
-	font-size: 1.7em;
-	color: black;
-	text-transform: uppercase;
-	letter-spacing: -1px;
-	padding-top: 9px;
-	font-weight: bold;	
+  float: left;
+  margin-left: 15px;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: black;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
 
-	&:hover {
-		color: blue;
-		text-decoration: none;
-	}
+  &:hover {
+    color: blue;
+    text-decoration: none;
+  }
 }
 
 section, .container {
 
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 /* footer */
 
 footer {
-	margin-top: 45px;
-	padding: 0 20px;
-	padding-top: 5px;
-	border-top: 1px solid $gray-med-light;
-	color: $gray-light;
-	a {
-		color: $gray;
-		&:hover {
-			color: $gray-darker;
+  margin-top: 45px;
+  padding: 0 20px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-med-light;
+  color: $gray-light;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
 
-		}
-	}
-	small {
-		float: left;
-	}
-	ul {
-		float: right;
-		list-style: none;
-		li {
-			float: left;
-			margin-left: 15px;
-		}
-	}
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
 }
 
 /* miscellaneous */
@@ -158,52 +158,52 @@ footer {
 /* sidebar */
 
 aside {
-	section.user_info {
-		margin-top: 20px;
-	}
+  section.user_info {
+    margin-top: 20px;
+  }
 
-	section {
-		padding: 10px 0;
-		margin-top: 20px;
-		&:first_child {
-			border: 0;
-			padding-top: 0;
-		}
-		span {
-			display: block;
-			margin-bottom: 3px;
-			line-height: 1;
-		}
-		h1 {
-			font-size: 1.4em;
-			text-align: left;
-			letter-spacing: -1px;
-			margin-bottom: 3px;
-			margin-top: 0px;
-		}
-	}
+  section {
+    padding: 10px 0;
+    margin-top: 20px;
+    &:first_child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+  }
 }
 
 .camp_info_side {
-	list-style-type: none; 
-	margin-left: 5px; 
-	padding: 2px;
+  list-style-type: none;
+  margin-left: 5px;
+  padding: 2px;
 }
 
 #ea_list {
-	list-style-type: decimal;
-	margin-left: 5px;
-	padding: 2px;
+  list-style-type: decimal;
+  margin-left: 5px;
+  padding: 2px;
 }
 
 .gravatar {
-	float: left;
-	margin-right: 10px;
-	margin-bottom: 10px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .gravatar_edit {
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 /* forms */
@@ -215,8 +215,8 @@ input, textarea, select, .uneditable-input {
 }
 
 .help-block {
-	font-size: small;
-	font-style: italic; 
+  font-size: small;
+  font-style: italic;
 }
 
 input {
@@ -239,174 +239,175 @@ input {
 }
 
 .checkbox {
-	/*margin: 10px 20px;*/
-	padding: 5px 20px;
-/*	span {
-		margin-left: 20px;
-		font-weight: normal;
-	}*/
+  /*margin: 10px 20px;*/
+  padding: 5px 20px;
+/*  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }*/
 }
 
 /*#remember_me {
-	width: auto;
-	margin-left: 0px;
+  width: auto;
+  margin-left: 0px;
 }*/
 
 fieldset {
-	border: 1px solid #bbb; 
-	padding: 15px; 
-	border-radius: 5px; 
+  border: 1px solid #bbb;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 
 /*home page*/
 
 .home-register {
-	margin: 20px;
+  margin: 20px;
 }
 
 .home-actions {
-	/*padding: 20px 80px;*/
-	/*background-color: $gray-med-light;*/
-	/*border-bottom: 1px solid $gray;*/
+  /*padding: 20px 80px;*/
+  /*background-color: $gray-med-light;*/
+  /*border-bottom: 1px solid $gray;*/
 }
 
 .lipstick-icon {
-	width: 25%;
-	height: 25%;
-	/*position: 10px 10px;*/
+  width: 25%;
+  height: 25%;
+  /*position: 10px 10px;*/
 }
 
 /* Users index */
 
 .users {
 
-	margin-bottom: 30px;
-	padding: 20px 0px;
-	border: 1px solid $gray-med-light;
-	border-radius: 3px;
-	
+  margin-bottom: 30px;
+  padding: 20px 0px;
+  border: 1px solid $gray-med-light;
+  border-radius: 3px;
+
 }
 
 
 /* Events index */
 
 .events {
-	list-style: none;
-	margin: 0;
-	li {
-		overflow: auto;
-		padding: 10px 0;
-		border-bottom: 1px solid $gray-med-light;
-	}
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-med-light;
+  }
 }
 
 
 /* account activation */
 
 .reset_account_activation {
-	border: 1px solid $gray-med-light;
-	margin: 20px 0;
-	padding: 20px;
+  border: 1px solid $gray-med-light;
+  margin: 20px 0;
+  padding: 20px;
 }
 
 ul#camp_info {
-	list-style: none;
+  list-style: none;
 }
 
 div.event_user_header {
-	h1 {
-		text-align: left;
-	}
+  h1 {
+    text-align: left;
+  }
 
-	padding: 40px 0;
-	background-image: asset-url("lipstick-icon.png");
-	background-size: 30%; 
-	/*background-attachment: fixed;*/
-	background-repeat: no-repeat;
-	background-position: right center;
+  padding: 40px 0;
+  background-image: asset-url("lipstick-icon.png");
+  background-size: 30%;
+  /*background-attachment: fixed;*/
+  background-repeat: no-repeat;
+  background-position: right center;
 
 
-	/*border-bottom: 1px solid $gray-med-light;*/
+  /*border-bottom: 1px solid $gray-med-light;*/
 }
 
 div.user_intention {
-	ul {
-		list-style: none;
-		li {
-			margin: 10px 0;
-		}
-	}
+  ul {
+    list-style: none;
+    li {
+      margin: 10px 0;
+    }
+  }
 
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 #home-next-event {
-	text-align: center;
-	/*border: 1px solid #bbb;*/
-	/*border-radius: 5px;*/
-	margin: 30px 0;
-	padding: 20px;
+  text-align: center;
+  /*border: 1px solid #bbb;*/
+  /*border-radius: 5px;*/
+  margin: 30px 0;
+  padding: 20px;
 
-	#home_activites_list {
-		border-bottom: 1px solid $gray-med-light;
-		border-width: 90%;
-		padding: 10px;
-	}
+  #home_activites_list {
+    border-bottom: 1px solid $gray-med-light;
+    border-width: 90%;
+    padding: 10px;
+  }
 }
 
 
 .admin {
 
-	border: 1px solid $gray-med-light;
-	background-color: $gray-lighter;
-	border-radius: 5px;
-	padding: 15px;
+  border: 1px solid $gray-med-light;
+  background-color: $gray-lighter;
+  border-radius: 5px;
+  padding: 15px;
 
 }
 
 
 #admin-user-notes {
-	padding: 10px 0;
+  padding: 10px 0;
 }
 
 #admin-user-notes-list {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .unstyled_list {
-	list-style-type: none;
-		margin-left: 0;
-		padding-left: 20px;
-	
+  list-style-type: none;
+    margin-left: 0;
+    padding-left: 20px;
+
 }
 
 /* Payment Options on user root_path */
 #payment-options {
-	padding: 5px 20px;
-	border: 1px solid black;
-	border-radius: 5px;
-	background-color: $gray-med-light;
+  padding: 5px 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: $gray-med-light;
 
 }
 
 .member_search {
 
-	padding: 5px 0;
+  padding: 5px 0;
 }
 /* Welcome page*/
 
 .welcome {
 
-	background-image: image-url("FC_2015.jpg");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-attachment: fixed;
-	background-size: cover;
-	min-height: 500px;
+  background-image: image-url("img_fc2016camp.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+
+  min-height: 500px;
 
 }
 
 .home-content {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }

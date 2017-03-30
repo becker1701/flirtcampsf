@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804223409) do
+ActiveRecord::Schema.define(version: 20170330030422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,12 +92,14 @@ ActiveRecord::Schema.define(version: 20150804223409) do
     t.string   "name"
     t.string   "email"
     t.string   "invite_digest"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.datetime "last_sent_at"
+    t.integer  "membership_application_id"
   end
 
   add_index "invitations", ["email"], name: "index_invitations_on_email", unique: true, using: :btree
+  add_index "invitations", ["membership_application_id"], name: "index_invitations_on_membership_application_id", using: :btree
 
   create_table "membership_applications", force: :cascade do |t|
     t.string   "name"
@@ -110,8 +112,10 @@ ActiveRecord::Schema.define(version: 20150804223409) do
     t.text     "passions"
     t.integer  "years_at_bm"
     t.boolean  "approved"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.text     "member_acquaintance"
+    t.boolean  "archived",            default: false
   end
 
   create_table "payments", force: :cascade do |t|
@@ -156,31 +160,35 @@ ActiveRecord::Schema.define(version: 20150804223409) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",                 default: false
+    t.boolean  "admin",                     default: false
     t.string   "activation_digest"
-    t.boolean  "activated",             default: false
+    t.boolean  "activated",                 default: false
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.string   "phone"
     t.string   "playa_name"
     t.string   "hometown"
-    t.boolean  "added_to_google_group", default: false
+    t.boolean  "added_to_google_group",     default: false
+    t.integer  "membership_application_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["membership_application_id"], name: "index_users_on_membership_application_id", using: :btree
 
   add_foreign_key "activities", "events"
   add_foreign_key "activities", "users"
   add_foreign_key "early_arrivals", "events"
   add_foreign_key "early_arrivals", "users"
   add_foreign_key "intentions", "users"
+  add_foreign_key "invitations", "membership_applications"
   add_foreign_key "payments", "events"
   add_foreign_key "payments", "users"
   add_foreign_key "tickets", "events"
   add_foreign_key "user_notes", "users"
+  add_foreign_key "users", "membership_applications"
 end

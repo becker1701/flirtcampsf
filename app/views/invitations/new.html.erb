@@ -3,24 +3,24 @@
 <h1>New Invitation</h1>
 
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<%= form_for @invitation, html: { class: "form-inline" } do |f| %>
-			
-			<%= render 'shared/error_messages', object: f.object %>
+  <div class="col-md-10 col-md-offset-1">
+    <%= form_for @invitation, html: { class: "form-inline" } do |f| %>
 
-			<div class="form-group">	
-				<%= f.label :name %>
-				<%= f.text_field :name, class: "form-control" %>
-			</div>
-			<div class="form-group">	
-				<%= f.label :email %>
-				<%= f.text_field :email, class: "form-control" %>	
-			</div>
-			<div class="form-group">	
-				<%= f.submit "Create Invitation", class: "btn btn-primary" %>
-			</div>
-		<% end %>
-	</div>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Create Invitation", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <hr>
@@ -30,22 +30,22 @@
 <%= link_to "Resend All Invites", resend_all_invitations_path, class: "btn btn-primary", data: { confirm: "Resend all invitations?" } %>
 
 <% if @invitations.present? && @invitations.any? %>
-	
-	<table class="table">
-		<thead>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Last Sent</th>
-			<th>Replied</th>
-			<th></th>
-		</thead>
-		<tbody>
-			<%= render @invitations %>
-		</tbody>
-	</table>
 
-	
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Last Sent</th>
+      <th>Replied</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <%= render @invitations %>
+    </tbody>
+  </table>
+
+
 <% else %>
-	<h3>No invites.</h3>
+  <h3>No invites.</h3>
 <% end %>
 

@@ -3,62 +3,69 @@
 <h1>Flirt Camp New Member Application</h1>
 
 <div class="row">
-	<div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3">
 
-		<%= form_for @membership_app do |f| %>
-			<%= render 'shared/error_messages', object: f.object %>
+    <%= form_for @membership_app do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
 
-			<div class="form-group">
-			<%= f.label :name, "REAL name :)" %>
-			<%= f.text_field :name, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :name, "REAL name :)" %>
+      <%= f.text_field :name, class: "form-control" %>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :playa_name %>
-			<%= f.text_field :playa_name, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :playa_name %>
+      <%= f.text_field :playa_name, class: "form-control" %>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :email %>
-			<%= f.text_field :email, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :email %>
+      <%= f.text_field :email, class: "form-control" %>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :phone %>
-			<%= f.text_field :phone, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :phone %>
+      <%= f.text_field :phone, class: "form-control" %>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :home_town %>
-			<p class="help-block">City, State.</p>
-			<%= f.text_field :home_town, class: "form-control" %>
-			</div>
+      <div class="form-group">
+        <%= f.label :member_acquaintance, "Flirt Camp Acquaintances" %>
+        <p class="help-block">Who do you know in Flirt Camp, or who refered you?</p>
+        <%= f.text_field :member_acquaintance, class: "form-control" %>
 
-			<div class="form-group">
-			<%= f.label :years_at_bm, "How many years have you been to Burning Man?" %>
-			<%= f.number_field :years_at_bm, in: 0..25, step: 1, class: "form-control" %>
-			</div>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :possibility, "What turns you on most about Flirt Camp and the possibility of becoming a Flirt Camper?" %>
-			<%= f.text_area :possibility, row: 10, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :home_town %>
+      <p class="help-block">City, State.</p>
+      <%= f.text_field :home_town, class: "form-control" %>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :contribution, "What contributions have you made to Flirt Camp thus far (if applicable)?" %>
-			<p class="help-block">Events and fundraisers attended, or other contribution.</p>
-			<%= f.text_area :contribution, row: 10, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :years_at_bm, "How many years have you been to Burning Man?" %>
+      <%= f.number_field :years_at_bm, in: 0..25, step: 1, class: "form-control" %>
+      </div>
 
-			<div class="form-group">
-			<%= f.label :passions, "Tell us a little bit about your passions in life and special/sexy abilities or skills that you want to contribute to Flirt Camp." %>
-			<p class="help-block">Perhaps you have a coaching practice, you're great at spanking, you like planning/coordinating, or just plain heavy lifting...  Let us know!  Contributions of all types are welcome and we love opportunities to create new and fun activities!</p>
-			<%= f.text_area :passions, row: 10, class: "form-control" %>
-			</div>
+      <div class="form-group">
+      <%= f.label :possibility, "What turns you on most about Flirt Camp and the possibility of becoming a Flirt Camper?" %>
+      <%= f.text_area :possibility, row: 10, class: "form-control" %>
+      </div>
 
-			
-			<%= f.submit "Submit Flirt Camp Application", class: "btn btn-large btn-primary" %>
-		
-		<% end %>		
-	</div>
+      <div class="form-group">
+      <%= f.label :contribution, "What contributions have you made to Flirt Camp thus far (if applicable)?" %>
+      <p class="help-block">Events and fundraisers attended, or other contribution.</p>
+      <%= f.text_area :contribution, row: 10, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+      <%= f.label :passions, "Tell us a little bit about your passions in life and special/sexy abilities or skills that you want to contribute to Flirt Camp." %>
+      <p class="help-block">Perhaps you have a coaching practice, you're great at spanking, you like planning/coordinating, or just plain heavy lifting...  Let us know!  Contributions of all types are welcome and we love opportunities to create new and fun activities!</p>
+      <%= f.text_area :passions, row: 10, class: "form-control" %>
+      </div>
+
+
+      <%= f.submit "Submit Flirt Camp Application", class: "btn btn-large btn-primary" %>
+
+    <% end %>
+  </div>
 </div>

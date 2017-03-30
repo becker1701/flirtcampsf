@@ -1,28 +1,28 @@
 <div id="invite_id_<%= invitation.id %>">
 
-	<tr class="<%= "success" if invitation.replied? %>">
-		<td><%= invitation.name %></td>
-		<td>
-			<%= mail_to invitation.email, invitation.email, body: edit_invitation_url(invitation.id, email: invitation.email), subject: "I need you to create a profile at Flirt Camp" %>
-		</td>
+  <tr class="<%= "success" if invitation.replied? %>">
+    <td><%= invitation.name %></td>
+    <td>
+      <%= mail_to invitation.email, invitation.email, body: edit_invitation_url(invitation.id, email: invitation.email), subject: "I need you to create a profile at Flirt Camp" %>
+    </td>
 
-		<td id="last_sent_at_<%= invitation.id %>">
-			<% if invitation.last_sent_at.nil? %>
-				Not Sent
-			<% else %>
-				<%= invitation.last_sent_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
-			<% end %>
-		</td>
+    <td id="last_sent_at_<%= invitation.id %>">
+      <% if invitation.last_sent_at.nil? %>
+        Not Sent
+      <% else %>
+        <%= invitation.last_sent_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
+      <% end %>
+    </td>
 
-		<% if invitation.replied? %>
-			<td><span class="label label-success">Yes</span></td>
-			<td></td>
-		<% else %>
-			<td><span class="label label-warning">No</span></td>
-			<td><%= link_to "Resend Invite", resend_invitation_path(invitation), class: "btn btn-primary btn-xs" %></td>
-		<% end %>	
+    <% if invitation.replied? %>
+      <td><span class="label label-success">Yes</span></td>
+      <td></td>
+    <% else %>
+      <td><span class="label label-warning">No</span></td>
+      <td><%= link_to "Resend Invite", resend_invitation_path(invitation), class: "btn btn-primary btn-xs" %></td>
+    <% end %>
 
-		<td><%= link_to "X", invitation_path(invitation), method: :delete, data: { confirm: "Are you sure?" } %></td>
+    <td><%= link_to "X", invitation_path(invitation), method: :delete, data: { confirm: "Are you sure?" } %></td>
 
-	</tr>
+  </tr>
 </div>

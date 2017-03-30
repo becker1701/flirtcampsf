@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  
+
 
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
@@ -30,12 +30,13 @@ Rails.application.routes.draw do
       get 'food_restrictions', to: 'users#food_restrictions'
     end
   end
-  
+
   resources :membership_applications, only: [:index, :new, :create, :edit, :destroy] do
     member do
       get 'thank_you'
       get 'approve'
       get 'decline'
+      get 'archive'
     end
   end
   resources :verify_tickets, only: :edit
@@ -53,10 +54,10 @@ Rails.application.routes.draw do
   end
 
 
-  resources :events do 
+  resources :events do
     resources :storage_tenents, only: :index
     resources :activities
-    resources :intentions, only: [:create, :edit, :update] do 
+    resources :intentions, only: [:create, :edit, :update] do
       patch :edit_storage_tenent, on: :member
     end
     resources :early_arrivals, only: [:index, :edit, :update, :create, :destroy]

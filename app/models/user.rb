@@ -4,14 +4,17 @@ class User < Application
 
   attr_accessor :remember_token, :activation_token, :password_reset_token
 
-  
+
 
   has_many :intentions, dependent: :destroy
   has_many :activities, dependent: :nullify
   has_many :early_arrivals, dependent: :destroy
   has_many :user_notes, dependent: :destroy
-  has_one :invitation, foreign_key: :email
   has_many :payments, dependent: :restrict_with_error
+
+  belongs_to :membership_application
+  belongs_to :invitation, primary_key: :email
+
 
   has_one :next_event_intention, ->{ where(event: Event.next_event) }, class_name: 'Intention'
   has_one :next_event_early_arrival, ->{ where(event: Event.next_event) }, class_name: 'EarlyArrival'
@@ -25,7 +28,7 @@ class User < Application
   validates :password, length: { minimum: 6 }, allow_blank: true
   validates :phone, length: { maximum: 30 }
 
-  
+
   before_save :downcase_email
   before_create :generate_activation_digest
 
@@ -120,7 +123,7 @@ class User < Application
   def camp_dues
     if self.next_event_intention && self.next_event_intention.going?
       Event.next_event.camp_dues
-    else 
+    else
       0
     end
   end
@@ -137,14 +140,14 @@ class User < Application
     if self.next_event_intention && self.next_event_intention.going? && self.next_event_intention.storage_tenent?
       self.next_event_intention.storage_amount_due
     else
-      0 
+      0
     end
   end
 
   def sum_camp_dues
     sum_dues = 0
     sum_dues = self.camp_dues + self.camp_dues_food + self.camp_dues_storage
-  end 
+  end
 
   def sum_next_event_payments
     self.payments.where(event: Event.next_event).sum(:amount)
@@ -166,9 +169,9 @@ class User < Application
 
   #   # self.includes(:intentions).merge(Intention.where(event: Event.next_event)).references(:intentions)
   #   intentions.for_next_event
-  
+
   # end
-  
+
   # def next_event_intentions
   # scope :next_event_intentions, -> {joins(:intentions).where(intention: {event: Event.next_event}).references(:intentions)}
   # end
@@ -225,7 +228,7 @@ class User < Application
         csv << [user.name, user.playa_name, user.intentions.for_next_event.first.food_restrictions]
       end
     end
-    
+
   end
 
 

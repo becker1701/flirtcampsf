@@ -1,35 +1,35 @@
 class UsersController < ApplicationController
 
   before_action :get_user, only: [:show, :edit, :update, :destroy, :camp_dues_notification, :added_to_google_group]
-  
-  
+
+
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group]
-  
+
   before_action :get_invite, only: [:new, :create]
   # before_action :invited, only: [:new, :create]
   before_action :next_event, only: [:index, :show, :camp_dues_notification, :food_restrictions, :added_to_google_group]
-  
 
 
-  def index  
-      
+
+  def index
+
       # binding.pry
     if params[:q].present?
 
       if params[:q] == "attending_next_event"
         @subtitle = "Members attending #{@next_event.year}"
         @users = User.activated.attending_next_event.paginate(page: params[:page])
-        
+
       elsif params[:q] == "not_attending_next_event"
         @subtitle = "Members not attending #{@next_event.year}"
         @users = User.activated.not_attending_next_event.paginate(page: params[:page])
-        
+
       elsif params[:q] == "not_responded_to_next_event"
         @subtitle = "Members not responded to #{@next_event.year}"
         @users = User.activated.not_responded_to_next_event.paginate(page: params[:page])
-        
+
       elsif params[:q] == "has_ticket_to_next_event"
         @subtitle = "Members who have tickets to #{@next_event.year}"
         @users = User.activated.has_ticket_to_next_event.paginate(page: params[:page])
@@ -79,9 +79,18 @@ class UsersController < ApplicationController
 
 
   def new
-    
-    # debugger
-    if @invite
+
+    if @invite && @invite.membership_application
+      @user = User.new(
+        membership_application_id: @invite.membership_application.id,
+
+        name: @invite.membership_application.name,
+        email: @invite.membership_application.email,
+        playa_name: @invite.membership_application.playa_name,
+        hometown: @invite.membership_application.home_town,
+        phone: @invite.membership_application.phone,
+      )
+    elsif @invite
       @user = User.new(name: @invite.name, email: @invite.email)
     else
       @user = User.new
@@ -89,10 +98,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    # debugger
-  	@user = User.new(user_params)
-  	if @user.save
-      
+
+    @user = User.new(user_params)
+    if @user.save
+
       if params[:invite].present? && @invite.email == @user.email
         @user.activate!
         log_in @user
@@ -102,15 +111,15 @@ class UsersController < ApplicationController
         @user.send_activation_email
       end
 
-  		
-  		redirect_to root_url
-  	else
-  		render :new
-  	end
+
+      redirect_to root_url
+    else
+      render :new
+    end
   end
 
   def show
-  	@user = User.find(params[:id])
+    @user = User.find(params[:id])
     # debugger
   end
 
@@ -152,18 +161,18 @@ class UsersController < ApplicationController
         format.js
       end
     end
-  end 
+  end
 
 
 private
 
-	def get_user
-		@user = User.find(params[:id])
-	end
+  def get_user
+    @user = User.find(params[:id])
+  end
 
-	def user_params
-		params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :invitation, :hometown, :added_to_google_group)
-	end
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :playa_name, :phone, :membership_application_id, :hometown, :added_to_google_group)
+  end
 
 
 

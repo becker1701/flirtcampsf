@@ -1,84 +1,84 @@
 <% if logged_in? and admin_user? %>
-	<div class="admin">
-		<h3>Admin</h3>
+  <div class="admin">
+    <h3>Admin</h3>
 
-		<% if @user.added_to_google_group? %>
-			<p>This user has been added to the Google Group.</p>
-		<% else %>
-			<%= form_for @user do |f| %>
-				<%= f.hidden_field :added_to_google_group, value: true %>
-				<%= f.submit "Added to Google Group", class: "btn btn-primary", style: "width: auto;" %>
-			<% end %>
-		<% end %>
+    <% if @user.added_to_google_group? %>
+      <p>This user has been added to the Google Group.</p>
+    <% else %>
+      <%= form_for @user do |f| %>
+        <%= f.hidden_field :added_to_google_group, value: true %>
+        <%= f.submit "Added to Google Group", class: "btn btn-primary", style: "width: auto;" %>
+      <% end %>
+    <% end %>
 
-		<br>
+    <br>
 
-		<div id="admin-early-arrival">
-			<% if @user.ea_exists?(@next_event) %> 
-				<%= form_for([@next_event, @next_event.early_arrivals.find_by(user_id: @user.id)], html: {method: :delete}) do |f| %>
-					<%#= f.hidden_field :user_id, value: @user.id %>
-					<%= f.submit "Unassign from Early Arrival", class: "btn", style: "width: auto;" %>
-				<% end %>
-			<% else %>
-				<%= form_for([@next_event, @next_event.early_arrivals.build]) do |f| %>				
-					<%= f.hidden_field :user_id, value: @user.id %>
-					<%= f.submit "Assign to Early Arrival", class: "btn btn-primary", style: "width: auto;" %>
-				<% end %>
-			<% end %>
-		</div>
+    <div id="admin-early-arrival">
+      <% if @user.ea_exists?(@next_event) %>
+        <%= form_for([@next_event, @next_event.early_arrivals.find_by(user_id: @user.id)], html: {method: :delete}) do |f| %>
+          <%#= f.hidden_field :user_id, value: @user.id %>
+          <%= f.submit "Unassign from Early Arrival", class: "btn", style: "width: auto;" %>
+        <% end %>
+      <% else %>
+        <%= form_for([@next_event, @next_event.early_arrivals.build]) do |f| %>
+          <%= f.hidden_field :user_id, value: @user.id %>
+          <%= f.submit "Assign to Early Arrival", class: "btn btn-primary", style: "width: auto;" %>
+        <% end %>
+      <% end %>
+    </div>
 
-		<br>	
-		<div id="admin-storage-tenent">
+    <br>
+    <div id="admin-storage-tenent">
 
-			<% if @user.next_event_intention %>
+      <% if @user.next_event_intention %>
 
-				<fieldset>
+        <fieldset>
 
-					<div class="row">
-						<div class="col-md-6">
-							<strong>Yurt owner:</strong> <%= @user.next_event_intention.yurt_owner? ? "Yes" : "No" %><br>
-							<strong>Yurt Panel Size:</strong> <%= @user.next_event_intention.yurt_panel_size.nil? ? "Not Specified" : "#{@user.next_event_intention.yurt_panel_size}\"" %><br>
-							<strong>Yurt Storage Requested:</strong> <%= @user.next_event_intention.yurt_storage? ? "Yes" : "No" %>		
-						</div>
-						<div class="col-md-6">
-							<%= form_for(
-							[@next_event, @user.next_event_intention], 
-							url: edit_storage_tenent_event_intention_path(@next_event, @user.next_event_intention)) do |f| %>
+          <div class="row">
+            <div class="col-md-6">
+              <strong>Yurt owner:</strong> <%= @user.next_event_intention.yurt_owner? ? "Yes" : "No" %><br>
+              <strong>Yurt Panel Size:</strong> <%= @user.next_event_intention.yurt_panel_size.nil? ? "Not Specified" : "#{@user.next_event_intention.yurt_panel_size}\"" %><br>
+              <strong>Yurt Storage Requested:</strong> <%= @user.next_event_intention.yurt_storage? ? "Yes" : "No" %>
+            </div>
+            <div class="col-md-6">
+              <%= form_for(
+              [@next_event, @user.next_event_intention],
+              url: edit_storage_tenent_event_intention_path(@next_event, @user.next_event_intention)) do |f| %>
 
-								<div class="checkbox">
-									<%= f.label :storage_tenent do %>
-										<%= f.check_box :storage_tenent %><strong>Storage Tenent</strong>
-									<% end %>
-								</div>
-								
-								<div class="form-group">
-									<%= f.label :camp_due_storage, "Storage Dues" %>
-									<%= f.number_field :camp_due_storage, class: "form-control" %>
-								</div>	
-								
-								<%= f.submit "Update", class: "btn btn-default" %>
-							
-							<% end %>
-						</div>
-					</div>
-				</fieldset>
-			<% end %>
-		
-		</div>
+                <div class="checkbox">
+                  <%= f.label :storage_tenent do %>
+                    <%= f.check_box :storage_tenent %><strong>Storage Tenent</strong>
+                  <% end %>
+                </div>
 
-		<%= render 'shared/camp_user_dues_summary', user: @user %>
+                <div class="form-group">
+                  <%= f.label :camp_due_storage, "Storage Dues" %>
+                  <%= f.number_field :camp_due_storage, class: "form-control" %>
+                </div>
 
-		<div id="admin-user-notes">
-			<%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
-			<% if @user.user_notes.any? %>
-				<ul class="list" id="admin-user-notes-list">
-					<% @user.user_notes.each do |note| %>
-						<%= content_tag(:li, note.note, id: "admin_user_note_id_#{note.id}") %>
-					<% end %>
-				</ul>
-			<% end %>
-		</div>
+                <%= f.submit "Update", class: "btn btn-default" %>
 
-	</div>
+              <% end %>
+            </div>
+          </div>
+        </fieldset>
+      <% end %>
+
+    </div>
+
+    <%= render 'shared/camp_user_dues_summary', user: @user %>
+
+    <div id="admin-user-notes">
+      <%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
+      <% if @user.user_notes.any? %>
+        <ul class="list" id="admin-user-notes-list">
+          <% @user.user_notes.each do |note| %>
+            <%= content_tag(:li, note.note, id: "admin_user_note_id_#{note.id}") %>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+  </div>
 
 <% end %>

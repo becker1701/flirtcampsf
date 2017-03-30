@@ -1,80 +1,80 @@
 class InvitationsController < ApplicationController
 
-	before_action :logged_in_user, except: [:edit]
-	before_action :admin_user, except: [:edit]
+  before_action :logged_in_user, except: [:edit]
+  before_action :admin_user, except: [:edit]
 
-	def new
-		@invitations = Invitation.all.order(:created_at)
-		@invitation = Invitation.new
-	end
+  def new
+    @invitations = Invitation.all.order(:created_at)
+    @invitation = Invitation.new
+  end
 
-	def create
-		@invitation = Invitation.new(invitation_params)
-		if @invitation.save
-			
-			flash[:success] = "Invitation added."
-			redirect_to new_invitation_url
-			@invitation.send_invitation_email
-		else
+  def create
+    @invitation = Invitation.new(invitation_params)
+    if @invitation.save
 
-			render :new
-		end
-	end
+      flash[:success] = "Invitation added."
+      redirect_to new_invitation_url
+      @invitation.send_invitation_email
+    else
 
-	def edit
-		# debugger
-		@invitation = Invitation.find_by(email: params[:email]) if params[:email]
+      render :new
+    end
+  end
 
-		if @invitation #&& @invitation.authenticated?(:invite, params[:id])
-			flash[:info] = "Create your Flirt Camp Profile!"
-			redirect_to signup_url(invite: @invitation.id)
-		
-		else
-			flash[:info] = "Create your Flirt Camp Profile!"
-			redirect_to signup_url
-		end
-	end
+  def edit
+    # debugger
+    @invitation = Invitation.find_by(email: params[:email]) if params[:email]
 
-	def update
-		redirect_to root_url
-	end
+    if @invitation #&& @invitation.authenticated?(:invite, params[:id])
+      flash[:info] = "Create your Flirt Camp Profile!"
+      redirect_to signup_url(invite: @invitation.id)
 
-	def destroy
-		invitation = Invitation.find_by(id: params[:id])
-		invitation.destroy
-		flash[:success] = "Invitation rescended."
-		redirect_to new_invitation_path
-	end
+    else
+      flash[:info] = "Create your Flirt Camp Profile!"
+      redirect_to signup_url
+    end
+  end
 
-	def resend
-		# debugger
-		@invite = Invitation.find_by(id: params[:id])
-		if @invite
-			@invite.resend
-			flash[:success] = "Invitation resent."
-		end
-		redirect_to new_invitation_url
-	end
+  def update
+    redirect_to root_url
+  end
 
-	def resend_all
-		@invitations = Invitation.not_replied
+  def destroy
+    invitation = Invitation.find_by(id: params[:id])
+    invitation.destroy
+    flash[:success] = "Invitation rescended."
+    redirect_to new_invitation_path
+  end
 
-		if @invitations.any?
-			@invitations.each do |invite|
-				# debugger
-				invite.resend
-			end
-			flash[:success] = "All invitations resent"
-		else
-			flash[:success] = "No invitations to resend"
-		end
-		redirect_to new_invitation_url
-	end
+  def resend
+    # debugger
+    @invite = Invitation.find_by(id: params[:id])
+    if @invite
+      @invite.resend
+      flash[:success] = "Invitation resent."
+    end
+    redirect_to new_invitation_url
+  end
+
+  def resend_all
+    @invitations = Invitation.not_replied
+
+    if @invitations.any?
+      @invitations.each do |invite|
+        # debugger
+        invite.resend
+      end
+      flash[:success] = "All invitations resent"
+    else
+      flash[:success] = "No invitations to resend"
+    end
+    redirect_to new_invitation_url
+  end
 
 private
 
-	def invitation_params
-		params.require(:invitation).permit(:name, :email)
-	end
+  def invitation_params
+    params.require(:invitation).permit(:name, :email)
+  end
 
 end

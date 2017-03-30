@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.3.1'
 
 gem 'rails', '4.2.0'
 gem 'pg', '0.17.1'
@@ -50,15 +51,15 @@ group :development, :test do
 end
 
 group :test do
-	gem 'minitest-reporters', '~> 1.0.11'
-	gem 'mini_backtrace'
+  gem 'minitest-reporters', '~> 1.0.11'
+  gem 'mini_backtrace'
   gem 'guard', '~>2.12.5'
-	gem 'guard-minitest', '~>2.4.4'
+  gem 'guard-minitest', '~>2.4.4'
   # gem "minitest-rails-capybara"
 end
 
 group :production do
-	gem 'rails_12factor', '0.0.2'
+  gem 'rails_12factor', '0.0.2'
   gem 'puma', '2.11.1'
 end
 
