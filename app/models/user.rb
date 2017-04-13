@@ -120,8 +120,12 @@ class User < Application
     errors.add(:password, 'can not be blank')
   end
 
+  def attending_next_event?
+    self.next_event_intention && self.next_event_intention.going?
+  end
+
   def camp_dues
-    if self.next_event_intention && self.next_event_intention.going?
+    if attending_next_event?
       Event.next_event.camp_dues
     else
       0
@@ -129,7 +133,7 @@ class User < Application
   end
 
   def camp_dues_food
-    if self.next_event_intention && self.next_event_intention.going? && self.next_event_intention.opt_in_meals?
+    if attending_next_event? && self.next_event_intention.opt_in_meals?
       Event.next_event.camp_dues_food
     else
       0
@@ -137,7 +141,7 @@ class User < Application
   end
 
   def camp_dues_storage
-    if self.next_event_intention && self.next_event_intention.going? && self.next_event_intention.storage_tenent?
+    if attending_next_event? && self.next_event_intention.storage_tenent?
       self.next_event_intention.storage_amount_due
     else
       0

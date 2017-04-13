@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
-	before_action :logged_in_user
-	before_action :admin_user
+  before_action :logged_in_user
+  before_action :admin_user
 
 
   def index
@@ -20,7 +20,7 @@ class EventsController < ApplicationController
     else
       render :new
     end
-    
+
   end
 
   def show
@@ -48,12 +48,10 @@ class EventsController < ApplicationController
   end
 
   def camp_dues_overview
-    
     @event = Event.find_by(id: params[:id])
     redirect_to users_path if @event.nil?
 
     @users = User.all.order(:name)
-
   end
 
 private

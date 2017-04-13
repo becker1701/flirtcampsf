@@ -27,20 +27,23 @@
           <%= content_tag :td do %>
             <% if user.next_event_intention && user.next_event_intention.going? && user.next_event_camp_dues_balance <= 0 %>
               <span class="label label-success">Paid</span>
+
             <% elsif user.next_event_intention && !user.next_event_intention.going? %>
               --
+
             <% else %>
               <%= number_to_currency(user.next_event_camp_dues_balance, precision: 0) %>
             <% end %>
+
           <% end %>
 
           <td>
             <%= link_to "Add Payment", new_user_payment_path(user), class: "btn btn-success btn-xs" %>
           </td>
+
           <td>
             <%= link_to "View Breakdown", user_payments_path(user), class: "btn btn-primary btn-xs" %>
           </td>
-
 
           <%= content_tag :td do %>
             <% if user.next_event_camp_dues_balance > 0 %>
@@ -50,14 +53,11 @@
               <td colspan="2"></td>
             <% end %>
           <% end %>
-
-          
-        
         <% end %>
       <% end %>
 
       <tr>
-        <td><strong>Totals</strong></td> 
+        <td><strong>Totals</strong></td>
         <td></td>
         <td><strong><span id="camp_dues_total"><%= number_to_currency(User.next_event_camp_dues, precision: 0) %></span></strong></td>
         <td><strong><span id="camp_payments_total"><%= number_to_currency(User.next_event_payments, precision: 0) %></span></strong></td>
@@ -68,5 +68,6 @@
     </tbody>
   </table>
 <% else %>
-  <strong>No one is going yet.</strong>
+
+  <strong>There are no members.</strong>
 <% end %>
