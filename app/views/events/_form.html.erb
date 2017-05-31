@@ -1,47 +1,81 @@
-<%= form_for @event do |f| %>	
+<%= form_for @event do |f| %>
 
-	<%= render 'shared/error_messages', object: f.object %>
+  <%= render 'shared/error_messages', object: f.object %>
 
-	<div class="form-group">
-		<%= f.label :year, "Event Title / Year", class: "control-label" %>
-		<%= f.text_field :year, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :start_date, class: "control-label" %>
-		<%= f.date_field :start_date, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :end_date, class: "control-label" %>
-		<%= f.date_field :end_date, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :theme, class: "control-label" %>
-		<%= f.text_field :theme, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :camp_address, class: "control-label" %>
-		<%= f.text_field :camp_address, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :early_arrival_date, class: "control-label" %>
-		<%= f.date_field :early_arrival_date, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :camp_dues, class: "control-label" %>
-		<%= f.number_field :camp_dues, class: "form-control" %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :camp_dues_food, class: "control-label" %>
-		<%= f.number_field :camp_dues_food, class: "form-control" %>
-	</div>
-	
-	<%= f.submit nil, class: "btn btn-primary", style: "width: auto" %> <%= link_to "Cancel", events_url, class: "btn btn-danger" %>
+  <div class="form-group">
+    <%= f.label :year, "Event Title / Year", class: "control-label" %>
+    <%= f.text_field :year, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :start_date, class: "control-label" %>
+    <%= f.date_field :start_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :end_date, class: "control-label" %>
+    <%= f.date_field :end_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :theme, class: "control-label" %>
+    <%= f.text_field :theme, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :camp_address, class: "control-label" %>
+    <%= f.text_field :camp_address, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :early_arrival_date, class: "control-label" %>
+    <%= f.date_field :early_arrival_date, class: "form-control" %>
+  </div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+
+    <div class="checkbox">
+      <%= f.label :accepting_apps do %>
+        <%= f.check_box :accepting_apps %> Accepting Apps?
+      <% end %>
+    </div>
+
+    <div class="checkbox">
+      <%= f.label :archive do %>
+        <%= f.check_box :archive %> Archive?
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :organizer_id, class: "control-label" %>
+      <%= f.select :organizer_id, User.all.collect { |u| [ u.name, u.id ] }, {}, {class: "form-control"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :camp_dues, class: "control-label" %>
+      <%= f.number_field :camp_dues, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :camp_dues_food, class: "control-label" %>
+      <%= f.number_field :camp_dues_food, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :camp_dues_mail, "Camp Dues Mailing Address", class: "control-label" %>
+      <%= f.text_field :camp_dues_mail, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :camp_dues_paypal, "Camp Dues PayPal", class: "control-label" %>
+      <%= f.text_field :camp_dues_paypal, class: "form-control" %>
+    </div>
+
+  </div>
+</div>
+
+
+  <%= f.submit nil, class: "btn btn-primary", style: "width: auto" %> <%= link_to "Cancel", events_url, class: "btn btn-danger" %>
 
 <% end %>

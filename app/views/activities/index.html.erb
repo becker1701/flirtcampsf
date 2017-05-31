@@ -25,7 +25,7 @@
                         <td></td>
                         <td><strong><%= link_to activity.title, [@event, activity] %></strong></td>
                         <!-- <td><%#= strf_day(activity.day) %></td> -->
-                        <td><%= strf_time(activity.time) %></td>
+                        <td><%= activity.time_range %></td>
                         <td><%= display_name(activity.user) %></td>
                         <td><%= activity.publish? ? "Yes" : "No" %></td>
 
@@ -48,4 +48,3 @@
 <br>
 
 <%= link_to 'New Activity', new_event_activity_path(@event), class: "btn btn-primary" %>
-  

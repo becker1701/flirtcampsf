@@ -28,10 +28,14 @@
         <div class="col-md-6 col-sm-12 home-content">
 
           <p class="lead">Join Flirt Camp</p>
-          <p>Fill out our membership application for Burning Man 2017!</p>
-          <%= link_to "Apply to Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
-        <!--  <p class="lead">Flirt Camp is full for Burning Man 2015!! </p>
-          <p>Sorry, we will not be accepting any more members for this year.</p>-->
+
+          <% if @next_event.accepting_apps %>
+            <p>Fill out our membership application for Burning Man 2017!</p>
+            <%= link_to "Apply to Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
+          <% else %>
+            <p><strong>Flirt Camp is full for <%= @next_event.year %></strong></p>
+            <p><small>Applications are closed.</small></p>
+          <% end %>
         </div>
 
 

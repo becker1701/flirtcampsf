@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
-  
+
 
   # GET /activities
   def index
@@ -39,32 +39,32 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity.save
-        
-        format.html do 
+
+        format.html do
           redirect_to event_activities_url(@event)
           flash[:success] = 'Activity was successfully created.'
         end
-    
+
       else
         format.html { render :new }
-    
+
       end
     end
   end
 
   # PATCH/PUT /activities/1
   def update
-    
+
     respond_to do |format|
       if @activity.update(activity_params)
-        format.html do 
+        format.html do
           redirect_to event_activities_url(@event)
           flash[:success] = 'Activity was successfully updated.'
         end
-    
+
       else
         format.html { render :edit }
-    
+
       end
     end
   end
@@ -77,7 +77,7 @@ class ActivitiesController < ApplicationController
         redirect_to event_activities_url(@event)
         flash[:success] = 'Activity was successfully destroyed.'
       end
-  
+
     end
   end
 
@@ -94,13 +94,13 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:event_id, :user_id, :publish, :title, :day, :time, :description)
+      params.require(:activity).permit(:event_id, :user_id, :publish, :title, :day, :time, :end_time, :description)
     end
 
     def correct_user
       # debugger
       unless current_user?(@activity.user) || current_user.admin
-        redirect_to event_activities_url(@event) 
+        redirect_to event_activities_url(@event)
       end
     end
 end

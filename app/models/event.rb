@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   has_many :tickets, dependent: :nullify
   has_many :payments, dependent: :restrict_with_error
 
-  #TODO: belongs_to :camp_organizer, class_name: :user, foreign_key: :camp_org_id
+  belongs_to :organizer, class_name: 'User'
 
   scope :event_early_arrivals, ->{ joins(early_arrivals: :user) }
 

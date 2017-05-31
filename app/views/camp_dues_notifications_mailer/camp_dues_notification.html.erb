@@ -8,43 +8,43 @@
 
 <p><strong>Camp Dues</strong></p>
 <ul>
-	<li>Camp Dues: <%= number_to_currency(@event.camp_dues, precision: 0) %></li>
-	<% if @user.next_event_intention.opt_in_meals? %>
-		<li>Camp Meals: <%= number_to_currency(@event.camp_dues_food, precision: 0) %></li>
-	<% else %>
-		<li>Camp Meals: <strong>Opted Out</strong> (<%= link_to "Opt In by updating your camp questionairre", root_url %>)</li>
-	<% end %>
-	<% if @user.next_event_intention.storage_tenent? %>
-		<li>Annual yurt storage: <%= number_to_currency(@user.next_event_intention.storage_amount_due, precision: 0) %></li>
-	<% end %>
+  <li>Camp Dues: <%= number_to_currency(@event.camp_dues, precision: 0) %></li>
+  <% if @user.next_event_intention.opt_in_meals? %>
+    <li>Camp Meals: <%= number_to_currency(@event.camp_dues_food, precision: 0) %></li>
+  <% else %>
+    <li>Camp Meals: <strong>Opted Out</strong> (<%= link_to "Opt In by updating your camp questionairre", root_url %>)</li>
+  <% end %>
+  <% if @user.next_event_intention.storage_tenent? %>
+    <li>Annual yurt storage: <%= number_to_currency(@user.next_event_intention.storage_amount_due, precision: 0) %></li>
+  <% end %>
 </ul>
 
 
 <p><strong>Payments</strong></p>
 
 <% if @user.payments.for_next_event.any? %>
-	<ul>
-		<% @user.payments.for_next_event.each do |payment| %>
-			<%= content_tag(:li, "#{number_to_currency(payment.amount, precision: 0)} on #{payment.payment_date.strftime("%a, %b %-e")}") %>
-		<% end %>
-	</ul>
+  <ul>
+    <% @user.payments.for_next_event.each do |payment| %>
+      <%= content_tag(:li, "#{number_to_currency(payment.amount, precision: 0)} on #{payment.payment_date.strftime("%a, %b %-e")}") %>
+    <% end %>
+  </ul>
 <% else %>
-	<p><strong>No payments recorded yet</strong></p>
+  <p><strong>No payments recorded yet</strong></p>
 <% end %>
 
 
 <p><strong>Totals</strong></p>
 <ul>
-	<li>Total Dues: <%= number_to_currency(@user.sum_camp_dues, precision: 0) %></li>
-	<li>Total Payments: <%= number_to_currency(@user.sum_next_event_payments, precision: 0) %></li>
-	<li>Dues Remaining: <%= number_to_currency(@user.next_event_camp_dues_balance, precision: 0) %></li>
+  <li>Total Dues: <%= number_to_currency(@user.sum_camp_dues, precision: 0) %></li>
+  <li>Total Payments: <%= number_to_currency(@user.sum_next_event_payments, precision: 0) %></li>
+  <li>Dues Remaining: <%= number_to_currency(@user.next_event_camp_dues_balance, precision: 0) %></li>
 </ul>
 
 <p><strong>Options for payment:</strong></p>
 <ul>
-	<li>PayPal <strong>becker1701@gmail.com</strong> as a "Freinds and Family" transfer</li>
-	<li>Mail check to Brian Becker, 330 Scott St #2, San Francisco, CA  94117</li>
-	<li>Cash</li>
+  <li>PayPal <strong><%= @event.camp_dues_paypal %></strong> as a "Freinds and Family" transfer</li>
+  <li>Mail check to <%= @event.organizer.name %>, <%= @event.camp_dues_mail %></li>
+  <li>Cash - In Person</li>
 </ul>
 
 

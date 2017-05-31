@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330030422) do
+ActiveRecord::Schema.define(version: 20170531185830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170330030422) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.boolean  "publish",     default: false
+    t.time     "end_time"
   end
 
   add_index "activities", ["event_id"], name: "index_activities_on_event_id", using: :btree
@@ -49,11 +50,16 @@ ActiveRecord::Schema.define(version: 20170330030422) do
     t.string   "theme"
     t.string   "camp_address"
     t.date     "early_arrival_date"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "camp_org"
     t.decimal  "camp_dues",          default: 0.0
     t.decimal  "camp_dues_food",     default: 0.0
+    t.integer  "organizer_id"
+    t.boolean  "accepting_apps"
+    t.string   "camp_dues_mail"
+    t.string   "camp_dues_paypal"
+    t.boolean  "archive",            default: false
   end
 
   create_table "intentions", force: :cascade do |t|
@@ -184,6 +190,7 @@ ActiveRecord::Schema.define(version: 20170330030422) do
   add_foreign_key "activities", "users"
   add_foreign_key "early_arrivals", "events"
   add_foreign_key "early_arrivals", "users"
+  add_foreign_key "events", "users", column: "organizer_id"
   add_foreign_key "intentions", "users"
   add_foreign_key "invitations", "membership_applications"
   add_foreign_key "payments", "events"

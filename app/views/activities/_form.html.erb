@@ -14,8 +14,12 @@
     <%= f.select :day, options_for_select(Event.next_event.date_range.map { |date| event_extended_date_select_formatter(@event, date) }, selected: @activity.day), {include_blank: "Select day"}, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :time %><br>
+    <%= f.label :time, "Start Time" %><br>
     <%= f.time_field :time, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :end_time %><br>
+    <%= f.time_field :end_time, class: "form-control" %>
   </div>
   <div class="form-group">
     <%= f.label :description %><br>

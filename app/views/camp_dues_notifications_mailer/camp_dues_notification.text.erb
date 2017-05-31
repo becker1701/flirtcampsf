@@ -37,9 +37,10 @@ Dues Remaining: <%= number_to_currency(@user.next_event_camp_dues_balance, preci
 
 
 Options for payment:
-1. PayPal becker1701@gmail.com as a "Freinds and Family" transfer
-2. Mail check to Brian Becker, 330 Scott St #2, San Francisco, CA  94117
-3. Cash
+- PayPal <%= @event.camp_dues_paypal %> as a "Freinds and Family" transfer
+- Mail check to <%= @event.organizer.name %>, <%= @event.camp_dues_mail %>
+- Cash - In Person
+
 
 Please contribute your dues as soon as possible. The camp dues deadline is August 1st.
 

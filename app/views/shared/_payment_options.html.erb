@@ -1,8 +1,8 @@
 <div class="well well-lg">
-	<h4>Payment Options</h4>
-	<ol>
-		<li>PayPal to <strong>becker1701@gmail.com</strong> as a "Family or Friends" payment</li>
-		<li>Check made out to Brian Becker and mail to 330 Scott St #2, San Francisco, CA.  94117</li>
-		<li>Cash</li>
-	</ol>	
+  <h4>Payment Options</h4>
+  <ol>
+    <li>PayPal <strong><%= @next_event.camp_dues_paypal %></strong> as a "Freinds and Family" transfer</li>
+    <li>Mail check to <%= @next_event.organizer.name %>, <%= @next_event.camp_dues_mail %></li>
+    <li>Cash - In Person</li>
+  </ol>
 </div>

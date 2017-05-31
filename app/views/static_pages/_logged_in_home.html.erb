@@ -1,104 +1,104 @@
 
 <div class="row">
-	<aside class="col-md-3">
-		<section class="user_info">
-			<h1>
-				<%= gravatar_for current_user %>	
-				<%= current_user.playa_name %>
-			</h1>
-			<small><%= "(aka #{current_user.name})" %></small><br>
-			<small><%= link_to "Edit profile", edit_user_path(current_user) %></small>
-		</section>
+  <aside class="col-md-3">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for current_user %>
+        <%= current_user.playa_name %>
+      </h1>
+      <small><%= "(aka #{current_user.name})" %></small><br>
+      <small><%= link_to "Edit profile", edit_user_path(current_user) %></small>
+    </section>
 
-		<% if @next_event.present? %>
+    <% if @next_event.present? %>
 
-			<%= link_to "Sell/Buy Tickets", event_tickets_path(@next_event), class: "btn btn-danger", style: "margin-top: 20px;" %>
+      <%= link_to "Sell/Buy Tickets", event_tickets_path(@next_event), class: "btn btn-danger", style: "margin-top: 20px;" %>
 
-			<section>
+      <section>
 
-				<div id="camp_info">
+        <div id="camp_info">
 
-					<p><strong>Camp Info</strong></p>
+          <p><strong>Camp Info</strong></p>
 
-					<ul class="camp_info_side">
-						<li>Address: <%= @next_event.camp_address %></li>
-					</ul>
+          <ul class="camp_info_side">
+            <li>Address: <%= @next_event.camp_address %></li>
+          </ul>
 
-				</div>
+        </div>
 
-				<div id="camp_organizer">
-					<p><strong>Camp Organizer:</strong></p>
+        <div id="camp_organizer">
+          <p><strong>Camp Organizer:</strong></p>
 
-					<ul class="camp_info_side">
-						<li>Camp Master</li>
-						<li><%= mail_to "campmaster@flirtcampsf.com" %></li>
-					</ul>
-				</div>
-
-
-
-			</section>
-		<% end %>
-
-		<div id="prev_years">
-
-			<p><strong>Previous Years:</strong></p>
-
-			<ul style="list-style-type: none; margin-left: 5px; padding: 2px;">
-				<li>Coming Soon...</li>
-			</ul>
-		</div>
-
-
-	</aside>
-	<div class="col-md-9">
-
-
-		<% if @next_event.present? %>
-			<div class="event_user_header">
-				<div class="row">
-					<div class="col-md-12">
-
-						<h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
-						<h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
-						<h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
-					</div>
-				</div>
-
-
-			</div>
+          <ul class="camp_info_side">
+            <li><%= @next_event.organizer.playa_name %></li>
+            <li><%= mail_to @next_event.organizer.email %></li>
+          </ul>
+        </div>
 
 
 
-			<div class="user_intention">
-				<% if @intention.new_record? %>
-					<%= render 'intentions/change_status' %>
-				<% else %>
+      </section>
+    <% end %>
 
-					<%= render 'intention_info' %>
-					<br>
+    <div id="prev_years">
 
-					<%= render 'attending_info' %>
-					<br>
-										
-					<%= render 'activites_info' %>
-					<br>
-										
-					<%= render 'early_arrival_info' %>
-					<br>
-					
-					<%= render 'shared/camp_user_dues_summary', user: current_user %>
-					<br>
+      <p><strong>Previous Years:</strong></p>
+
+      <ul style="list-style-type: none; margin-left: 5px; padding: 2px;">
+        <li>Coming Soon...</li>
+      </ul>
+    </div>
 
 
-					
+  </aside>
+  <div class="col-md-9">
 
 
-				<% end %>
-			</div>
-		<% else %>
+    <% if @next_event.present? %>
+      <div class="event_user_header">
+        <div class="row">
+          <div class="col-md-12">
 
-			<h3>No event scheduled</h3>
-		<% end %>
-	</div>
+            <h1 class="text-left" style="padding-bottom: 0; margin-bottom: 0;"><%= @next_event.year %></h1>
+            <h1 style="margin-bottom: 0; margin-top: 0;"><small><%= @next_event.theme %></small></h1>
+            <h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+      <div class="user_intention">
+        <% if @intention.new_record? %>
+          <%= render 'intentions/change_status' %>
+        <% else %>
+
+          <%= render 'intention_info' %>
+          <br>
+
+          <%= render 'attending_info' %>
+          <br>
+
+          <%= render 'activites_info' %>
+          <br>
+
+          <%= render 'early_arrival_info' %>
+          <br>
+
+          <%= render 'shared/camp_user_dues_summary', user: current_user %>
+          <br>
+
+
+
+
+
+        <% end %>
+      </div>
+    <% else %>
+
+      <h3>No event scheduled</h3>
+    <% end %>
+  </div>
 </div>

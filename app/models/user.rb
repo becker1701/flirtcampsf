@@ -15,6 +15,7 @@ class User < Application
   belongs_to :membership_application
   belongs_to :invitation, primary_key: :email
 
+  has_one :organizer, class_name: 'Event', foreign_key: :organizer_id
 
   has_one :next_event_intention, ->{ where(event: Event.next_event) }, class_name: 'Intention'
   has_one :next_event_early_arrival, ->{ where(event: Event.next_event) }, class_name: 'EarlyArrival'
@@ -210,11 +211,16 @@ class User < Application
 
   def self.to_csv
     CSV.generate do |csv|
-      columns_to_export = %w[name playa_name phone email]
+      columns_to_export = %w[name playa_name phone email status payments ea]
 
       csv << columns_to_export
       all.each do |user|
-        csv << user.attributes.values_at(*columns_to_export)
+        cols = user.attributes.values_at(*columns_to_export)
+        cols << user.next_event_intention.try(:status)
+        cols << user.sum_camp_dues
+        cols << (user.ea_exists?(Event.next_event) ? "EA Assigned" : "")
+
+        csv << cols
       end
     end
   end
