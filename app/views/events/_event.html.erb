@@ -14,8 +14,12 @@
     </div>
 
     <div class="panel-body">
-      <p class="bg-<%= event.accepting_apps ? "success" : "danger" %>" style="padding: 10px 15px;">
 
+      <p class="bg-<%= event.camp_closed ? "danger" : "success" %>" style="padding: 10px 15px;">
+        Camp <%= event.camp_closed ? "CLOSED" : "OPEN" %>
+      </p>
+
+      <p class="bg-<%= event.accepting_apps ? "success" : "danger" %>" style="padding: 10px 15px;">
         Applications are <%= event.accepting_apps ? "OPEN" : "CLOSED" %>
       </p>
 

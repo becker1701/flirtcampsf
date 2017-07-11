@@ -1,9 +1,14 @@
 <h1><%= @event.year %></h1>
-<h1><small>For <%= @intention.user.name %></small></h1>
+<h1>
+  <small>For <%= @intention.user.name %></small>
 
-<% if admin_user? %>
-  <h3>ADMIN</h3>
-<% end %>
+  <% if admin_user? %>
+    <br>ADMIN
+  <% end %>
+
+</h1>
+
+
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -14,9 +19,15 @@
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.hidden_field :user_id %>
+
       <%= f.label :status %>
 
-      <%= f.select :status, options_for_select([["Going with Flirt Camp, and I have a ticket", :going_has_ticket], ["Going with Flirt Camp, but I need a ticket", :going_needs_ticket], ["No camping with Flirt Camp this year", :not_going_no_ticket]], selected: @intention.status), {}, { class: "form-control"}  %>
+      <%= f.select :status, options_for_select(
+                    [
+                      ["Going with Flirt Camp, and I have a ticket", :going_has_ticket],
+                      ["Going with Flirt Camp, but I need a ticket", :going_needs_ticket],
+                      ["No camping with Flirt Camp this year", :not_going_no_ticket]
+                    ]), {prompt: true}, { class: "form-control" } %>
 
       <%#= f.select :status, options_for_select(Intention.statuses.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.status), {}, { class: "form-control"} %>
 
@@ -128,7 +139,7 @@
       <%#= f.select :storage_bikes, options_for_select(%w[0 1 2]), {}, class: "form-control" %> -->
 
       <br>
-      <%= f.submit "Update", class: "btn btn-primary" %>
+      <%= f.submit "Create Intention", class: "btn btn-primary" %>
 
     <% end %>
 

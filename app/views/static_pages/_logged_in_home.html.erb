@@ -64,24 +64,22 @@
             <h4><small><%= @next_event.start_date.strftime("%B %e") %> to <%= @next_event.end_date.strftime("%B %e") %></small></h4>
           </div>
         </div>
-
-
       </div>
-
-
 
       <div class="user_intention">
         <% if @intention.new_record? %>
-          <%= render 'intentions/change_status' %>
+
+          <% if @next_event.camp_closed %>
+            <h2 class="alert alert-danger">Flirt Camp is full for the year, and is not taking any other campers.</h2>
+          <% else %>
+            <%= render 'intentions/change_status' %>
+          <% end %>
+
+          <br>
+
         <% else %>
 
           <%= render 'intention_info' %>
-          <br>
-
-          <%= render 'attending_info' %>
-          <br>
-
-          <%= render 'activites_info' %>
           <br>
 
           <%= render 'early_arrival_info' %>
@@ -90,11 +88,14 @@
           <%= render 'shared/camp_user_dues_summary', user: current_user %>
           <br>
 
-
-
-
-
         <% end %>
+
+        <%= render 'attending_info' %>
+        <br>
+
+        <%= render 'activites_info' %>
+        <br>
+
       </div>
     <% else %>
 

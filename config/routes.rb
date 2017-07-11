@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   resources :events do
     resources :storage_tenents, only: :index
     resources :activities
-    resources :intentions, only: [:create, :edit, :update] do
+    resources :intentions, only: [:new, :create, :edit, :update] do
       patch :edit_storage_tenent, on: :member
     end
     resources :early_arrivals, only: [:index, :edit, :update, :create, :destroy]

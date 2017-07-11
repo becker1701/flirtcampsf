@@ -8,6 +8,7 @@
   <table class="table">
     <thead>
       <th>User</th>
+      <!-- <th></th> -->
       <th>Intention</th>
       <th>Dues</th>
       <th>Payments</th>
@@ -20,7 +21,17 @@
       <% @users.each do |user| %>
         <%= content_tag(:tr, id: "user_id_#{user.id}") do %>
           <%= content_tag(:td, link_to(user.name, user)) %>
-          <%= content_tag(:td, user.next_event_intention.nil? ? 'Not Responded' : user.next_event_intention.status ) %>
+
+          <%= content_tag(:td) do %>
+            <% if user.next_event_intention.nil? %>
+              <%= link_to "Create Intention", new_event_intention_path(@event, user: user) %>
+            <% else %>
+              <%= link_to user.next_event_intention.status, edit_event_intention_path(@event, user.next_event_intention) %>
+            <% end %>
+          <% end %>
+
+
+          <%#= content_tag(:td, user.next_event_intention.nil? ? 'Not Responded' : user.next_event_intention.status ) %>
           <%= content_tag(:td, number_to_currency(user.sum_camp_dues, precision: 0)) %>
           <%= content_tag(:td, number_to_currency(user.sum_next_event_payments, precision: 0)) %>
 

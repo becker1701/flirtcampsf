@@ -14,6 +14,10 @@ class Event < ActiveRecord::Base
   validate :start_date_before_end_date
   validate :early_arrival_date_before_start_date
 
+  # def camp_closed
+  #   true
+  # end
+
   def self.next_event
     self.where( "end_date > ?", Date.today ).order(:start_date).limit(1).first
   end

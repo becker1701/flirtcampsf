@@ -36,6 +36,12 @@
   <div class="panel-body">
 
     <div class="checkbox">
+      <%= f.label :camp_closed do %>
+        <%= f.check_box :camp_closed %> Camp Closed?
+      <% end %>
+    </div>
+
+    <div class="checkbox">
       <%= f.label :accepting_apps do %>
         <%= f.check_box :accepting_apps %> Accepting Apps?
       <% end %>
