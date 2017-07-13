@@ -64,19 +64,19 @@ class User < Application
   end
 
   def User.not_responded_to_next_event
-    where(intentions: {id: nil})
+    joins(:intentions).where(intentions: {id: nil})
   end
 
   def User.has_ticket_to_next_event
-    where(intentions: {status: [1,3]})
+    joins(:intentions).where(intentions: {status: [1,3]})
   end
 
   def User.needs_ticket_to_next_event
-    where(intentions: {status: 2})
+    joins(:intentions).where(intentions: {status: 2})
   end
 
   def User.driving_to_next_event
-    where(intentions: {transportation: 1})
+    joins(:intentions).where(intentions: {transportation: 1})
   end
 
   def User.early_arrivals_next_event
