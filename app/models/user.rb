@@ -20,7 +20,7 @@ class User < Application
   has_one :next_event_intention, ->{ where(event: Event.next_event) }, class_name: 'Intention'
   has_one :next_event_early_arrival, ->{ where(event: Event.next_event) }, class_name: 'EarlyArrival'
 
-  default_scope -> { includes(:next_event_intention, :next_event_early_arrival) }
+  # default_scope -> { includes(:next_event_intention, :next_event_early_arrival) }
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :playa_name, length: { maximum: 50 }
