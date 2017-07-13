@@ -1,5 +1,5 @@
 class EarlyArrival < ActiveRecord::Base
-  
+
   belongs_to :event
   belongs_to :user
 
@@ -9,5 +9,7 @@ class EarlyArrival < ActiveRecord::Base
 
   validates :user_id, :event_id, presence: true
 
-  
+  def ea_date
+    Event.next_event.early_arrival_date
+  end
 end
