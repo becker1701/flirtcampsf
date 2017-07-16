@@ -3,9 +3,9 @@ class UsersController < ApplicationController
   before_action :get_user, only: [:show, :edit, :update, :destroy, :camp_dues_notification, :added_to_google_group]
 
 
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group, :aquaintences]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group]
+  before_action :admin_user, only: [:destroy, :camp_dues_notification, :food_restrictions, :added_to_google_group, :aquaintences]
 
   before_action :get_invite, only: [:new, :create]
   # before_action :invited, only: [:new, :create]
@@ -163,6 +163,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def aquaintences
+    respond_to do |format|
+      format.csv { send_data User.aquaintences_to_csv }
+    end
+  end
 
 private
 

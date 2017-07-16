@@ -166,20 +166,14 @@ class User < Application
     end
   end
 
-  # def next_event_intention
-
-  #   # event = Event.next_event
-  #   # return nil if event.nil?
-  #   # self.intentions.find_by(event: event) || event.intentions.build(user: self)
-
-  #   # self.includes(:intentions).merge(Intention.where(event: Event.next_event)).references(:intentions)
-  #   intentions.for_next_event
-
-  # end
-
-  # def next_event_intentions
-  # scope :next_event_intentions, -> {joins(:intentions).where(intention: {event: Event.next_event}).references(:intentions)}
-  # end
+  # return aquaintences from application
+  def aquaintences
+    if membership_application.nil? || membership_application.member_acquaintance.blank?
+      return "<no data>"
+    else
+      return membership_application.member_acquaintance
+    end
+  end
 
   def assign_ea(event)
     self.early_arrivals.create!(event: event)
@@ -197,11 +191,6 @@ class User < Application
   def ea_info(event)
     self.early_arrivals.find_by(event: event)
   end
-
-  # def User.next_event_intentions
-  #   #TODO: test next_event_intentions
-  #   self.activated.includes(:intentions).merge(Intention.for_next_event).references(:intentions)
-  # end
 
 
   def send_camp_dues_notification
@@ -242,10 +231,24 @@ class User < Application
   end
 
 
+  def self.aquaintences_to_csv
+
+    user_list = User.attending_next_event
+
+    CSV.generate do |csv|
+      columns_to_export = %w[name aquaintences]
+
+      csv << columns_to_export
+
+      user_list.each do |user|
+        csv << [user.name, user.aquaintences]
+      end
+    end
+
+  end
+
 
 private
-
-
 
   def generate_activation_digest
     self.activation_token = User.new_token

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get 'camp_dues_notification', on: :member
     collection do
       get 'food_restrictions', to: 'users#food_restrictions'
+      get 'camper_aquaintences', to: 'users#aquaintences'
     end
   end
 
