@@ -236,12 +236,12 @@ class User < Application
     user_list = User.attending_next_event
 
     CSV.generate do |csv|
-      columns_to_export = %w[name aquaintences]
+      columns_to_export = %w[name playa_name aquaintences]
 
       csv << columns_to_export
 
       user_list.each do |user|
-        csv << [user.name, user.aquaintences]
+        csv << [user.name, user.playa_name, user.aquaintences]
       end
     end
 
