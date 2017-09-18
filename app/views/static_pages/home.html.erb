@@ -25,29 +25,42 @@
 
     <section class="container">
       <div class="row home-actions">
-        <div class="col-md-6 col-sm-12 home-content">
 
-          <p class="lead">Join Flirt Camp</p>
+        <% if @next_event %>
+          <div class="col-md-6 col-sm-12 home-content">
 
-          <% if @next_event.accepting_apps %>
-            <p>Fill out our membership application for Burning Man 2017!</p>
-            <%= link_to "Apply to Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
-          <% else %>
-            <p><strong>Flirt Camp is full for <%= @next_event.year %></strong></p>
-            <p><small>Applications are closed.</small></p>
-          <% end %>
-        </div>
+            <p class="lead">Join Flirt Camp</p>
+
+            <% if @next_event.accepting_apps %>
+              <p>Fill out our membership application for Burning Man 2017!</p>
+              <%= link_to "Apply to Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
+            <% else %>
+              <p><strong>Flirt Camp is full for <%= @next_event.year %></strong></p>
+              <p><small>Applications are closed.</small></p>
+            <% end %>
+          </div>
 
 
 
-        <div class="col-md-6 col-sm-12 home-content">
-          <% if @next_event %>
+          <div class="col-md-6 col-sm-12 home-content">
+            <% if @next_event %>
 
-            <p class="lead">Sell your tickets!</p>
-            <p>Have an extra ticket and want to sell it to a Flirt Camper?</p>
-            <%= link_to "Sell Your Ticket", new_event_ticket_path(@next_event), class: "btn btn-primary btn-block" %>
-          <% end %>
-        </div>
+              <p class="lead">Sell your tickets!</p>
+              <p>Have an extra ticket and want to sell it to a Flirt Camper?</p>
+              <%= link_to "Sell Your Ticket", new_event_ticket_path(@next_event), class: "btn btn-primary btn-block" %>
+            <% end %>
+          </div>
+
+        <% else %>
+          <div class="col-md-12 col-sm-12 home-content">
+
+
+              <p class="lead">Check back later for info on next years event!</p>
+
+
+          </div>
+        <% end %>
+
       </div>
 
 
