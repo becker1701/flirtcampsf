@@ -16,6 +16,7 @@ class Invitation < Application
 
 
   def send_invitation_email
+    generate_invite_token
     self.update_attribute(:last_sent_at, Time.zone.now)
     InvitationMailer.invite(self).deliver_now
   end

@@ -16,9 +16,11 @@ class MembershipApplication < Application
   def approve
     update_attribute(:approved, true)
 
-    invite = Invitation.create!(
-      name: self.name, email: self.email, membership_application: self
-    )
+    invite = Invitation.where(email: self.email).first_or_create do |invite|
+      invite.name = self.name
+    end
+
+    invite.update(membership_application: self)
 
     invite.send_invitation_email
   end
