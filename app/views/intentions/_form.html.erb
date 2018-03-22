@@ -1,19 +1,25 @@
+<style>
+  .mt-4em {
+    margin-top: 4em;
+  }
+</style>
+
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <!-- <div class="col-md-8 col-md-offset-2"> -->
 
 
-<%= form_for([@event, @intention], html: { class: 'form-horizontal' }) do |f| %>
+    <%= form_for([@event, @intention], html: { class: 'form-horizontal' }) do |f| %>
 
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.hidden_field :user_id %>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :status, class: 'control-label' %>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.select :status, options_for_select(
                       [
                         ["Going with Flirt Camp, and I have a ticket", :going_has_ticket],
@@ -23,14 +29,17 @@
         </div>
       </div>
 
-      <hr>
-      <h3>Transportation:</h3>
+
+      <div class='col-md-12 mt-4em'>
+        <h3>Transportation:</h3>
+        <hr>
+      </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :transportation, "I'm getting there by:", class: 'control-label' %>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.select :transportation,
                 options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]},
                   selected: @intention.transportation),
@@ -40,10 +49,10 @@
       </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :arrival_date, "Arrival date:", class: 'control-label' %>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.select :arrival_date,
                 options_for_select(Event.next_event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) },
                   selected: @intention.arrival_date),
@@ -53,10 +62,10 @@
       </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :departure_date, "Departure date:", class: 'control-label' %>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.select :departure_date,
                 options_for_select(Event.next_event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) },
                 selected: @intention.departure_date),
@@ -68,78 +77,85 @@
 
       <!-- <fieldset> -->
         <!-- <legend style="padding-left:10px; border: 0px;"><h3><small>For Drivers Only:</small></h3></legend> -->
-      <h3><small>Drivers</small></h3>
+      <div class="col-md-12 mt-4em">
+        <h3>For Drivers:</h3>
+        <hr>
+      </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :seats_available, "How many carpool seats do you have?:", class: 'control-label' %>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
         <%= f.select :seats_available, options_for_select(%w[0 1 2 3 4 5 6 7 8 9 10], selected: @intention.seats_available), {}, class: "form-control" %>
         </div>
       </div>
       <!-- </fieldset> -->
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :vehicle_type, "Type of vehicle you will be driving, and trailer length (if applicable):" %>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.text_field :vehicle_type, class: "form-control" %>
         </div>
       </div>
 
-      <hr>
-      <h3>Lodging:</h3>
+      <div class="col-md-12 mt-4em">
+        <h3>Lodging:</h3>
+        <hr>
+      </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :lodging, "I will staying in a:", class: 'control-label' %>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.select :lodging, options_for_select(Intention.lodgings.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.lodging), {prompt: true}, { class: "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :lodging_footprint, "Total foot print of your home & shade (width x length):" %>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.text_field :lodging_footprint, class: "form-control" %>
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-md-4 col-md-offset-1">
           <%= f.label :lodging_num_occupants, "How many others will be staying with you?", class: 'control-label' %>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= f.select :lodging_num_occupants, options_for_select(%w[0 1 2 3 4 5 6 7 8 9 10], selected: @intention.lodging_num_occupants), {}, class: "form-control" %>
         </div>
       </div>
 
 
+      <div class="col-md-12 mt-4em">
+        <h3>Yurt Owners:</h3>
+        <hr>
+      </div>
 
-      <hr>
-      <h3>Yurt Owners:</h3>
+      <div class="col-md-10 col-md-offset-1">
 
         <div class="form-group">
-          <div class="col-md-12">
             <div class="checkbox">
               <%= f.label :yurt_owner, class: "checkbox" do %>
               <%= f.check_box :yurt_owner %>
                 Check if you own a yurt (If yurt ownership is shared, please select one person to fill this section out.)
               <% end %>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
 
         <div class="form-group">
-          <div class="col-md-12">
+          <!-- <div class="col-md-10 col-md-offset-2"> -->
             <div class="checkbox">
               <%= f.label :yurt_storage, class: "checkbox" do %>
               <%= f.check_box :yurt_storage %>
@@ -149,58 +165,68 @@
                 <br><span class="text-danger">Please note that there currently is not room for additional yurts in the storage container for 2018-2019.</span>
               <% end %>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
+      </div>
 
         <div class="form-group">
-          <div class="col-md-5">
-            <%= f.label :yurt_user, "Names of the folks using your yurt this year?" %>
+          <div class="col-md-4 col-md-offset-1">
+            <%= f.label :yurt_user, "Names of the folks using and paying storage (if applicable) for your yurt this year?" %>
           </div>
-          <div class="col-md-7">
+          <div class="col-md-6">
             <%= f.text_field :yurt_user, class: "form-control" %>
-            <span class="help-block">
-              - These folks will be responsible for yurt storage fees for the year, if storing with Flirt Camp.
-            </span>
           </div>
         </div>
 
 
         <div class="form-group">
-          <div class="col-md-5">
+          <div class="col-md-4 col-md-offset-1">
             <%= f.label :yurt_panel_size, "Yurt panel size (in inches)", class: 'control-label' %>
           </div>
-          <div class="col-md-7">
+          <div class="col-md-6">
             <%= f.select :yurt_panel_size, options_for_select(%w[1 1.5 2 2.5 3], selected: @intention.yurt_panel_size), {prompt: true}, class: "form-control" %>
           </div>
         </div>
 
-
-      <hr>
+      <div class="col-md-12 mt-4em">
       <h3>
         Community Dinners
       </h3>
-
-      <%= f.label :food_restrictions, "Do you have any food alerigies we should be aware of?" %>
-      <%= f.text_area :food_restrictions, class: "form-control" %>
-
       <hr>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-4 col-md-offset-1">
+          <%= f.label :food_restrictions, "Do you have any food alerigies we should be aware of?" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.text_area :food_restrictions, class: "form-control" %>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-12 mt-4em">
       <h3>Logistics:</h3>
+      <hr>
+      </div>
 
-      <p class='text-info'>Flirt Camp will not be utilizing the large trailer for 2018. This means that folks will need to be radically self reliant to get their bikes and yurts up themselves this year. We thank Bruno Martini for his contribution in the past!!</p>
+      <div class="col-md-10 col-md-offset-1">
+        <p class='text-info'>Flirt Camp will not be utilizing the large trailer for 2018. This means that folks will need to be radically self reliant to get their bikes and yurts up themselves this year. We thank Bruno Martini for his contribution in the past!!</p>
 
-      <p>The option to collect some Flirt Campers to get a moving truck or trailer is an option.</p>
-
+        <p>The option to collect some Flirt Campers to get a moving truck or trailer is an option.</p>
 
         <div class="form-group">
-          <div class="col-md-12">
+          <!-- <div class="col-md-10 col-md-offset-1"> -->
             <div class="checkbox">
               <%= f.label :interested_in_rental_van, class: "checkbox" do %>
               <%= f.check_box :interested_in_rental_van %>
                 Check here if you are interested in pooling resources with other Flirt Campers for a rental of some sort.
               <% end %>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
+      </div>
 
       <!--
       <h3><small>For individuals, couples or groups. Get together with others to make sure this is filled out to the best of your knowledge and prevent overlapping information:</small></h3>
@@ -214,12 +240,45 @@
       <%#= f.text_area :logistics, class: "form-control" %>
       -->
 
+      <div class="col-md-12 mt-4em">
+        <h3>Flirt Camp Stryke</h3>
+        <hr>
+      </div>
+
+      <div class="col-md-10 col-md-offset-1">
+      <blockquote>
+        <p>
+          As any true adventurer knows, there comes a time in one's travels that the yearning for home is intense and deep. This is often the experience at burning man: after spending a week in the hot desert together,  sleeping and partying in the most interesting of conditions, traversing physical and psychic journeys we couldn't have dreamed up, we have symbolically delved into the unknown, died, been reborn, transformed, and are ready to return home. And yet, as a camp, we have the final task and trial of breaking down camp as a community, otherwise known as FLIRT CAMP STRYKE--as essential part of the hero/heroine's journey. </p>
+
+          <p>As Mistress Stryke, it's my intention that this aspect of camp is full of efficiency, generosity, positive attitudes, hard work, and a powerful coming together in the last hours.  </p>
+
+          <p>
+            As you are making your travel plans to and from burning man, please do your best to accommodate for Stryke--the more members that participate, the smoother and more pleasurable it is! Also, please make sure your departure times on the flirt camp website accurately reflect your plans. I am depending on this information to assign teams for Stryke.
+          </p>
+          <footer>Mistress Stryke <cite>2017</cite></footer>
+        </blockquote>
+
+        <div class="form-group">
+          <!-- <div class="col-md-12 mt-4em"> -->
+            <div class="checkbox">
+              <%= f.label :stryke_confirmation, class: "checkbox" do %>
+              <%= f.check_box :stryke_confirmation %>
+                Please check after reading about Flirt Camp Stryke to confirm that you will schedule to join us for this special event into your Burning Man plans.<br>
+
+              <% end %>
+            </div>
+          <!-- </div> -->
+        </div>
+
+        </div>
 
 
-      <br>
-      <%= f.submit "Save", class: "btn btn-primary" %>
+      <div class="col-md-12 mt-4em">
+      <hr>
+        <%= f.submit "Save", class: "btn btn-primary btn-lg", style: 'width: auto;' %>
+      </div>
 
     <% end %>
 
-  </div>
+  <!-- </div> -->
 </div>

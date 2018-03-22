@@ -7,15 +7,15 @@
 <% else %>
 
   <main>
-    <section class="welcome">
+    <section class="welcome" style='margin: 0 auto;'>
       <div class="center"><!--  jumbotron"> -->
-        <div class="container">
+        <div class="container" style='margin: 0 auto;'>
           <div class="row">
             <div class="col-md-6 col-md-offset-3">
               <%= image_tag "lipstick-icon.png", class: "lipstick-icon" %>
               <div class='pad'>
-                <%= link_to "Member Log In", login_path, class: "btn btn-primary btn-block btn-lg" %>
-                <%= link_to "Member without an account? Register here.", new_existing_member_request_path, class: "btn btn-primary btn-block" %>
+                <%#= link_to "Member Log In", login_path, class: "btn btn-primary btn-block btn-lg" %>
+                <%#= link_to "Member without an account? Register here.", new_existing_member_request_path, class: "btn btn-primary btn-block" %>
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
     </section>
 
 
-    <section class="container">
+    <section class="container text-center">
       <div class="row home-actions">
 
         <% if @next_event %>
@@ -32,11 +32,11 @@
             <p class="lead">Join Flirt Camp</p>
 
             <% if @next_event.accepting_apps %>
-              <p>Fill out our membership application for Burning Man 2017!</p>
+              <p>Fill out our membership application for <%= @next_event.year %>!</p>
               <%= link_to "Apply to Join Flirt Camp", new_member_app_path, class: "btn btn-primary btn-block" %>
             <% else %>
-              <p><strong>Flirt Camp is full for <%= @next_event.year %></strong></p>
-              <p><small>Applications are closed.</small></p>
+
+              <p><small>Applications are currently closed.</small></p>
             <% end %>
           </div>
 

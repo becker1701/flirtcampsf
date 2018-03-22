@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322011527) do
+ActiveRecord::Schema.define(version: 20180322204008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20180322011527) do
     t.string   "lodging_footprint"
     t.string   "vehicle_type"
     t.boolean  "interested_in_rental_van"
+    t.boolean  "stryke_confirmation"
   end
 
   add_index "intentions", ["user_id", "event_id"], name: "index_intentions_on_user_id_and_event_id", using: :btree

@@ -6,6 +6,8 @@ class Intention < ActiveRecord::Base
   scope :for_next_event, -> { joins(:event).merge(Event.next_event) }
 
   validates :status, :user_id, :event_id, :camp_due_storage, presence: true
+  validates :stryke_confirmation, acceptance: { message: ': Please confirm you understand the request for Camp Stryke.', accept: true }
+
   validate :arrival_date_before_departure_date
 
   enum status: { going_has_ticket: 1, going_needs_ticket: 2, not_going_has_ticket: 3, not_going_no_ticket: 4 }

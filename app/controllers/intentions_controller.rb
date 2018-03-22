@@ -23,7 +23,7 @@ class IntentionsController < ApplicationController
   end
 
   def create
-    # binding.pry
+    binding.pry
 
     if params[:intention]
       user = User.find_by(id: intention_params[:user_id]) || current_user
@@ -120,7 +120,8 @@ private
                       :camp_due_storage,
                       :storage_tenent,
                       :vehicle_type,
-                      :interested_in_rental_van)
+                      :interested_in_rental_van,
+                      :stryke_confirmation)
     #:tickets_for_sale,
   end
 
