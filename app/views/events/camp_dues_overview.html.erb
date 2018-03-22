@@ -23,11 +23,12 @@
           <%= content_tag(:td, link_to(user.name, user)) %>
 
           <%= content_tag(:td) do %>
-            <% if user.next_event_intention.nil? %>
-              <%= link_to "Create Intention", new_event_intention_path(@event, user: user) %>
-            <% else %>
-              <%= link_to user.next_event_intention.status, edit_event_intention_path(@event, user.next_event_intention) %>
-            <% end %>
+           <!--  <%# if user.next_event_intention.nil? %>
+              <%#= link_to "Create Intention", new_event_intention_path(@event, user: user) %>
+            <%# else %>
+              <%#= link_to user.next_event_intention.status, edit_event_intention_path(@event, user.next_event_intention) %>
+            <%# end %> -->
+            <%= edit_intention_link_for(@event, user) %>
           <% end %>
 
 

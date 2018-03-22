@@ -50,6 +50,13 @@ module ApplicationHelper
     end
   end
 
+  def edit_intention_link_for(event, user)
+    if user.next_event_intention.nil?
+      (link_to "Create Intention", new_event_intention_path(event, user: user)).html_safe
+    else
+      (link_to user.next_event_intention.status.titleize, edit_event_intention_path(event, user.next_event_intention)).html_safe
+    end
+  end
 
 
 

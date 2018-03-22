@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628213506) do
+ActiveRecord::Schema.define(version: 20180322011527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,15 +66,15 @@ ActiveRecord::Schema.define(version: 20170628213506) do
   create_table "intentions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "status"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.date     "arrival_date"
     t.date     "departure_date"
     t.integer  "transportation"
     t.integer  "seats_available"
     t.integer  "lodging"
-    t.boolean  "yurt_owner",            default: false
-    t.boolean  "yurt_storage",          default: false
+    t.boolean  "yurt_owner",               default: false
+    t.boolean  "yurt_storage",             default: false
     t.string   "yurt_panel_size"
     t.string   "yurt_user"
     t.boolean  "opt_in_meals"
@@ -87,9 +87,12 @@ ActiveRecord::Schema.define(version: 20170628213506) do
     t.integer  "logistics_bins"
     t.integer  "lodging_num_occupants"
     t.boolean  "shipping_yurt"
-    t.decimal  "camp_due_storage",      default: 0.0
-    t.boolean  "storage_tenent",        default: false
+    t.decimal  "camp_due_storage",         default: 0.0
+    t.boolean  "storage_tenent",           default: false
     t.datetime "dues_last_sent"
+    t.string   "lodging_footprint"
+    t.string   "vehicle_type"
+    t.boolean  "interested_in_rental_van"
   end
 
   add_index "intentions", ["user_id", "event_id"], name: "index_intentions_on_user_id_and_event_id", using: :btree

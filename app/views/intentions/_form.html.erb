@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+
+
+<%= form_for([@event, @intention], html: { class: 'form-horizontal' }) do |f| %>
+
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.hidden_field :user_id %>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :status, class: 'control-label' %>
+        </div>
+
+        <div class="col-md-7">
+          <%= f.select :status, options_for_select(
+                      [
+                        ["Going with Flirt Camp, and I have a ticket", :going_has_ticket],
+                        ["Going with Flirt Camp, but I need a ticket", :going_needs_ticket],
+                        ["No camping with Flirt Camp this year", :not_going_no_ticket]
+                      ]), { prompt: true }, { class: "form-control" } %>
+        </div>
+      </div>
+
+      <hr>
+      <h3>Transportation:</h3>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :transportation, "I'm getting there by:", class: 'control-label' %>
+        </div>
+        <div class="col-md-7">
+          <%= f.select :transportation,
+                options_for_select(Intention.transportations.collect { |s| [s[0].humanize, s[0]]},
+                  selected: @intention.transportation),
+                  { prompt: true },
+                  class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :arrival_date, "Arrival date:", class: 'control-label' %>
+        </div>
+        <div class="col-md-7">
+          <%= f.select :arrival_date,
+                options_for_select(Event.next_event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) },
+                  selected: @intention.arrival_date),
+                  {prompt: true},
+                  class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :departure_date, "Departure date:", class: 'control-label' %>
+        </div>
+        <div class="col-md-7">
+          <%= f.select :departure_date,
+                options_for_select(Event.next_event.extended_date_range.map { |date| event_extended_date_select_formatter(@event, date) },
+                selected: @intention.departure_date),
+                {prompt: true},
+                class: "form-control" %>
+        </div>
+      </div>
+
+
+      <!-- <fieldset> -->
+        <!-- <legend style="padding-left:10px; border: 0px;"><h3><small>For Drivers Only:</small></h3></legend> -->
+      <h3><small>Drivers</small></h3>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :seats_available, "How many carpool seats do you have?:", class: 'control-label' %>
+        </div>
+
+        <div class="col-md-7">
+        <%= f.select :seats_available, options_for_select(%w[0 1 2 3 4 5 6 7 8 9 10], selected: @intention.seats_available), {}, class: "form-control" %>
+        </div>
+      </div>
+      <!-- </fieldset> -->
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :vehicle_type, "Type of vehicle you will be driving, and trailer length (if applicable):" %>
+        </div>
+        <div class="col-md-7">
+          <%= f.text_field :vehicle_type, class: "form-control" %>
+        </div>
+      </div>
+
+      <hr>
+      <h3>Lodging:</h3>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :lodging, "I will staying in a:", class: 'control-label' %>
+        </div>
+
+        <div class="col-md-7">
+          <%= f.select :lodging, options_for_select(Intention.lodgings.collect { |s| [s[0].humanize, s[0]]}, selected: @intention.lodging), {prompt: true}, { class: "form-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :lodging_footprint, "Total foot print of your home & shade (width x length):" %>
+        </div>
+        <div class="col-md-7">
+          <%= f.text_field :lodging_footprint, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-5">
+          <%= f.label :lodging_num_occupants, "How many others will be staying with you?", class: 'control-label' %>
+        </div>
+
+        <div class="col-md-7">
+          <%= f.select :lodging_num_occupants, options_for_select(%w[0 1 2 3 4 5 6 7 8 9 10], selected: @intention.lodging_num_occupants), {}, class: "form-control" %>
+        </div>
+      </div>
+
+
+
+      <hr>
+      <h3>Yurt Owners:</h3>
+
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="checkbox">
+              <%= f.label :yurt_owner, class: "checkbox" do %>
+              <%= f.check_box :yurt_owner %>
+                Check if you own a yurt (If yurt ownership is shared, please select one person to fill this section out.)
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="checkbox">
+              <%= f.label :yurt_storage, class: "checkbox" do %>
+              <%= f.check_box :yurt_storage %>
+                Check to request yurt storage for 2018-2019
+                <br>
+                <strong>*** Cost for storage of yurt will be about $91</strong>
+                <br><span class="text-danger">Please note that there currently is not room for additional yurts in the storage container for 2018-2019.</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-5">
+            <%= f.label :yurt_user, "Names of the folks using your yurt this year?" %>
+          </div>
+          <div class="col-md-7">
+            <%= f.text_field :yurt_user, class: "form-control" %>
+            <span class="help-block">
+              - These folks will be responsible for yurt storage fees for the year, if storing with Flirt Camp.
+            </span>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-md-5">
+            <%= f.label :yurt_panel_size, "Yurt panel size (in inches)", class: 'control-label' %>
+          </div>
+          <div class="col-md-7">
+            <%= f.select :yurt_panel_size, options_for_select(%w[1 1.5 2 2.5 3], selected: @intention.yurt_panel_size), {prompt: true}, class: "form-control" %>
+          </div>
+        </div>
+
+
+      <hr>
+      <h3>
+        Community Dinners
+      </h3>
+
+      <%= f.label :food_restrictions, "Do you have any food alerigies we should be aware of?" %>
+      <%= f.text_area :food_restrictions, class: "form-control" %>
+
+      <hr>
+      <h3>Logistics:</h3>
+
+      <p class='text-info'>Flirt Camp will not be utilizing the large trailer for 2018. This means that folks will need to be radically self reliant to get their bikes and yurts up themselves this year. We thank Bruno Martini for his contribution in the past!!</p>
+
+      <p>The option to collect some Flirt Campers to get a moving truck or trailer is an option.</p>
+
+
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="checkbox">
+              <%= f.label :interested_in_rental_van, class: "checkbox" do %>
+              <%= f.check_box :interested_in_rental_van %>
+                Check here if you are interested in pooling resources with other Flirt Campers for a rental of some sort.
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      <!--
+      <h3><small>For individuals, couples or groups. Get together with others to make sure this is filled out to the best of your knowledge and prevent overlapping information:</small></h3>
+      <%#= f.label :logistics_bike, "Number of bikes needed to get shipped?" %>
+      <%#= f.select :logistics_bike, options_for_select(%w[0 1 2 3 4], selected: @intention.logistics_bike), {}, class: "form-control" %>
+
+      <%#= f.label :logistics_bins, "Number of bins needed to get shipped?" %>
+      <%#= f.select :logistics_bins, options_for_select(%w[0 1 2 3 4 5 6 7 8 9 10], selected: @intention.logistics_bins), {}, class: "form-control" %>
+
+      <%#= f.label :logistics, "How many people are these logistics for, anything else that do you need transported and approx. size?" %>
+      <%#= f.text_area :logistics, class: "form-control" %>
+      -->
+
+
+
+      <br>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+
+    <% end %>
+
+  </div>
+</div>

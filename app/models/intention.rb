@@ -9,8 +9,7 @@ class Intention < ActiveRecord::Base
   validate :arrival_date_before_departure_date
 
   enum status: { going_has_ticket: 1, going_needs_ticket: 2, not_going_has_ticket: 3, not_going_no_ticket: 4 }
-
-  enum lodging: { tent: 1, yurt: 2, car: 3, other_lodging: 4 }
+  enum lodging: { tent: 1, yurt: 2, car: 3, other_lodging: 4, rv: 5 }
   enum transportation: { driving: 1, riding_with_someone: 2, bus: 3, walk: 4, flying_in: 5, other_transportation: 6 }
 
   def Intention.for_next_event
@@ -37,7 +36,7 @@ class Intention < ActiveRecord::Base
   end
 
   def storage_amount_due
-    if storage_tenent && yurt_owner
+    if storage_tenent# && yurt_owner
       camp_due_storage
     else
       0

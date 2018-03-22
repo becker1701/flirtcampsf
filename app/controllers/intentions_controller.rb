@@ -35,7 +35,7 @@ class IntentionsController < ApplicationController
 
     # next_event = Event.find_by(id: params[:event])
 
-    @intention = @event.intentions.build(status: intention_status, user: user)
+    @intention = @event.intentions.build(status: intention_status, user: user, opt_in_meals: true)
     if @intention.save
       if intention_status == "not_going_no_ticket"
         flash[:success] = "You will be missed..."
@@ -106,7 +106,8 @@ private
                       :yurt_storage,
                       :yurt_panel_size,
                       :yurt_user,
-                      :opt_in_meals,
+                      # :opt_in_meals,
+                      :lodging_footprint,
                       :food_restrictions,
                       :logistics,
                       :user_id,
@@ -117,7 +118,9 @@ private
                       :lodging_num_occupants,
                       :shipping_yurt,
                       :camp_due_storage,
-                      :storage_tenent)
+                      :storage_tenent,
+                      :vehicle_type,
+                      :interested_in_rental_van)
     #:tickets_for_sale,
   end
 

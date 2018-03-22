@@ -5,10 +5,10 @@ class StaticPagesController < ApplicationController
   def home
     if logged_in? && @next_event
 # binding.pry
-      if current_user.intentions.empty?
-        @intention = current_user.intentions.build(event: @next_event) #unless @next_event.camp_closed
-      else
+      if current_user.next_event_intention
         @intention = current_user.next_event_intention
+      else
+        @intention = current_user.intentions.build(event: @next_event)
       end
 
       @payments = current_user.payments.where(event: @next_event)

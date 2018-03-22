@@ -15,10 +15,14 @@
               <% if user.next_event_intention.nil? %>
                 Not responded yet
               <% elsif user.next_event_intention.opt_in_meals %>
-                <%= number_to_currency(@next_event.camp_dues_food, precision: 0) %>
+                <% if @next_event.camp_dues_food == 0 %>
+                  <strong>Opted In</strong>
+                <% else %>
+                  <%= number_to_currency(@next_event.camp_dues_food, precision: 0) %>
+                <% end %>
               <% else %>
                 <strong>Opted out</strong>
-              <% end %> 
+              <% end %>
             </td>
           </tr>
 
@@ -29,7 +33,7 @@
                 Not responded yet
               <% elsif user.next_event_intention.storage_tenent? %>
                 <%= number_to_currency(user.next_event_intention.storage_amount_due, precision: 0) %>
-              <% end %>  
+              <% end %>
             </td>
           </tr>
 
@@ -48,7 +52,7 @@
                 <th></th>
               </thead>
               <tbody>
-                
+
                 <% user.payments.for_next_event.each do |payment| %>
                   <tr id="user_payment_id_<%= payment.id %>">
                     <%= content_tag(:td, payment.payment_date.strftime("%a, %b %-e")) %>
@@ -66,8 +70,8 @@
             </table>
           <% else %>
             <strong>No payments recorded.</strong>
-          <% end %>           
-        
+          <% end %>
+
           <%= link_to "Add payment", new_user_payment_path(user), class: "btn btn-sm btn-primary" if current_user.admin? %>
 
         <h3>Totals</h3></div>

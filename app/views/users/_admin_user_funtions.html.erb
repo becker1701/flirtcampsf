@@ -67,7 +67,9 @@
 
     </div>
 
+
     <%= render 'shared/camp_user_dues_summary', user: @user %>
+
 
     <div id="admin-user-notes">
       <%= link_to "Notes", user_user_notes_path(@user), class: "btn btn-default" %>
@@ -79,6 +81,8 @@
         </ul>
       <% end %>
     </div>
+
+    <p>Edit Questionnaire: <%= edit_intention_link_for(@next_event, @user) %></p>
 
   </div>
 
