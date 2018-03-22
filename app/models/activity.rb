@@ -26,7 +26,7 @@ private
   end
 
   def end_time_valid
-    # binding.pry
+    #
     errors.add(:end_time, "must be later than start time.") if time_comparison == 1
   end
 

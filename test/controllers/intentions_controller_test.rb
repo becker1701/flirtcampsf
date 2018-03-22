@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class IntentionsControllerTest < ActionController::TestCase
-  
+
 	def setup
 		@user = users(:archer)
 		@other_user = users(:kurt)
@@ -20,7 +20,7 @@ class IntentionsControllerTest < ActionController::TestCase
 	# 	intention = assigns(:intention)
 	# 	assert_not intention.nil?
 
-	# 	binding.pry
+	#
 
 	# 	patch :update, event_id: @event.id, id: intention, intention: {
 	# 		arrival_date: Date.today + 120.days,
@@ -49,7 +49,7 @@ class IntentionsControllerTest < ActionController::TestCase
 
 	# 		assert_equal user.id, intention.user_id
 	# 		assert_equal @event.id, intention.event_id
-	# 		# binding.pry
+	# 		#
 	# 		assert_equal 1, intention.status
 	# 		assert_equal Date.today + 120.days, intention.arrival_date
 	# 		assert_equal Date.today + 125.days, intention.departure_date
@@ -101,7 +101,7 @@ class IntentionsControllerTest < ActionController::TestCase
 		assert_not_equal existing_status, @intention.reload.status
 		assert_redirected_to root_path
 	end
-	
+
 	test "redirect incorrect user on edit" do
 		# @intention = @event.intentions.find_by(user: @user)
 		get :edit, event_id: @event.id, id: @intention

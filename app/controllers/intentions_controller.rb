@@ -9,7 +9,7 @@ class IntentionsController < ApplicationController
   # before_action :get_next_event, only: [:edit, :update]
 
   def new
-    # binding.pry
+    #
     if params['user']
       user = User.find_by(id: params['user'].to_i)
     end
@@ -23,7 +23,7 @@ class IntentionsController < ApplicationController
   end
 
   def create
-    binding.pry
+
 
     if params[:intention]
       user = User.find_by(id: intention_params[:user_id]) || current_user
@@ -59,12 +59,12 @@ class IntentionsController < ApplicationController
   end
 
   def edit_storage_tenent
-    # binding.pry
+    #
     if params[:intention][:storage_tenent] == "0"
       params[:intention][:camp_due_storage] = 0
     end
 
-    # binding.pry
+    #
 
     if @intention.update_attributes(intention_params)
       flash[:success] = "Storage tenent option updated"

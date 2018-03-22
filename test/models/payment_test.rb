@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class PaymentTest < ActiveSupport::TestCase
-  
+
 	def setup
 		@user = users(:archer)
 		@event = events(:future)
@@ -14,7 +14,7 @@ class PaymentTest < ActiveSupport::TestCase
 	end
 
 	test "payments.for_next_event returns payments for next_event" do
-		# binding.pry
+		#
 		payment_1 = @user.payments.create!(event: @event, payment_date: Date.today - 5.days, amount: 100)
 		payment_2 = @user.payments.create!(event: @event, payment_date: Date.today - 10.days, amount: 50)
 		payment_3 = @user.payments.create!(event: events(:past), payment_date: Date.today - 1.year, amount: 50)

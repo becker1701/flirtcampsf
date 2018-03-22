@@ -1,7 +1,7 @@
 module MembershipApplicationsHelper
 
   def display_name(user, options = {})
-    # binding.pry
+    #
 
     opt = {first_name_only: false}.merge(options)
     return "" if user.nil?

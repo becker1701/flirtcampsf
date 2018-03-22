@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 	before_action :get_event
 
   def new
-  	# binding.pry
+  	#
   	@payment = @user.payments.build(event: @next_event)
   end
 
@@ -57,7 +57,7 @@ private
 		if @user.nil?
 			flash[:danger] = "User not found"
 			redirect_to users_url
-		end		
+		end
 	end
 
   def correct_user
@@ -67,7 +67,7 @@ private
   end
 
 	def get_event
-		# binding.pry
+		#
 		@event = next_event
 	end
 end

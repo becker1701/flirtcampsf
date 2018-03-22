@@ -35,7 +35,7 @@ class User < Application
 
   def User.next_event_camp_dues
     next_event_camp_dues = 0
-    # binding.pry
+    #
     User.attending_next_event.each do |u|
       next_event_camp_dues += u.sum_camp_dues
     end

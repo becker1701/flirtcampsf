@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class IntentionStatusTest < ActionDispatch::IntegrationTest
-  
+
   def setup
   	@user = users(:brian)
     @admin = users(:brian)
@@ -49,8 +49,8 @@ class IntentionStatusTest < ActionDispatch::IntegrationTest
 
     get edit_event_intention_path(@event, intention)
 
-    # binding.pry
-    
+    #
+
     assert_response :success
     assert_template 'intentions/edit'
 
@@ -71,9 +71,9 @@ class IntentionStatusTest < ActionDispatch::IntegrationTest
     intention = intentions(:for_archer)
 
     get edit_event_intention_path(@event, intention)
-    
+
     assert_redirected_to root_path
-  
+
   end
 
 

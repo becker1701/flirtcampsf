@@ -98,7 +98,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		users.each do |user|
 
 			if user.next_event_intention.nil?
-				# binding.pry
+				#
 
 				assert_includes assigns(:users), user
 			else
@@ -120,7 +120,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		users.each do |user|
 
 			if user.next_event_intention.nil?
-				# binding.pry
+				#
 
 				assert_not_includes assigns(:users), user
 			else
@@ -147,7 +147,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		users.each do |user|
 
 			if user.next_event_intention.nil?
-				# binding.pry
+				#
 
 				assert_not_includes assigns(:users), user
 			else
@@ -174,7 +174,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		users.each do |user|
 
 			if user.next_event_intention.nil?
-				# binding.pry
+				#
 
 				assert_not_includes assigns(:users), user
 			else
@@ -201,7 +201,7 @@ class UsersFilteredIndexTest < ActionDispatch::IntegrationTest
 		users.each do |user|
 
 			if user.next_event_early_arrival.nil?
-				# binding.pry
+				#
 
 				assert_not_includes assigns(:users), user
 			else

@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
 
   def home
     if logged_in? && @next_event
-# binding.pry
+#
       if current_user.next_event_intention
         @intention = current_user.next_event_intention
       else

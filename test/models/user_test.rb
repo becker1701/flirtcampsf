@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  def setup 
+  def setup
   	@user = User.new(name: "Ray Ban", email: "ray@example.com", password: "foobar", password_confirmation: "foobar", phone: "123-456-7890", playa_name: "Camp Master")
   end
 
@@ -63,7 +63,7 @@ class UserTest < ActiveSupport::TestCase
     	@user.email = invalid_email
     	assert_not @user.valid?, "#{invalid_email.inspect} should not be a valid email address."
     end
-  end  
+  end
 
   test "message for invalid email format" do
   	@user.email = "user@example,com"
@@ -108,7 +108,7 @@ class UserTest < ActiveSupport::TestCase
     assert @user.next_event_intention.nil?
     @user.email = "someemail@otheremail.com"
     @user.save!
-    # binding.pry
+    #
     @user.intentions.create!(event: event, status: :going_has_ticket)
     assert_equal event, @user.reload.next_event_intention.event
   end
@@ -158,7 +158,7 @@ class UserTest < ActiveSupport::TestCase
       if user.next_event_intention.nil?
         assert_not_includes User.activated.has_ticket_to_next_event, user
       else
-        # binding.pry
+        #
         if user.next_event_intention.status == "going_has_ticket" || user.next_event_intention.status == "not_going_has_ticket"
           assert_includes User.activated.has_ticket_to_next_event, user
         else
@@ -178,7 +178,7 @@ class UserTest < ActiveSupport::TestCase
       if user.next_event_intention.nil?
         assert_not_includes User.activated.needs_ticket_to_next_event, user
       else
-        # binding.pry
+        #
         if user.next_event_intention.status == "going_needs_ticket"
 
           assert_includes User.activated.needs_ticket_to_next_event, user
@@ -199,7 +199,7 @@ class UserTest < ActiveSupport::TestCase
       if user.next_event_intention.nil?
         assert_not_includes User.activated.driving_to_next_event, user
       else
-        # binding.pry
+        #
         if user.next_event_intention.transportation == "driving"
 
           assert_includes User.activated.driving_to_next_event, user
@@ -249,7 +249,7 @@ class UserTest < ActiveSupport::TestCase
     end
 
     ea = EarlyArrival.last
-    
+
     assert @user.ea_exists?(event)
 
     assert_not_empty @user.early_arrivals
@@ -277,15 +277,15 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "sum of user camp dues" do 
-    
+  test "sum of user camp dues" do
+
     user = users(:archer)
     #with fod_option
     assert_equal 225, user.sum_camp_dues
 
     #without food option
     user.next_event_intention.toggle!(:opt_in_meals)
-    assert_equal 175, user.sum_camp_dues.to_i    
+    assert_equal 175, user.sum_camp_dues.to_i
   end
 
   test "#first_name returns first name" do
@@ -303,7 +303,7 @@ class UserTest < ActiveSupport::TestCase
 
     user.name = " "
     assert_nil user.first_name
-    
+
   end
 
   test "next_event_total_camp_dues" do

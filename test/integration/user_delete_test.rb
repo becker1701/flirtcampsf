@@ -19,7 +19,7 @@ class UserDeleteTest < ActionDispatch::IntegrationTest
 		delete user_path(@user)
 
 		# assert_response :redirect
-		# binding.pry
+		#
 		assert_redirected_to users_path
 		assert_equal "Cannot delete record because dependent payments exist", flash[:danger]
 	end
@@ -31,7 +31,7 @@ class UserDeleteTest < ActionDispatch::IntegrationTest
 		assert @user.payments.empty?
 
 		delete user_path(@user)
-		
+
 		assert_redirected_to users_path
 		assert_not flash[:danger].present?
 	end

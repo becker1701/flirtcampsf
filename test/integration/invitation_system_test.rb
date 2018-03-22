@@ -1,20 +1,20 @@
 require 'test_helper'
 
 class InvitationSystemTest < ActionDispatch::IntegrationTest
-  
+
 	# The invitation sytem is a means to invite folks who are part of the camp or hae been accepted to the camp to
 	# create an account.
 
 	# Generating the list of invitees:
-	# 1: For members who are already a part of Flirt Camp (i.e. "Direct Add"), ADMIN will be able to add an email address and 
-	# name through controller to invitations table.  
+	# 1: For members who are already a part of Flirt Camp (i.e. "Direct Add"), ADMIN will be able to add an email address and
+	# name through controller to invitations table.
 	# 2: For members who apply via the site --  ADMIN will mark the membership application as accepted, and an invitation will automaticall be generated, along with the email.
 
 	#The invitation and user creator...
-	# The invitations table will generate a token and an invitation digest and send an email to the invitee with a link, 
+	# The invitations table will generate a token and an invitation digest and send an email to the invitee with a link,
 	# complete with the token and email address of the recipient.
 	# Recipient will click on the link in the email, and the controller will cross reference the token and email address with the
-	# invitees in the invitations table. 
+	# invitees in the invitations table.
 	# Once the user is validated, the invitation status is updated to "clicked through" and linked to a new user record.
 	# The invitee is redirected to a "New Profile" page, where the invitee, now a user, will create their profile.
 	# Once the profile is created, they will have full access to the dashboard
@@ -75,16 +75,16 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		delete logout_path
 		assert_not is_logged_in?
 
-		
+
 		#test for no invitation token
 		get signup_path
 		assert_template 'users/new'
 		assert assigns(:invite).nil?
-		assert flash.empty?	
+		assert flash.empty?
 
 		#test for invalid token
 		#****  Not testing for token values
-		
+
 		get edit_invitation_path('invalid_token', email: invitation.email)
 		assert_redirected_to signup_path(invite: invitation.id)
 		assert_not flash.empty?
@@ -96,27 +96,27 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		#*****  user will be sent to a blank signup_path without invite_id
 		get edit_invitation_path(invitation.invite_token, email: "incorrect email")
 		assert_redirected_to signup_path
-		assert_not flash.empty?		
+		assert_not flash.empty?
 
 		# valid token and email
 		# delete logout_path
 		assert_not is_logged_in?
 
 		get edit_invitation_path(invitation.invite_token, email: invitation.email)
-		
+
 		# delete logout_path
 		assert_not is_logged_in?
 
-		assert_redirected_to signup_path(invite: invitation.id)		
+		assert_redirected_to signup_path(invite: invitation.id)
 		follow_redirect!
 		assert_equal invitation, assigns(:invite)
 		assert_template 'users/new'
 		# debugger
-		
+
 		assert_select "input[value=?]", invitation.id.to_s
 		assert_select "input[value=?]", invitation.name.to_s
 		assert_select "p.form-static-control", invitation.email.to_s
-		
+
 		delete logout_path
 		assert_not is_logged_in?
 		log_in_as @admin
@@ -133,7 +133,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_equal "Some Person 123", new_invite.name
 		# make sure the email was sent
 		assert_equal 1, ActionMailer::Base.deliveries.count
-		
+
 		#******  Delete the invitation and make sure the user is sent to the signup page anyways, but without the invite_id
 		delete invitation_path(new_invite)
 
@@ -155,7 +155,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		@membership_app = membership_applications(:first)
 
 		#redirect when trying to access membership apps without being logged in
-		
+
 		get membership_applications_path
 		assert_not is_logged_in?
 		assert_redirected_to login_path
@@ -204,7 +204,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_select "a[href=?]", decline_membership_application_path(@membership_app)
 
 		assert_not @membership_app.approved?
-		
+
 		# decline membership
 		assert_no_difference 'Invitation.count' do
 			get decline_membership_application_path(@membership_app)
@@ -281,7 +281,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 
 
 	test "resend invitation from index" do
-		
+
 		invite = invitations(:one)
 		invite_last_sent = invite.last_sent_at
 
@@ -318,7 +318,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		# debugger
 
 		invites.each do |invite|
-			
+
 			assert_select 'a[href=?]', invitation_path(invite), method: :delete
 
 			if invite.replied?
@@ -328,7 +328,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 			end
 		end
 
-		#delete button works to remove 
+		#delete button works to remove
 		assert_difference 'Invitation.count', -1 do
 			delete invitation_path(first_invite)
 		end
@@ -364,17 +364,17 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		assert_difference 'Invitation.count', 1 do
 			post invitations_path, invitation: { name: "Some Person 123", email: "someperson123@example.com" }
 		end
-		
+
 		# assert_equal 1, ActionMailer::Base.deliveries.count
 
 		invite = assigns(:invitation)
 		assert_not invite.nil?
 
 		# old_invite_token = invite.invite_token
-		
+
 		# debugger
 		get resend_invitation_path(invite)
-		
+
 		new_invite = assigns(:invite)
 
 		# ensure the same invite is pulled back from the resend method
@@ -402,14 +402,14 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 	end
 
 	test "user signup from invite activated on create with correct invite ID" do
-		
+
 		log_in_as @admin
-		
+
 		invite = Invitation.create!(name: "Some Person 123", email: "someperson123@example.com")
 
 		delete logout_path
 		assert_not is_logged_in?
-		
+
 		get edit_invitation_url(invite.invite_token, email: invite.email)
 
 
@@ -438,7 +438,7 @@ class InvitationSystemTest < ActionDispatch::IntegrationTest
 		get new_invitation_path
 		invites = assigns(:invitations)
 		invites.each do |invite|
-			# binding.pry
+			#
 			assert_match "mailto:#{invite.email}", response.body
 		end
 	end

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def index
 
-      # binding.pry
+      #
     if params[:q].present?
 
       if params[:q] == "attending_next_event"
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 
     end
 
-    # binding.pry
+    #
 
     if params[:q_name].present?
       @users = @users.activated.where("name ILIKE :name or playa_name ILIKE :name", {name: "%#{params[:q_name]}%"})

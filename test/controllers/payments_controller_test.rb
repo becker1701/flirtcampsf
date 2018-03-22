@@ -1,15 +1,15 @@
 require 'test_helper'
 
 class PaymentsControllerTest < ActionController::TestCase
-  
+
   def setup
-    
+
     @user = users(:archer)
     @admin = users(:brian)
     @event = events(:future)
     @payment = @user.payments.create(event: @event, payment_date: Date.today, amount: 100, description: "Some description")
 
-  end 
+  end
 
 
 
@@ -17,7 +17,7 @@ class PaymentsControllerTest < ActionController::TestCase
     get :new, user_id: @user
     assert_redirected_to login_path
 
-    log_in_as @user 
+    log_in_as @user
     get :new, user_id: @user
     assert_redirected_to root_url
   end
@@ -45,10 +45,10 @@ class PaymentsControllerTest < ActionController::TestCase
 
     assert_no_difference 'Payment.count' do
       post :create, user_id: @user, payment: {event_id: @event.id, payment_date: Date.today, amount: 100, description: "Some description"}
-    end 
+    end
     assert_redirected_to login_path
 
-    log_in_as @user 
+    log_in_as @user
     assert_no_difference 'Payment.count' do
       post :create, user_id: @user, payment: {event_id: @event.id, payment_date: Date.today, amount: 100, description: "Some description"}
     end
@@ -73,7 +73,7 @@ class PaymentsControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    
+
     assert_equal @user, assigns(:user)
     assert_equal @event, assigns(:event)
     assert_not assigns(:payment).nil?
@@ -88,7 +88,7 @@ class PaymentsControllerTest < ActionController::TestCase
     get :edit, user_id: @user, id: @payment
     assert_redirected_to login_path
 
-    log_in_as @user 
+    log_in_as @user
     get :edit, user_id: @user, id: @payment
     assert_redirected_to root_url
   end
@@ -104,7 +104,7 @@ class PaymentsControllerTest < ActionController::TestCase
     log_in_as @admin
     get :edit, user_id: @user, id: @payment
     assert_response :success
-    
+
     assert_equal @user, assigns(:user)
     assert_equal @payment, assigns(:payment)
 
@@ -118,7 +118,7 @@ class PaymentsControllerTest < ActionController::TestCase
     patch :update, user_id: @user, id: @payment, payment: {event_id: @event.id, payment_date: Date.today, amount: 100, description: "Some description"}
     assert_redirected_to login_path
 
-    log_in_as @user 
+    log_in_as @user
     patch :update, user_id: @user, id: @payment, payment: {event_id: @event.id, payment_date: Date.today, amount: 100, description: "Some description"}
 
     assert_redirected_to root_url
@@ -137,7 +137,7 @@ class PaymentsControllerTest < ActionController::TestCase
     patch :update, user_id: @user, id: @payment.id, payment: {event_id: @event.id, payment_date: Date.today, amount: 50, description: "Some description"}
 
     assert_response :redirect
-    
+
     assert_equal @user, assigns(:user)
     assert_equal @payment, assigns(:payment)
     assert_equal 50, assigns(:payment).amount
@@ -153,15 +153,15 @@ class PaymentsControllerTest < ActionController::TestCase
   end
 
   test "get index on correct user" do
-    log_in_as @user 
+    log_in_as @user
     get :index, user_id: @user
-    # binding.pry
+    #
     assert_response :success
     assert_select 'title', full_title("Camp Dues for #{@user.name}")
   end
 
   test "redirect get index on incorrect user" do
-    log_in_as @user 
+    log_in_as @user
     get :index, user_id: users(:kurt)
     assert_redirected_to root_path
   end
@@ -189,10 +189,10 @@ class PaymentsControllerTest < ActionController::TestCase
 
     assert_no_difference 'Payment.count' do
       delete :destroy, user_id: @user, id: @payment
-    end 
+    end
     assert_redirected_to login_path
 
-    log_in_as @user 
+    log_in_as @user
     assert_no_difference 'Payment.count' do
       delete :destroy, user_id: @user, id: @payment
     end
@@ -216,7 +216,7 @@ class PaymentsControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    
+
     assert_equal @user, assigns(:user)
     assert_equal @event, assigns(:event)
     assert_equal @payment, assigns(:payment)
